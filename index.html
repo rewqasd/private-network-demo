@@ -1,0 +1,3514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>企业/政府专网产品动态演示 V3</title>
+  <style>
+    /* V3 全局主题：深蓝科技底色 + 玻璃拟态卡片 + 产品专属色条 */
+    :root {
+      --nav-width: 306px;
+      --bg-0: #06101f;
+      --bg-1: #071c38;
+      --bg-2: #0c2b55;
+      --ink: #edf6ff;
+      --ink-strong: #ffffff;
+      --muted: #a8bbd4;
+      --muted-2: #7f93ad;
+      --glass: rgba(255, 255, 255, 0.09);
+      --glass-strong: rgba(255, 255, 255, 0.14);
+      --line: rgba(180, 213, 255, 0.22);
+      --blue: #22b7ff;
+      --cyan: #26d4ff;
+      --purple: #8b5cf6;
+      --orange: #f97316;
+      --green: #22c55e;
+      --red: #e60012;
+      --gold: #f5c542;
+      --grayblue: #7c9bbd;
+      --radius: 8px;
+      --shadow: 0 18px 45px rgba(0, 0, 0, 0.26);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 18% 10%, rgba(34, 183, 255, 0.18), transparent 34%),
+        radial-gradient(circle at 82% 18%, rgba(139, 92, 246, 0.15), transparent 32%),
+        linear-gradient(135deg, var(--bg-0), var(--bg-1) 48%, #030914);
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(0deg, rgba(139, 184, 255, 0.06) 0, rgba(139, 184, 255, 0.06) 1px, transparent 1px, transparent 34px),
+        repeating-linear-gradient(90deg, rgba(139, 184, 255, 0.05) 0, rgba(139, 184, 255, 0.05) 1px, transparent 1px, transparent 34px);
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.25));
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: var(--nav-width) minmax(0, 1fr);
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    .sidebar {
+      height: 100vh;
+      overflow: auto;
+      padding: 20px 16px 18px;
+      background:
+        linear-gradient(180deg, rgba(8, 26, 55, 0.96), rgba(3, 11, 25, 0.98)),
+        radial-gradient(circle at 18% 8%, rgba(34, 183, 255, 0.23), transparent 210px);
+      border-right: 1px solid rgba(173, 214, 255, 0.15);
+      box-shadow: 14px 0 36px rgba(0, 0, 0, 0.28);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 4px 6px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius);
+      color: #fff;
+      background: linear-gradient(135deg, #e60012, #22b7ff);
+      font-weight: 900;
+      box-shadow: 0 0 24px rgba(34, 183, 255, 0.3);
+    }
+
+    .brand-title {
+      font-size: 17px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.25;
+    }
+
+    .brand-subtitle {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .nav-list {
+      display: grid;
+      gap: 7px;
+      padding-top: 14px;
+    }
+
+    .nav-item {
+      --accent: var(--blue);
+      --accent2: var(--cyan);
+      position: relative;
+      width: 100%;
+      min-height: 57px;
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 10px 9px 12px;
+      color: rgba(237, 246, 255, 0.8);
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-align: left;
+      transition: 180ms ease;
+      overflow: hidden;
+    }
+
+    .nav-item::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 4px;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+    }
+
+    .nav-item:hover,
+    .nav-item:focus-visible {
+      outline: none;
+      color: #fff;
+      transform: translateX(3px);
+      background: rgba(255, 255, 255, 0.09);
+      border-color: color-mix(in srgb, var(--accent) 55%, white 15%);
+    }
+
+    .nav-item.active {
+      color: #fff;
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--accent) 42%, transparent), color-mix(in srgb, var(--accent2) 28%, transparent)),
+        rgba(255, 255, 255, 0.09);
+      border-color: color-mix(in srgb, var(--accent) 64%, white 10%);
+      box-shadow: 0 0 26px color-mix(in srgb, var(--accent) 28%, transparent);
+    }
+
+    .nav-icon {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius);
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0;
+      box-shadow: 0 8px 18px color-mix(in srgb, var(--accent) 24%, transparent);
+    }
+
+    .nav-kicker {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .nav-no {
+      color: color-mix(in srgb, var(--accent2) 78%, white 15%);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .nav-title {
+      display: block;
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .nav-note {
+      display: block;
+      margin-top: 3px;
+      color: rgba(221, 235, 255, 0.62);
+      font-size: 11px;
+      line-height: 1.25;
+    }
+
+    .sidebar-foot {
+      margin: 16px 6px 0;
+      padding-top: 12px;
+      color: rgba(221, 235, 255, 0.58);
+      font-size: 12px;
+      line-height: 1.6;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .main {
+      min-width: 0;
+      height: 100vh;
+      overflow: auto;
+      padding: 20px 28px 24px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 16px;
+      padding: 0 0 12px;
+      background: linear-gradient(180deg, rgba(6, 16, 31, 0.96), rgba(6, 16, 31, 0.72) 76%, rgba(6, 16, 31, 0));
+      backdrop-filter: blur(10px);
+    }
+
+    .eyebrow-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent-current, var(--cyan));
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 0 6px color-mix(in srgb, currentColor 20%, transparent);
+    }
+
+    .page-count {
+      padding: 3px 8px;
+      border-radius: 999px;
+      color: #dcecff;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .page-title {
+      margin: 7px 0 0;
+      color: #fff;
+      font-size: 28px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    .page-summary {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 14px;
+      color: #eaf6ff;
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(210, 230, 255, 0.2);
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 900;
+      white-space: nowrap;
+      transition: 160ms ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      outline: none;
+      transform: translateY(-1px);
+      border-color: rgba(38, 212, 255, 0.55);
+      box-shadow: 0 12px 28px rgba(34, 183, 255, 0.16);
+    }
+
+    .btn.primary {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(135deg, #e60012, #22b7ff 58%, #8b5cf6);
+      box-shadow: 0 14px 32px rgba(34, 183, 255, 0.22);
+    }
+
+    .btn-icon {
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+    }
+
+    .overview-progress {
+      display: none;
+      grid-column: 1 / -1;
+      height: 7px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .overview-progress.visible {
+      display: block;
+    }
+
+    .overview-progress span {
+      display: block;
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #7c9bbd, #22b7ff, #f97316, #e60012, #8b5cf6, #22c55e);
+    }
+
+    .content-shell {
+      display: grid;
+      gap: 12px;
+      animation: fadeSlide 300ms ease both;
+    }
+
+    .stage,
+    .compare-card,
+    .side-card,
+    .speaker-card,
+    .conclusion {
+      border: 1px solid rgba(191, 221, 255, 0.2);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.065));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .stage {
+      height: clamp(360px, 38vh, 410px);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .stage svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .tag-rail {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .tag {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      color: #eaf6ff;
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      font-size: 12px;
+      font-weight: 900;
+      cursor: default;
+    }
+
+    .tag.good {
+      border-color: rgba(34, 197, 94, 0.36);
+      background: rgba(34, 197, 94, 0.12);
+    }
+
+    .tag.weak {
+      border-color: rgba(124, 155, 189, 0.36);
+      background: rgba(124, 155, 189, 0.15);
+    }
+
+    .tag.risk {
+      border-color: rgba(239, 68, 68, 0.42);
+      background: rgba(239, 68, 68, 0.14);
+    }
+
+    .tag.security {
+      border-color: rgba(249, 115, 22, 0.42);
+      background: rgba(249, 115, 22, 0.14);
+    }
+
+    .tag::after {
+      content: attr(data-tip);
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 8px);
+      width: 220px;
+      padding: 9px 10px;
+      border-radius: var(--radius);
+      color: #fff;
+      background: rgba(2, 8, 20, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      font-weight: 500;
+      line-height: 1.45;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, 6px);
+      transition: 160ms ease;
+      z-index: 8;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.36);
+    }
+
+    .tag:hover::after {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .lower-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.32fr) minmax(330px, 0.68fr);
+      gap: 12px;
+    }
+
+    .compare-card,
+    .side-card,
+    .speaker-card {
+      border-radius: var(--radius);
+      padding: 14px 16px;
+    }
+
+    .compare-title,
+    .side-title {
+      margin: 0 0 10px;
+      color: #fff;
+      font-size: 16px;
+      line-height: 1.25;
+    }
+
+    .compare-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .mini-panel {
+      min-width: 0;
+      padding: 12px;
+      border-radius: var(--radius);
+      background: rgba(0, 0, 0, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .mini-panel.recommend {
+      border-color: color-mix(in srgb, var(--accent-current, var(--cyan)) 42%, white 8%);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--accent-current, var(--cyan)) 14%, transparent), rgba(255, 255, 255, 0.06));
+    }
+
+    .mini-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      color: #fff;
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .mini-title::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--muted-2);
+    }
+
+    .mini-panel.recommend .mini-title::before {
+      background: var(--accent-current, var(--cyan));
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent-current, var(--cyan)) 18%, transparent);
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    li {
+      position: relative;
+      padding-left: 13px;
+      margin: 6px 0;
+      color: #c5d5eb;
+      font-size: 12px;
+      line-height: 1.42;
+    }
+
+    li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.7em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent-current, var(--cyan));
+    }
+
+    .side-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .scenario-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .scenario {
+      padding: 6px 9px;
+      border-radius: 999px;
+      color: #eaf6ff;
+      background: color-mix(in srgb, var(--accent-current, var(--cyan)) 16%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent-current, var(--cyan)) 36%, transparent);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .footer-line {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .conclusion {
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      color: #eaf6ff;
+      font-weight: 900;
+      line-height: 1.42;
+    }
+
+    .conclusion strong {
+      color: var(--accent-current, var(--cyan));
+      white-space: nowrap;
+    }
+
+    .speaker-card {
+      display: none;
+      max-width: 720px;
+      color: #d8e8ff;
+      line-height: 1.55;
+    }
+
+    .speaker-card.visible {
+      display: block;
+      animation: fadeSlide 220ms ease both;
+    }
+
+    /* SVG 公共风格 */
+    .svg-grid {
+      fill: url(#stageBg);
+    }
+
+    .svg-title {
+      fill: #f5fbff;
+      font-size: 21px;
+      font-weight: 900;
+    }
+
+    .svg-subtitle {
+      fill: #a8bbd4;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .node-label {
+      fill: #f5fbff;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .node-note {
+      fill: #a8bbd4;
+      font-size: 10.5px;
+      font-weight: 700;
+    }
+
+    .device {
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.28));
+    }
+
+    .glass-node {
+      fill: rgba(255, 255, 255, 0.1);
+      stroke: rgba(207, 229, 255, 0.36);
+      stroke-width: 1.4;
+    }
+
+    .link-muted {
+      fill: none;
+      stroke: #7c9bbd;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-dasharray: 8 9;
+      opacity: 0.72;
+      animation: dashFlow 2.2s linear infinite;
+    }
+
+    .link-flow {
+      fill: none;
+      stroke: var(--flow, #22b7ff);
+      stroke-width: var(--flow-width, 8);
+      stroke-linecap: round;
+      stroke-dasharray: 18 18;
+      animation: dashFlow 1.25s linear infinite;
+      filter: drop-shadow(0 0 9px color-mix(in srgb, var(--flow, #22b7ff) 58%, transparent));
+    }
+
+    .link-back {
+      fill: none;
+      stroke: color-mix(in srgb, var(--flow, #22b7ff) 20%, transparent);
+      stroke-width: calc(var(--flow-width, 8) + 10px);
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 12px color-mix(in srgb, var(--flow, #22b7ff) 38%, transparent));
+    }
+
+    .attack-flow {
+      fill: none;
+      stroke: #1f0508;
+      stroke-width: 6;
+      stroke-linecap: round;
+      stroke-dasharray: 12 10;
+      animation: dashFlow 0.9s linear infinite;
+      filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.72));
+    }
+
+    .attack-red {
+      fill: none;
+      stroke: #ef4444;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-dasharray: 8 10;
+      animation: dashFlow 0.7s linear infinite;
+    }
+
+    .flow-reverse {
+      animation-direction: reverse;
+    }
+
+    .badge {
+      fill: rgba(255, 255, 255, 0.12);
+      stroke: rgba(255, 255, 255, 0.22);
+      stroke-width: 1;
+    }
+
+    .badge-text {
+      fill: #f5fbff;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .badge-good { fill: rgba(34, 197, 94, 0.16); stroke: rgba(34, 197, 94, 0.48); }
+    .badge-risk { fill: rgba(239, 68, 68, 0.16); stroke: rgba(239, 68, 68, 0.48); }
+    .badge-warn { fill: rgba(249, 115, 22, 0.16); stroke: rgba(249, 115, 22, 0.48); }
+    .badge-blue { fill: rgba(34, 183, 255, 0.16); stroke: rgba(34, 183, 255, 0.48); }
+    .badge-purple { fill: rgba(139, 92, 246, 0.18); stroke: rgba(139, 92, 246, 0.52); }
+
+    .fade-1, .fade-2, .fade-3, .fade-4, .fade-5, .fade-6 {
+      opacity: 0;
+      animation: fadeIn 680ms ease both;
+    }
+    .fade-1 { animation-delay: .18s; }
+    .fade-2 { animation-delay: .48s; }
+    .fade-3 { animation-delay: .78s; }
+    .fade-4 { animation-delay: 1.08s; }
+    .fade-5 { animation-delay: 1.38s; }
+    .fade-6 { animation-delay: 1.68s; }
+
+    .pulse {
+      animation: pulseDot 1.2s ease-in-out infinite;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    .float {
+      animation: floatSoft 3.8s ease-in-out infinite;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    .jitter {
+      animation: jitter 1s ease-in-out infinite;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    .liquid-a { animation: liquidA 4s ease-in-out infinite; transform-origin: bottom; transform-box: fill-box; }
+    .liquid-b { animation: liquidB 4.4s ease-in-out infinite; transform-origin: bottom; transform-box: fill-box; }
+    .liquid-c { animation: liquidC 3.8s ease-in-out infinite; transform-origin: bottom; transform-box: fill-box; }
+    .ip-1 { animation: ipOne 6s steps(1, end) infinite; }
+    .ip-2 { opacity: 0; animation: ipTwo 6s steps(1, end) infinite; }
+    .ip-3 { opacity: 0; animation: ipThree 6s steps(1, end) infinite; }
+    .auth-ring { animation: authRing 1.8s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+    .stage-ordinary { animation: ordinaryPhase 8s ease-in-out infinite; }
+    .stage-recommend { opacity: 0; animation: recommendPhase 8s ease-in-out infinite; }
+    .fault-main { animation: faultMain 8s ease-in-out infinite; }
+    .backup-on { animation: backupOn 8s ease-in-out infinite; }
+    .timeline-step { cursor: pointer; }
+    .timeline-step:hover .glass-node { stroke-width: 2.2; }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    @keyframes dashFlow {
+      to { stroke-dashoffset: -72; }
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: .45; transform: scale(.82); }
+      50% { opacity: 1; transform: scale(1.18); }
+    }
+
+    @keyframes floatSoft {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+
+    @keyframes jitter {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(2px, -1px); }
+      50% { transform: translate(-2px, 1px); }
+      75% { transform: translate(1px, 2px); }
+    }
+
+    @keyframes liquidA {
+      0%, 100% { transform: scaleY(.72); }
+      50% { transform: scaleY(.92); }
+    }
+
+    @keyframes liquidB {
+      0%, 100% { transform: scaleY(.54); }
+      50% { transform: scaleY(.74); }
+    }
+
+    @keyframes liquidC {
+      0%, 100% { transform: scaleY(.32); }
+      50% { transform: scaleY(.56); }
+    }
+
+    @keyframes ipOne {
+      0%, 32% { opacity: 1; }
+      33%, 100% { opacity: 0; }
+    }
+
+    @keyframes ipTwo {
+      0%, 32% { opacity: 0; }
+      33%, 65% { opacity: 1; }
+      66%, 100% { opacity: 0; }
+    }
+
+    @keyframes ipThree {
+      0%, 65% { opacity: 0; }
+      66%, 100% { opacity: 1; }
+    }
+
+    @keyframes authRing {
+      0% { opacity: .8; transform: scale(.7); }
+      100% { opacity: 0; transform: scale(1.35); }
+    }
+
+    @keyframes ordinaryPhase {
+      0%, 43% { opacity: 1; }
+      58%, 100% { opacity: .26; }
+    }
+
+    @keyframes recommendPhase {
+      0%, 42% { opacity: 0; transform: translateY(10px); }
+      58%, 100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes faultMain {
+      0%, 48% { stroke: #e60012; opacity: 1; }
+      56%, 68% { stroke: #ef4444; opacity: .82; filter: drop-shadow(0 0 10px rgba(239, 68, 68, .8)); }
+      78%, 100% { stroke: #9b1c1c; opacity: .42; }
+    }
+
+    @keyframes backupOn {
+      0%, 50% { opacity: .34; }
+      62%, 100% { opacity: 1; filter: drop-shadow(0 0 9px rgba(245, 197, 66, .62)); }
+    }
+
+    .mission-mode .stage {
+      height: min(820px, calc(100vh - 136px));
+      min-height: 620px;
+      padding: 14px;
+      overflow: auto;
+    }
+
+    .mission-mode .tag-rail,
+    .mission-mode .lower-grid,
+    .mission-mode .footer-line {
+      display: none;
+    }
+
+    .mission-shell {
+      display: grid;
+      grid-template-columns: minmax(420px, 1.05fr) minmax(420px, 0.95fr);
+      gap: 12px;
+      min-height: 100%;
+    }
+
+    .mission-board,
+    .mission-panel {
+      min-width: 0;
+      border-radius: var(--radius);
+      border: 1px solid rgba(191, 221, 255, 0.18);
+      background: rgba(0, 0, 0, 0.16);
+      overflow: hidden;
+    }
+
+    .mission-board {
+      display: grid;
+      grid-template-rows: auto auto auto auto;
+      align-content: start;
+      gap: 10px;
+      padding: 12px;
+    }
+
+    .mission-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .mission-tab {
+      min-width: 0;
+      height: 38px;
+      padding: 0 8px;
+      border-radius: var(--radius);
+      color: #dcecff;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .mission-tab.active {
+      color: #fff;
+      border-color: color-mix(in srgb, var(--accent-current, var(--cyan)) 58%, white 12%);
+      background: linear-gradient(135deg, color-mix(in srgb, var(--accent-current, var(--cyan)) 32%, transparent), rgba(255,255,255,.08));
+      box-shadow: 0 10px 22px color-mix(in srgb, var(--accent-current, var(--cyan)) 20%, transparent);
+    }
+
+    .mission-brief {
+      display: grid;
+      gap: 6px;
+      padding: 11px 12px;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(255,255,255,.11), rgba(255,255,255,.055));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .mission-brief h2 {
+      margin: 0;
+      color: #fff;
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    .mission-brief p {
+      margin: 0;
+      color: #aec2dc;
+      font-size: 12px;
+      line-height: 1.48;
+    }
+
+    .mission-topology {
+      height: 362px;
+      min-height: 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        linear-gradient(180deg, rgba(7,26,51,.85), rgba(5,13,27,.88)),
+        repeating-linear-gradient(90deg, rgba(139,184,255,.06) 0, rgba(139,184,255,.06) 1px, transparent 1px, transparent 30px);
+    }
+
+    .mission-topology svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .mission-footnote {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      align-items: center;
+      color: #bcd0e9;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .source-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      color: #eaf6ff;
+      background: rgba(34, 183, 255, 0.11);
+      border: 1px solid rgba(34, 183, 255, 0.25);
+      font-weight: 800;
+    }
+
+    .mission-panel {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+    }
+
+    .mission-scorebar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 12px;
+      border-bottom: 1px solid rgba(255,255,255,.11);
+      background: rgba(255,255,255,.045);
+    }
+
+    .score-title {
+      color: #fff;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .score-subtitle {
+      margin-top: 3px;
+      color: #a8bbd4;
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .score-badge {
+      width: 78px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius);
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent-current, var(--cyan)), var(--accent-current-2, var(--purple)));
+      font-size: 20px;
+      font-weight: 900;
+      box-shadow: 0 12px 26px color-mix(in srgb, var(--accent-current, var(--cyan)) 22%, transparent);
+    }
+
+    .mission-challenges {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+      padding: 12px;
+      overflow: auto;
+    }
+
+    .challenge-card {
+      border-radius: var(--radius);
+      padding: 8px;
+      background: rgba(255,255,255,.065);
+      border: 1px solid rgba(255,255,255,.11);
+    }
+
+    .challenge-head {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .challenge-no {
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: color-mix(in srgb, var(--accent-current, var(--cyan)) 70%, #111 10%);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .challenge-title {
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.32;
+    }
+
+    .challenge-kind {
+      color: #9fb4cf;
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 5px;
+    }
+
+    .mission-option {
+      min-height: 45px;
+      padding: 5px 6px;
+      border-radius: var(--radius);
+      color: #dbeaff;
+      background: rgba(0,0,0,.16);
+      border: 1px solid rgba(255,255,255,.12);
+      cursor: pointer;
+      text-align: left;
+      transition: 150ms ease;
+    }
+
+    .mission-option:hover,
+    .mission-option:focus-visible {
+      outline: none;
+      border-color: color-mix(in srgb, var(--accent-current, var(--cyan)) 48%, white 8%);
+      background: rgba(255,255,255,.09);
+    }
+
+    .mission-option.selected {
+      border-color: color-mix(in srgb, var(--accent-current, var(--cyan)) 68%, white 10%);
+      background: color-mix(in srgb, var(--accent-current, var(--cyan)) 18%, rgba(0,0,0,.16));
+    }
+
+    .mission-option.correct.selected {
+      border-color: rgba(34, 197, 94, 0.75);
+      background: rgba(34, 197, 94, 0.16);
+    }
+
+    .mission-option.wrong.selected {
+      border-color: rgba(239, 68, 68, 0.78);
+      background: rgba(239, 68, 68, 0.13);
+    }
+
+    .option-label {
+      display: block;
+      color: #f5fbff;
+      font-size: 10.8px;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+    .option-detail {
+      display: block;
+      margin-top: 2px;
+      color: #9fb4cf;
+      font-size: 9.4px;
+      line-height: 1.28;
+    }
+
+    .mission-result {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 12px;
+      border-top: 1px solid rgba(255,255,255,.11);
+      background: rgba(0,0,0,.14);
+    }
+
+    .result-box {
+      min-width: 0;
+      padding: 10px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    .result-box strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #fff;
+      font-size: 12px;
+    }
+
+    .result-box span {
+      display: block;
+      color: #bcd0e9;
+      font-size: 10.5px;
+      line-height: 1.42;
+    }
+
+    .mission-reset {
+      height: 30px;
+      margin-top: 8px;
+      padding: 0 10px;
+      border-radius: var(--radius);
+      color: #eaf6ff;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .mission-reset:hover {
+      border-color: rgba(38, 212, 255, 0.55);
+    }
+
+    @media (max-width: 1280px) {
+      :root { --nav-width: 282px; }
+      .main { padding: 18px; }
+      .page-title { font-size: 24px; }
+      .lower-grid { grid-template-columns: 1fr; }
+      .mission-shell { grid-template-columns: 1fr; }
+      .mission-mode .stage { height: auto; min-height: 0; }
+      .mission-challenges { grid-template-columns: 1fr; }
+      body { overflow: auto; }
+    }
+
+    @media (max-width: 720px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { height: auto; max-height: 42vh; }
+      .topbar { grid-template-columns: 1fr; }
+      .mission-tabs,
+      .option-grid,
+      .mission-result { grid-template-columns: 1fr; }
+      .mission-shell { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" aria-label="专网产品目录">
+      <div class="brand">
+        <div class="brand-mark">政企</div>
+        <div>
+          <div class="brand-title">专网产品动态演示 V3</div>
+          <div class="brand-subtitle">18 个板块串讲产品、硬件、行业组网与闯关考核</div>
+        </div>
+      </div>
+      <nav class="nav-list" id="navList"></nav>
+      <div class="sidebar-foot">数字键 1-9 跳转前 9 页；0 跳四川政务；Q/W/E/R/T/Y/U/I 跳政法、金融、制造、地图、问题诊断、硬件地图、闯关考核、课堂总览。</div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow-row">
+            <div class="eyebrow" id="sceneEyebrow">共享宽带基准</div>
+            <div class="page-count" id="pageCount">01 / 18</div>
+          </div>
+          <h1 class="page-title" id="pageTitle">家宽 PPPoE：共享宽带基准</h1>
+          <p class="page-summary" id="pageSummary"></p>
+        </div>
+        <div class="top-actions">
+          <button class="btn" id="replayBtn" type="button" aria-label="重播当前动画">
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 7h7a5 5 0 1 1-4.1 7.9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M7 7V3M7 7h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            重播动画
+          </button>
+          <button class="btn" id="speakerBtn" type="button" aria-expanded="false">
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 10v4h4l5 4V6l-5 4H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M16 9.5a4 4 0 0 1 0 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            讲师提示
+          </button>
+          <button class="btn primary" id="overviewBtn" type="button">
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 5v14l11-7z" fill="currentColor"/>
+            </svg>
+            播放总览
+          </button>
+        </div>
+        <div class="overview-progress" id="overviewProgress" aria-hidden="true"><span id="overviewFill"></span></div>
+      </header>
+
+      <section class="content-shell" id="contentShell">
+        <div class="stage" id="svgStage" aria-label="网络拓扑动态演示"></div>
+        <div class="tag-rail" id="tagRail"></div>
+        <div class="lower-grid">
+          <section class="compare-card" id="compareCard"></section>
+          <aside class="side-stack">
+            <section class="side-card" id="scenarioCard"></section>
+            <section class="side-card" id="boundaryCard"></section>
+          </aside>
+        </div>
+        <div class="footer-line">
+          <div class="conclusion" id="coreConclusion"></div>
+          <div class="speaker-card" id="speakerCard"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // 产品专属颜色：导航、卡片边框、链路动画都会读取这里。
+    const colors = {
+      pppoe: ["#7c9bbd", "#9fb6cf"],
+      dia: ["#22b7ff", "#26d4ff"],
+      security: ["#f97316", "#8b5cf6"],
+      sdh: ["#6fb3b8", "#9aa7b4"],
+      otn: ["#e60012", "#ff4b5c"],
+      smart: ["#e60012", "#f5c542"],
+      cloud: ["#2563eb", "#8b5cf6"],
+      advantage: ["#22b7ff", "#8b5cf6"],
+      hospital: ["#22c55e", "#14b8a6"],
+      gov: ["#2563eb", "#22d3ee"],
+      justice: ["#7c3aed", "#ef4444"],
+      finance: ["#0f766e", "#f5c542"],
+      manufacturing: ["#f97316", "#22c55e"],
+      map: ["#f97316", "#22b7ff"],
+      diagnostic: ["#14b8a6", "#f97316"],
+      hardware: ["#64748b", "#22d3ee"],
+      mission: ["#e60012", "#f5c542"],
+      overview: ["#e60012", "#22b7ff"]
+    };
+
+    // 页面数据：新增页面时同步维护这里，渲染、导航、总览、键盘跳转都会自动更新。
+    const pages = [
+      {
+        key: "pppoe",
+        no: "01",
+        nav: "家宽 PPPoE",
+        icon: "PP",
+        note: "共享宽带基准",
+        eyebrow: "共享宽带基准",
+        title: "家宽 PPPoE：共享宽带基准",
+        summary: "核心表达：家宽解决的是“能不能上网”，不是“企业关键业务承载”。",
+        tags: [
+          ["共享带宽", "多个用户共享接入资源，高峰期容易拥堵。", "weak"],
+          ["动态 IP", "公网地址可能变化，不适合稳定对外发布业务。", "risk"],
+          ["上下行不对称", "下载体验好，上传和业务回传能力有限。", "weak"],
+          ["SLA 弱", "通常不承诺企业级恢复时间。", "risk"],
+          ["普通运维", "适合家庭和普通办公，不适合核心业务。", "weak"]
+        ],
+        compareTitle: "家宽的典型特点",
+        leftTitle: "共享宽带特征",
+        leftItems: ["共享带宽：多个用户共享接入资源，高峰期容易拥堵", "动态 IP：公网地址可能变化，不适合稳定对外发布业务", "上下行不对称：下载体验好，上传和业务回传能力有限", "SLA 弱：通常不承诺企业级恢复时间", "普通运维：适合家庭和普通办公"],
+        rightTitle: "企业核心业务需要",
+        rightItems: ["带宽可保障", "地址和路由稳定", "上下行业务能力匹配", "有明确 SLA 和故障响应", "可叠加安全、监控、备份和运维保障"],
+        scenarios: ["家庭上网", "小微普通办公", "临时互联网访问", "非关键业务"],
+        boundaryTitle: "不适合承载",
+        boundaryItems: ["官网稳定发布", "核心系统互联", "灾备同步", "远程运维入口", "对 SLA 有要求的业务"],
+        conclusion: "家宽解决的是“能不能上网”，不是“企业关键业务承载”。",
+        speaker: "家宽就像小区公共道路，大家都能走，但早晚高峰会堵；企业核心业务需要的是更稳定、更可承诺的专属车道。",
+        svg: svgPPPoE
+      },
+      {
+        key: "dia",
+        no: "02",
+        nav: "DIA / 互联网专线",
+        icon: "DIA",
+        note: "企业级独享公网出口",
+        eyebrow: "企业级公网出口",
+        title: "DIA / 互联网专线：企业级独享公网出口",
+        summary: "核心对比：共享带宽 vs 独享/保障带宽，动态 IP vs 固定公网 IP，尽力而为 vs SLA 承诺。",
+        tags: [
+          ["独享/保障带宽", "企业出口质量更可控。", "good"],
+          ["固定公网 IP", "适合官网、远程访问、VPN、业务发布。", "good"],
+          ["上下行更匹配", "比家宽更适合企业上传、回传、发布业务。", "good"],
+          ["SLA 承诺", "故障响应和运维保障更强。", "good"],
+          ["可叠加安全能力", "便于叠加防火墙、抗 DDoS、VPN、上网行为管理。", "good"]
+        ],
+        compareTitle: "DIA 相比家宽的主要优势",
+        leftTitle: "家宽 / 普通宽带",
+        leftItems: ["多个用户共享道路和带宽池", "IP 标签不断变化", "SLA 灰色，偏尽力而为", "上下行能力不对称", "高峰期拥堵更明显"],
+        rightTitle: "DIA / 互联网专线",
+        rightItems: ["独享或保障带宽，质量更可控", "固定公网 IP，适合官网、远程访问、VPN、业务发布", "上下行能力更适合企业业务", "SLA 和故障响应更强", "适合办公、SaaS、视频会议、远程办公、网站发布"],
+        scenarios: ["企业统一公网出口", "SaaS 访问", "视频会议", "远程办公", "网站发布"],
+        boundaryTitle: "边界提醒",
+        boundaryItems: ["DIA 仍然是连接公共互联网", "DIA 不是企业内部专网", "总部与分支互联需要叠加 VPN、SD-WAN、MPLS VPN、云联网等方案"],
+        conclusion: "DIA 贵的不是“能上网”，而是“更稳定、更可承诺、更适合承载业务”。",
+        speaker: "家宽像大家共用的公共道路，DIA 像企业自己的专属高速入口。它贵的不是“能上网”，而是“更稳定、更可承诺、更适合承载业务”。",
+        svg: svgDIA
+      },
+      {
+        key: "security",
+        no: "03",
+        nav: "互联网安全专线",
+        icon: "盾",
+        note: "专线 + 安全防护",
+        eyebrow: "专线 + 安全感知 + 按需防护",
+        title: "互联网安全专线：专线 + 安全防护一体化",
+        summary: "普通互联网专线只解决“通”，互联网安全专线解决“通 + 安全感知 + 按需防护”。",
+        tags: [
+          ["攻击监测", "感知 DDoS、扫描、异常访问等攻击行为。", "security"],
+          ["流量清洗", "攻击流量进入清洗，正常流量回注企业。", "security"],
+          ["域名/网站监测", "监控域名和网站安全状态。", "security"],
+          ["漏洞扫描", "识别业务暴露面和漏洞风险。", "security"],
+          ["安全报告", "输出可汇报、可审计的安全结果。", "security"]
+        ],
+        compareTitle: "互联网安全专线能力",
+        leftTitle: "普通互联网专线",
+        leftItems: ["只提供网络接入", "安全能力另配", "安全感知弱", "攻击后才发现", "客户需要自行拼接多套安全服务"],
+        rightTitle: "互联网安全专线",
+        rightItems: ["专线自带安全监测", "可按需叠加 DDoS 防护、域名监测、网站监测、漏洞扫描、流量清洗", "秒级感知攻击", "支持安全报告", "一点受理、一点开通、一点计费、一点出账、一点结算"],
+        scenarios: ["政企公网出口", "网站发布", "互联网医院", "教育门户", "对安全报告有要求的客户"],
+        boundaryTitle: "版本展示",
+        boundaryItems: ["基础版：攻击监测、行业态势", "进阶版：攻击监测 + DDoS 防护", "增强版：攻击监测 + DDoS + 域名监测", "无忧版：DDoS + 域名 + 网站 + 漏洞扫描", "尊享版：更高规格防护"],
+        conclusion: "安全专线让客户不只是能上网，还能看见风险、应对攻击。",
+        speaker: "普通互联网专线是“有路能通”，互联网安全专线是在这条路上加了监测、预警、清洗和报告能力，让客户不只是能上网，还能看见风险、应对攻击。",
+        svg: svgSecurityLine
+      },
+      {
+        key: "sdh",
+        no: "04",
+        nav: "SDH / MSTP 专线",
+        icon: "E1",
+        note: "传统电路型专线",
+        eyebrow: "传统稳定电路，但灵活性不足",
+        title: "SDH / MSTP 专线：传统稳定电路，但灵活性不足",
+        summary: "SDH/MSTP 适合传统电路型业务，但面对云化、大带宽、视频、AI、数据中心互联等新业务，弹性不足逐渐明显。",
+        tags: [
+          ["稳定性好", "传统电路型业务成熟，路径确定。", "good"],
+          ["颗粒固定", "2M/E1 等固定颗粒不适合弹性扩容。", "weak"],
+          ["扩容慢", "业务调整周期通常较长。", "risk"],
+          ["大带宽不经济", "承载视频、PACS、云系统时成本和效率压力大。", "risk"],
+          ["向 OTN/云联网演进", "存量可评估迁改或与新方案并存。", "good"]
+        ],
+        compareTitle: "SDH / MSTP 优点与缺点",
+        leftTitle: "优点",
+        leftItems: ["稳定性好", "电路型业务成熟", "适合传统 E1、语音、老系统", "时延相对确定", "运维体系成熟"],
+        rightTitle: "缺点与演进",
+        rightItems: ["带宽颗粒固定", "扩容不灵活", "承载大带宽 IP 业务不经济", "面向云、视频、AI、大数据场景能力不足", "逐步被 OTN、IP 化专网、云联网等方案替代或补充"],
+        scenarios: ["存量 E1", "老系统专线", "传统柜面终端", "语音电路", "MSTP 迁改评估"],
+        boundaryTitle: "和 OTN 的关系",
+        boundaryItems: ["OTN 可理解为 SDH/MSTP 的升级版 / 接班人", "OTN 提供更大带宽、更强承载能力", "OTN 更适合核心专线演进"],
+        conclusion: "SDH 稳、准、可靠，但面对今天的视频、云和大数据业务，客户更需要 OTN 或云联网。",
+        speaker: "SDH 像老式绿皮火车，稳、准、可靠，但车厢固定、扩容慢；面对今天的视频、云和大数据业务，客户更需要 OTN 这样的高铁硬管道，或者云联网这样的灵活组网平台。",
+        svg: svgSDH
+      },
+      {
+        key: "otn",
+        no: "05",
+        nav: "OTN 精品专线",
+        icon: "红",
+        note: "核心业务红色硬管道",
+        eyebrow: "核心业务红色硬管道",
+        title: "OTN 精品专线：核心业务红色硬管道",
+        summary: "OTN 面向数据中心互联、灾备同步、核心系统承载，重点是大带宽、低时延、高可靠和不走公网。",
+        tags: [
+          ["大带宽", "适合大流量复制、备份和核心业务互联。", "good"],
+          ["低时延", "光层直连路径更短、更确定。", "good"],
+          ["高可靠", "专用传送能力和保护机制更适合关键链路。", "good"],
+          ["不走公网", "安全与质量边界更清晰。", "good"],
+          ["点到点直连", "适合两个关键地点之间的高等级连接。", "good"]
+        ],
+        compareTitle: "OTN 相比公网/VPN/DIA 的主要优势",
+        leftTitle: "公网 / VPN / DIA + VPN",
+        leftItems: ["路径不确定", "抖动和拥塞受公网影响", "不适合核心同步", "安全和质量需要额外叠加保障"],
+        rightTitle: "OTN 精品专线",
+        rightItems: ["更适合数据中心互联", "更适合核心系统和灾备同步", "时延更低，路径更确定", "带宽更大，稳定性更强", "不以访问公网为主要目的"],
+        scenarios: ["双活数据中心", "灾备同步", "金融/政务核心系统", "大带宽专线互联"],
+        boundaryTitle: "OTN 的边界",
+        boundaryItems: ["成本高", "适合点到点核心链路", "不适合大量普通小分支", "开通和调整周期通常比互联网类接入更长"],
+        conclusion: "DIA 解决企业上公网，OTN 解决两个关键地点之间的高等级直连。",
+        speaker: "OTN 是核心业务的红色硬管道。它不是为了到处上网，而是为了让两个关键地点之间走一条确定、稳定、低时延的大通道。",
+        svg: svgOTN
+      },
+      {
+        key: "smart",
+        no: "06",
+        nav: "智能 OTN",
+        icon: "智",
+        note: "可视、可管、可调度",
+        eyebrow: "可视可管可调度",
+        title: "智能 OTN：可视、可管、可调度",
+        summary: "智能 OTN 不只提供光路，还提供监控、快速开通、弹性带宽、保护切换和故障定位。",
+        tags: [
+          ["可视化", "客户和运维侧能看到链路状态与关键指标。", "good"],
+          ["快速开通", "业务开通和调整流程更自动化。", "good"],
+          ["弹性带宽", "可按业务变化调整带宽能力。", "good"],
+          ["智能保护", "链路异常时能感知并切换到保护路径。", "good"],
+          ["故障定位", "更快定位告警、时延、丢包等问题。", "good"]
+        ],
+        compareTitle: "智能 OTN 相比传统 OTN 的主要优势",
+        leftTitle: "传统 OTN",
+        leftItems: ["提供一条高质量光路", "固定带宽", "人工开通", "人工排障", "可视化弱"],
+        rightTitle: "智能 OTN",
+        rightItems: ["提供可视化监控", "支持更快的业务开通和调整", "支持故障感知和保护切换", "支持带宽随选和 SLA 运营", "更适合高价值客户的核心链路运营"],
+        scenarios: ["核心链路运营", "高价值客户专线", "跨城数据中心", "需要可视化 SLA 的客户"],
+        boundaryTitle: "智能 OTN 的边界",
+        boundaryItems: ["成本高于普通专线", "需要客户确实有高等级业务承载需求", "不适合只需要普通办公上网的客户"],
+        conclusion: "传统 OTN 卖的是一条高品质光路，智能 OTN 卖的是一套可视、可管、可保障的核心网络能力。",
+        speaker: "传统 OTN 的价值是光路质量，智能 OTN 的价值是把光路变成可运营、可感知、可调度的服务能力。",
+        svg: svgSmartOTN
+      },
+      {
+        key: "cloud",
+        no: "07",
+        nav: "云联网业务",
+        icon: "云",
+        note: "多点组网与上云",
+        eyebrow: "多点组网与上云",
+        title: "云联网业务：多点组网与上云",
+        summary: "云联网把总部、分支、数据中心和云资源接入同一张专属网络，降低多点互联复杂度。",
+        tags: [
+          ["多点互联", "总部、分支、数据中心、云资源池可以互相连通。", "good"],
+          ["统一管理", "网络、路由、安全策略更便于集中管理。", "good"],
+          ["灵活上云", "新增云资源或分支时扩展更快。", "good"],
+          ["路由清晰", "减少点到点拉线带来的复杂路径。", "good"],
+          ["支持混合云/多云", "适合政务云、公有云、私有云等多云互联。", "good"]
+        ],
+        compareTitle: "云联网相比点到点拉线的主要优势",
+        leftTitle: "非云联网方案",
+        leftItems: ["每个点单独建设连接", "链路线缆和逻辑关系复杂", "多云、多分支、多系统互通困难", "路由和安全策略分散", "后续扩展成本高"],
+        rightTitle: "云联网",
+        rightItems: ["把总部、分支、数据中心和云资源接入同一张网络", "支持多点互联", "便于统一管理和统一安全策略", "适合政务云、企业上云、多分支访问云系统、多云互联", "比单独点到点拉线更清晰、更易扩展"],
+        scenarios: ["政务云接入", "企业多分支上云", "混合云互联", "多云访问", "云上应用统一访问"],
+        boundaryTitle: "云联网的边界",
+        boundaryItems: ["不是普通互联网出口", "不是简单一条云专线", "需要规划网段、路由、VPC、安全组、防火墙、访问控制", "如果客户没有上云或多点互联需求，价值不明显"],
+        conclusion: "云联网不是一条线，而是一张连接总部、分支、数据中心和云资源的专属网络。",
+        speaker: "讲云联网时，不要把它讲成一条线。它更像企业上云后的网络换乘枢纽：所有重要地点先接入平台，再通过统一路由和策略互联。",
+        svg: svgCloudConnect
+      },
+      {
+        key: "advantage",
+        no: "08",
+        nav: "联通云联网优势",
+        icon: "通",
+        note: "一点接入，全球通达",
+        eyebrow: "一点接入，全球通达",
+        title: "联通云联网优势：一点接入，全球通达",
+        summary: "突出运营商云联网的覆盖、接入、调度、统一运维和跨域连接能力。",
+        tags: [
+          ["一点接入", "客户通过一个入口接入云联网平台。", "good"],
+          ["全球通达", "连接总部、分支、数据中心、云资源和跨境节点。", "good"],
+          ["云网协同", "网络能力与云资源访问一起规划。", "good"],
+          ["统一运维", "网络、路由、质量、安全策略统一可视。", "good"],
+          ["弹性扩展", "新增分支、云资源、区域节点更方便。", "good"]
+        ],
+        compareTitle: "联通云联网的价值",
+        leftTitle: "客户自建多点连接",
+        leftItems: ["多条线路分别建设", "跨云、跨区域、跨分支关系复杂", "不同供应商协同难", "扩容和排障链路长"],
+        rightTitle: "一点接入，全球通达",
+        rightItems: ["统一接入云联网平台", "多点互联和多云访问更清晰", "适合政务云、行业云、公有云、数据中心互联", "便于统一开通、统一计费、统一运维", "支撑后续全球化和多区域扩展"],
+        scenarios: ["集团多分支", "多云互联", "跨区域业务", "政务云专网", "云资源统一访问"],
+        boundaryTitle: "规划要点",
+        boundaryItems: ["先梳理网段和路由", "明确云侧 VPC/VNet 连接关系", "规划安全组、防火墙、访问控制", "识别关键业务和普通访问的优先级"],
+        conclusion: "云联网的卖点不是“多拉几条线”，而是把多点、多云、多区域接入统一到一张可运营的网络。",
+        speaker: "讲联通云联网优势时，可以围绕“一点接入，全球通达”展开：客户少做复杂连接，把复杂的跨域互联交给云联网平台承载和运营。",
+        svg: svgCloudAdvantage
+      },
+      {
+        key: "hospital",
+        no: "09",
+        nav: "企业内部组网",
+        icon: "院",
+        note: "三甲医院网络示例",
+        eyebrow: "客户现场网络落地",
+        title: "企业内部组网：以三甲医院为例",
+        summary: "专线不是孤立的，最终要接入客户内部网络，和路由器、交换机、防火墙、服务器、数据库、终端、安全设备一起工作。",
+        tags: [
+          ["部门清晰", "门急诊、住院、医技、药房收费、安防物联分别接入。", "good"],
+          ["接入-汇聚-核心", "终端先到接入交换机，再到楼宇/科室汇聚，最后到双核心。", "good"],
+          ["业务系统承载", "HIS、EMR、LIS、PACS、数据库、存储位于数据中心区。", "good"],
+          ["专线入口明确", "DIA/安全专线、OTN、云联网、医保/政务云进入边界或核心区。", "security"],
+          ["安全边界明确", "公网访问和攻击流量先经过安全平台、防火墙、WAF、VPN 等设备。", "security"]
+        ],
+        compareTitle: "三甲医院部门与网络组件对应关系",
+        leftTitle: "部门 / 终端如何接入",
+        leftItems: ["门急诊：医生工作站、收费窗口、自助机 → 门诊接入交换机 → 门诊汇聚", "住院病区：护士站、移动护理、床旁终端、Wi-Fi AP → 病区接入交换机 → 病区汇聚", "医技科室：LIS 检验终端、PACS 影像设备、检查工作站 → 医技接入交换机 → 医技汇聚", "药房/收费：药房终端、收费终端、打印机 → 业务接入交换机 → 楼宇汇聚", "安防物联/访客：摄像头、门禁、访客 Wi-Fi → 物联/访客接入 → 隔离汇聚或防火墙策略区"],
+        rightTitle: "核心 / 安全 / 专线如何承载",
+        rightItems: ["双核心交换机：医院内网骨干，承接各楼宇汇聚和数据中心交换机", "数据中心交换机：连接 HIS、EMR、LIS、PACS、数据库、存储、备份和虚拟化平台", "边界安全区：出口路由器、防火墙、WAF、上网行为管理、VPN/零信任、堡垒机、日志审计/SIEM", "DIA/安全专线：接入公网出口；OTN：连接灾备/核心机房；云联网：连接分院、政务云、医保云和云资源池", "攻击流量：先被安全专线平台、抗 DDoS、防火墙、WAF 拦截，不能直接打到核心业务区"],
+        scenarios: ["三甲医院", "园区网络", "政务单位", "教育集团", "多楼宇企业"],
+        boundaryTitle: "专线进入医院网络的位置",
+        boundaryItems: ["DIA / 安全专线：通常接在互联网出口和边界安全区", "OTN：通常连接核心机房、灾备中心、分院核心业务网", "云联网：通常连接医院、分院、政务云、医保云、云资源池", "SDH / MSTP：可能仍存在于老系统、传统专线或存量电路中"],
+        conclusion: "客户买的不是一条孤立的线，而是把外部网络能力接入自己的业务系统。",
+        speaker: "客户买的不是一条孤立的线，而是把外部网络能力接入自己的业务系统。讲专线时，必须知道客户现场网络里路由器、交换机、防火墙、服务器和终端各自在哪个位置。",
+        svg: svgHospital
+      },
+      {
+        key: "gov",
+        no: "10",
+        nav: "四川政务行业",
+        icon: "政",
+        note: "省-市-县政务云网",
+        eyebrow: "四川省政务云网一体化",
+        title: "四川省政务行业组网：省市县一体化政务云网",
+        summary: "围绕省级政务云、电子政务外网、各厅局业务、21 个市州、区县乡镇和互联网办事入口，展示政务行业常见专网承载方式。",
+        tags: [
+          ["省市县三级", "省级平台、市州节点、区县乡镇逐级接入。", "good"],
+          ["政务外网", "承载跨部门协同、政务数据共享和业务访问。", "good"],
+          ["云联网/OTN", "云联网负责多点互联，OTN 承载核心机房和灾备直连。", "good"],
+          ["统一安全边界", "互联网办事入口经过安全专线、WAF、态势感知和等保区。", "security"],
+          ["数据共享交换", "人口、法人、电子证照、信用等数据在共享交换平台汇聚。", "good"]
+        ],
+        compareTitle: "四川政务行业组网设计要点",
+        leftTitle: "典型接入对象",
+        leftItems: ["省级政务云/省大数据中心：承载统一云资源池和数据共享交换平台", "21 个市州政务节点：通过云联网或政务外网接入省级平台", "区县乡镇窗口：通过市州汇聚接入政务外网和省级业务系统", "厅局专网：公安、民政、人社、医保、自然资源等业务按权限访问", "互联网办事：公众通过互联网入口访问政务服务平台"],
+        rightTitle: "推荐网络能力",
+        rightItems: ["云联网：连接省、市、县、云资源池和部门业务节点", "OTN：连接省级核心机房、同城/异地灾备中心", "DIA/安全专线：承载互联网办事入口并叠加 WAF、DDoS、态势感知", "SD-WAN/MPLS VPN：可承载基层网点和移动办公补充接入", "统一运维：链路、路由、SLA、安全告警集中可视"],
+        scenarios: ["数字政府", "政务云", "电子政务外网", "省市县协同", "数据共享交换"],
+        boundaryTitle: "落地提醒",
+        boundaryItems: ["政务外网、业务专网、互联网区需要安全隔离", "跨部门数据共享要明确权限、目录、接口和审计", "省级平台和灾备中心建议使用高等级专线承载", "基层接入要兼顾成本、覆盖和运维效率"],
+        conclusion: "政务行业不是一条线，而是省、市、县、部门、云资源和互联网办事入口的一张分级云网。",
+        speaker: "四川政务可以按“省级政务云是大脑，市州区县是分支节点，政务外网是业务骨干，互联网入口必须过安全边界”来讲。",
+        svg: svgSichuanGov
+      },
+      {
+        key: "justice",
+        no: "11",
+        nav: "四川政法行业",
+        icon: "法",
+        note: "政法专网与视频协同",
+        eyebrow: "政法专网安全协同",
+        title: "四川省政法行业组网：政法专网、视频专网与安全协同",
+        summary: "围绕省委政法委、公安、法院、检察院、司法、监狱戒毒、综治中心和视频资源，展示政法行业高安全、多网隔离、跨域协同组网。",
+        tags: [
+          ["多单位协同", "政法委、公安、法院、检察、司法等单位按权限互联。", "good"],
+          ["专网隔离", "政法业务网、视频网、互联网区之间分区分域。", "security"],
+          ["视频汇聚", "天网/雪亮、执法办案、指挥调度视频进入视频专网。", "good"],
+          ["安全边界", "跨域交换、边界防火墙、网闸、堡垒机、日志审计统一布防。", "security"],
+          ["核心链路保障", "省级指挥中心、灾备和市州节点适合 OTN/智能 OTN 承载。", "good"]
+        ],
+        compareTitle: "四川政法行业组网设计要点",
+        leftTitle: "典型业务域",
+        leftItems: ["政法委/综治中心：指挥调度、事件协同、网格治理", "公安：警务云、情指行、视频图像、派出所接入", "法院/检察院：办案系统、庭审、卷宗和跨单位协同", "司法/监狱戒毒：远程会见、监管业务、视频汇聚", "基层网点：派出所、司法所、法庭、综治网格站"],
+        rightTitle: "推荐网络能力",
+        rightItems: ["OTN/智能 OTN：承载省级指挥中心、核心机房、灾备和关键市州链路", "云联网/MPLS VPN：实现省、市、县、基层多点安全互联", "视频专网：承载摄像头、视频平台、指挥调度大流量", "安全专线/安全平台：互联网暴露面监测、防护、清洗和安全报告", "跨域安全：网闸、防火墙、堡垒机、日志审计、SIEM"],
+        scenarios: ["政法委", "公安", "法院检察", "司法监狱", "综治中心"],
+        boundaryTitle: "落地提醒",
+        boundaryItems: ["政法业务网和视频网不能简单混在一张平面网络里", "跨单位共享要按权限、等级保护和审计要求设计", "视频流量大，需单独核算带宽、存储和调度链路", "互联网入口和移动警务入口必须经过安全边界"],
+        conclusion: "政法行业的关键不是“互相能通”，而是“按域隔离、按权协同、视频大流量可保障”。",
+        speaker: "讲政法行业时，要把业务网、视频网、互联网区和跨域交换讲清楚。政法客户最关心的是安全边界、权限审计和指挥调度的可靠性。",
+        svg: svgSichuanJustice
+      },
+      {
+        key: "finance",
+        no: "12",
+        nav: "四川银行金融",
+        icon: "银",
+        note: "双中心与网点专线",
+        eyebrow: "金融高可靠专网",
+        title: "四川省银行金融行业组网：双中心、分支网点与监管安全",
+        summary: "围绕成都总部/省分行、同城双活、异地灾备、核心交易、柜面网点、ATM、监管报送和互联网金融入口，展示金融行业高可靠组网。",
+        tags: [
+          ["双中心/灾备", "同城双活和异地灾备需要低时延、高可靠链路。", "good"],
+          ["网点专线", "营业网点、ATM、自助银行通过专线或 VPN 接入核心。", "good"],
+          ["交易低时延", "核心交易、支付清算、风控系统需要稳定时延和带宽。", "good"],
+          ["监管报送", "人民银行、银保监、支付清算、征信等外联专区隔离。", "security"],
+          ["安全合规", "防火墙、WAF、抗 DDoS、堡垒机、日志审计、零信任统一建设。", "security"]
+        ],
+        compareTitle: "四川银行金融行业组网设计要点",
+        leftTitle: "典型网络区域",
+        leftItems: ["总部/省分行：核心交易、风控、渠道、统一运维和安全运营", "同城双活中心：成都主备中心通过 OTN/智能 OTN 低时延互联", "异地灾备中心：跨省或省内异地灾备通过高等级专线承载", "营业网点/ATM：通过网点专线、MPLS VPN、SD-WAN 备份接入", "互联网金融区：手机银行、网上银行、开放 API 经过 DMZ 和安全防护"],
+        rightTitle: "推荐网络能力",
+        rightItems: ["OTN/智能 OTN：承载核心交易中心、同城双活和灾备复制", "MPLS VPN/云联网：连接省内网点、分行、灾备和云资源", "DIA/安全专线：承载互联网金融入口、WAF、抗 DDoS 和安全监测", "双运营商/双路由：网点和数据中心避免单点故障", "可视化 SLA：对交易链路、网点链路、互联网入口分级监控"],
+        scenarios: ["银行省分行", "农商行", "城商行", "证券保险", "支付清算"],
+        boundaryTitle: "落地提醒",
+        boundaryItems: ["核心交易链路和办公互联网出口必须分区隔离", "营业网点需要主备链路和自动切换策略", "互联网金融入口要重点考虑 DDoS、WAF、API 安全和审计", "监管报送和第三方连接要做独立安全域"],
+        conclusion: "金融行业组网的核心是高可靠、低时延、强隔离、可审计。",
+        speaker: "银行金融客户的网络不是只看带宽，真正要讲的是交易链路的连续性、网点主备、监管合规和互联网金融入口安全。",
+        svg: svgSichuanFinance
+      },
+      {
+        key: "manufacturing",
+        no: "13",
+        nav: "制造集团组网",
+        icon: "厂",
+        note: "总部 + 全国 5 大分厂",
+        eyebrow: "大型制造集团云网工厂互联",
+        title: "大型制造企业组网：总部 + 全国 5 家大型分厂",
+        summary: "围绕四川总部、全国 5 大分厂、工业园区、MES/ERP/PLM、生产线 OT 网络、仓储物流、云上协同和灾备，展示制造集团多点互联。",
+        tags: [
+          ["总部管控", "总部统一 ERP、财务、人资、供应链和安全运营。", "good"],
+          ["五大分厂", "华东、华南、华中、华北、西北等工厂接入集团专网。", "good"],
+          ["IT/OT 分区", "办公 IT 网和生产 OT 网隔离，通过工业防火墙受控互访。", "security"],
+          ["云边协同", "云上 PLM、供应链、数据湖与工厂边缘节点协同。", "good"],
+          ["主备链路", "分厂推荐专线 + 互联网 VPN/5G 备份，保障生产连续性。", "good"]
+        ],
+        compareTitle: "大型制造企业组网设计要点",
+        leftTitle: "总部与分厂怎么接",
+        leftItems: ["四川总部：集团数据中心、统一出口、安全运营中心、ERP/MES/PLM 总部平台", "5 家大型分厂：各自有办公网、生产网、仓储物流网、视频安防网", "工厂接入：主链路使用云联网/MPLS VPN/OTN，备链路使用 DIA + VPN 或 5G", "工业网络：PLC、SCADA、产线设备进入 OT 区，不直接暴露到办公网和互联网", "云上协同：供应链、研发、BI、数据湖接入云资源池"],
+        rightTitle: "推荐网络能力",
+        rightItems: ["云联网：总部、分厂、数据中心、云资源池多点互联", "OTN/智能 OTN：总部到核心工厂、灾备中心或大带宽数据同步", "DIA/安全专线：各工厂公网出口、安全监测、远程运维入口", "工业防火墙/零信任/VPN：IT/OT 边界、远程工程师和供应商接入", "统一运维：链路质量、工厂在线率、生产系统访问和安全告警集中看板"],
+        scenarios: ["制造集团总部", "大型分厂", "工业园区", "智能制造", "全国多基地企业"],
+        boundaryTitle: "落地提醒",
+        boundaryItems: ["生产 OT 网不能和办公互联网扁平互通", "分厂链路要设计主备和自动切换，避免影响生产", "远程运维供应商要走 VPN/零信任和堡垒机审计", "视频、工业数据、ERP 访问要分级规划带宽和优先级"],
+        conclusion: "制造集团组网的重点是总部统一管控、分厂稳定接入、IT/OT 安全隔离和云边协同。",
+        speaker: "讲制造企业时，可以按“总部管控、五大分厂、生产 OT、云上协同、主备链路”五句话展开，让客户看到专线最终服务的是生产连续性。",
+        svg: svgManufacturingGroup
+      },
+      {
+        key: "map",
+        no: "14",
+        nav: "产品选择地图",
+        icon: "图",
+        note: "客户到底该选哪种",
+        eyebrow: "客户说：我要一条专线",
+        title: "产品选择地图：客户到底该选哪种",
+        summary: "把客户“我要一条专线”的模糊需求拆成普通上网、公网出口、安全防护、存量电路、核心直连、多点上云、行业现场和产品组合。",
+        tags: [
+          ["看成本", "只是普通上网，优先看家宽/商务宽带。", "weak"],
+          ["看出口", "企业需要稳定公网出口，优先看 DIA。", "good"],
+          ["看防护", "公网出口还要安全监测和防护，看安全专线。", "security"],
+          ["看存量", "E1/老系统/MSTP 迁改先做存量评估。", "weak"],
+          ["看多点上云", "总部、分支、数据中心、多云互联看云联网。", "good"]
+        ],
+        compareTitle: "产品选择口诀",
+        leftTitle: "判断客户需求",
+        leftItems: ["只是普通上网 → 家宽 / 商务宽带", "企业需要稳定公网出口 → DIA / 互联网专线", "公网出口还要安全监测和防护 → 互联网安全专线", "存量传统 E1 / 老系统 / MSTP 迁改 → SDH / MSTP 存量评估", "两个核心机房高品质直连 → OTN 精品专线"],
+        rightTitle: "继续向高价值方案引导",
+        rightItems: ["核心专线要求可视、可管、带宽随选 → 智能 OTN", "总部、分支、数据中心、多云互联 → 云联网", "客户问“这条线接到哪里” → 企业内部组网拓扑分析", "客户有行业属性 → 政务、政法、金融、制造按行业拓扑拆解", "先确认业务，再确认接入点、带宽、SLA、安全和运维要求"],
+        scenarios: ["售前问诊", "客户方案初筛", "产品培训", "需求澄清", "方案组合推荐"],
+        boundaryTitle: "底部口诀",
+        boundaryItems: ["家宽看成本", "DIA 看出口", "安全专线看防护", "SDH 看存量", "OTN 看核心直连", "智能 OTN 看可视运维", "云联网看多点上云", "行业图看客户组织和业务系统", "内部组网看客户现场结构"],
+        conclusion: "客户说“我要一条专线”时，先问业务目的，再选产品路径。",
+        speaker: "这页适合做销售问诊：不要一听专线就报价，先问客户要上公网、做安全、连机房、上云，还是接入现场业务系统。",
+        svg: svgChoiceMap
+      },
+      {
+        key: "diagnostic",
+        no: "15",
+        nav: "问题诊断商机",
+        icon: "诊",
+        note: "痛点-判断-方案",
+        eyebrow: "客户经理问诊雷达",
+        title: "专线问题诊断：典型问题、判断条件与商机信号",
+        summary: "把客户现场的“慢、不稳、不安全、扩不了、看不见”翻译成可判断、可推进、可组合销售的专线机会。",
+        tags: [
+          ["家宽误用", "共享带宽、会话数、上行能力和 SLA 不满足企业关键业务。", "risk"],
+          ["固定公网 IP 暴露", "DIA 具备稳定发布能力，也意味着暴露面更固定。", "security"],
+          ["多点互联混乱", "总部、分支、云、数据中心之间靠临时 VPN 拼接，路由和运维复杂。", "weak"],
+          ["核心链路高等级", "灾备、交易、影像、工业数据同步需要低时延、高可靠。", "good"],
+          ["存量 SDH 迁改", "老 E1/MSTP 业务扩容慢、颗粒小、承载新业务不经济。", "weak"]
+        ],
+        compareTitle: "问题 -> 判断条件 -> 推荐方案",
+        leftTitle: "客户现场常见问题",
+        leftItems: ["普通宽带承载门店收银、视频会议、SaaS、远程办公，高峰期卡顿且会话数不足", "DIA 固定公网 IP 暴露官网、VPN、远程桌面、业务端口，客户缺少持续监测", "总部和分支靠公网 VPN 临时拼接，新增网点、路由变更、故障定位都很痛", "医院 PACS、银行交易、政务灾备、制造 MES/工业数据同步要求低时延和高可靠", "存量 SDH/MSTP/E1 线路长期在用，但带宽小、扩容慢、运维可视性弱"],
+        rightTitle: "对应方案与商机信号",
+        rightItems: ["DIA/互联网专线：客户要稳定公网出口、固定 IP、对称上行、SLA 和办公体验", "互联网安全专线：客户有公网固定 IP、官网/API/VPN 暴露、等保检查、攻击告警或安全报告诉求", "组网专线/PON 组网/云联网/MPLS VPN：客户有多网点、多园区、多云、多分支互联", "OTN/智能 OTN：客户有双中心、灾备复制、核心交易、PACS 影像、跨厂区生产系统同步", "SDH 迁转：客户仍有 E1/MSTP 老电路，且正在上云、扩带宽、系统 IP 化或要求可视化 SLA"],
+        scenarios: ["售前问诊", "存量客户复盘", "竞品替换", "安全拓展", "SDH 迁转"],
+        boundaryTitle: "判断商机是否合格",
+        boundaryItems: ["有明确业务承载对象：办公上网、官网发布、远程访问、总部互联、灾备同步、生产系统等", "有可量化问题：卡顿、掉线、攻击、扩容慢、故障频繁、恢复时间长、监管检查", "有网络边界信息：接入点、带宽、IP、路由、设备、主备、SLA 和当前供应商", "有预算或事件触发：新建园区、等保整改、系统上线、旧线到期、灾备建设、分支扩张", "能找到攻坚对象：信息中心/网信办、科技部、运维部、安全负责人、业务部门负责人和采购决策人"],
+        conclusion: "好商机不是客户说“要条线”，而是业务、痛点、触发事件、决策人和预算路径同时变清楚。",
+        speaker: "这一页是客户经理的问诊雷达。先问业务，再问问题；先找触发事件，再找决策人。只听到“我要便宜点的宽带”还不是成熟商机。",
+        svg: svgProblemDiagnostic
+      },
+      {
+        key: "hardware",
+        no: "16",
+        nav: "客户侧设备地图",
+        icon: "硬",
+        note: "路由、交换、安全、CPE",
+        eyebrow: "专线客户侧硬件知识",
+        title: "专线客户侧设备地图：硬件位置、功能与组合销售",
+        summary: "客户买专线后必须落到设备上。看懂路由器、交换机、防火墙、CPE 的位置，才能发现带宽、安全、主备和运维商机。",
+        tags: [
+          ["路由器/CPE", "专线落地第一跳，处理路由、NAT、VPN、主备切换。", "good"],
+          ["核心/汇聚/接入交换机", "承载客户内部三层架构，决定楼宇、科室、网点如何接入。", "good"],
+          ["防火墙/NGFW", "互联网出口和安全域边界的关键设备。", "security"],
+          ["WAF/抗 DDoS", "保护网站、API、互联网入口和固定公网 IP。", "security"],
+          ["PON/OTN 终端", "PON ONU/ONT 与 OTN CPE 是运营商专线能力落地端。", "good"]
+        ],
+        compareTitle: "硬件看点与专线组合",
+        leftTitle: "设备功能与典型位置",
+        leftItems: ["路由器/SD-WAN CPE：放在专线入口，负责静态/BGP 路由、VPN、NAT、双链路切换", "核心交换机：放在机房核心，汇聚楼宇、数据中心、出口区和业务区流量", "汇聚/接入交换机：放在楼宇、科室、网点、生产线，连接 PC、AP、摄像头、打印机和工业终端", "防火墙/NGFW/WAF：放在互联网出口、DMZ、业务边界、IT/OT 边界，做访问控制和应用防护", "ONU/ONT/OTN CPE：放在客户侧机房或弱电间，把 PON、DIA、OTN 等运营商线路交付给客户网络"],
+        rightTitle: "组合销售和参考价格带",
+        rightItems: ["DIA + 企业路由器/出口防火墙：适合稳定上网、固定公网 IP、办公和网站发布", "安全专线 + WAF/抗 DDoS/漏洞扫描：适合官网、互联网医院、政务门户、金融 API", "PON 组网 + ONU/ONT/政企网关：适合大量基层网点、门店、园区楼宇和小分支", "OTN/智能 OTN + 双核心交换/双路由：适合双中心、灾备、核心生产和金融交易", "价格仅作训战参考：ONU/ONT 数百至千元级；接入交换机千元至万元级；企业路由/防火墙万元至十万元级；核心交换、WAF、抗 DDoS、OTN CPE 按规格和本地报价确认"],
+        scenarios: ["客户现场勘查", "方案预审", "设备替换", "专线交付", "安全加装"],
+        boundaryTitle: "现场收集商机清单",
+        boundaryItems: ["入口设备型号、端口、电口/光口、是否支持主备和 BGP/静态路由", "防火墙是否过保、吞吐是否低于专线带宽、策略是否混乱", "交换机是否单核心、是否有环路、VLAN 是否隔离、关键业务是否混跑", "客户公网 IP、开放端口、官网/API/VPN/远程桌面是否暴露", "是否有链路监控、日志审计、故障报表、SLA 证据和运维责任边界"],
+        conclusion: "专线商机常常藏在客户侧设备里：带宽升不上去、安全补不上来、主备切不过去、故障说不清楚。",
+        speaker: "去客户现场看设备，不是为了替客户当网管，而是为了找机会：出口有没有固定公网 IP，防火墙吞吐够不够，核心交换是不是单点，专线落地有没有主备。",
+        svg: svgHardwareMap
+      },
+      {
+        key: "mission",
+        no: "17",
+        nav: "分组闯关考核",
+        icon: "闯",
+        note: "四行业互动任务",
+        eyebrow: "四组四场景互动闯关",
+        title: "分组闯关考核：网络架构、痛点、业务组合和攻坚对象",
+        summary: "每组选择一个行业场景，按“读拓扑 -> 识别架构 -> 标注痛点 -> 拼方案 -> 找人 -> 判商机”完成本地即时评分。",
+        type: "mission",
+        tags: [
+          ["四川政务", "省市县政务云网、政务外网、互联网办事入口。", "good"],
+          ["四川政法", "政法业务网、视频专网、跨域安全和指挥调度。", "security"],
+          ["四川金融", "省行、市行、网点、双中心、监管与互联网金融。", "good"],
+          ["制造集团", "四川总部 + 全国五大分厂、IT/OT 隔离、云边协同。", "good"]
+        ],
+        compareTitle: "互动闯关",
+        leftTitle: "任务步骤",
+        leftItems: ["读场景拓扑", "选客户当前架构", "标注典型痛点", "拼推荐网络架构", "匹配业务组合", "选择攻坚人员职级并判断商机"],
+        rightTitle: "考核目标",
+        rightItems: ["知道行业网络架构长什么样", "知道痛点如何匹配产品", "知道该找甲方哪些人", "知道商机合格条件", "形成下一步拜访清单"],
+        scenarios: ["课堂分组", "训战考核", "客户经理演练", "复盘测验"],
+        boundaryTitle: "本地状态",
+        boundaryItems: ["分数仅保存在当前浏览器", "不上传后台", "后续可接 KDocs 表格或问卷收集成绩"],
+        conclusion: "考核不是背产品名，而是在具体客户场景里把架构、痛点、产品组合、攻坚对象和商机判断连起来。",
+        speaker: "闯关页适合课堂分组：每组选择一个行业，用点击方式完成诊断。讲师最后看每组漏掉了哪些关键项，再回到对应产品页讲解。"
+      },
+      {
+        key: "overview",
+        no: "18",
+        nav: "课堂演示总览",
+        icon: "总",
+        note: "一键串讲",
+        eyebrow: "一键串讲时间轴",
+        title: "课堂演示总览：一键串讲",
+        summary: "按“共享基准 → 产品能力 → 客户现场 → 四个行业落地 → 问诊工具 → 硬件地图 → 闯关考核”完成 18 页课堂串讲。",
+        tags: [
+          ["时间轴", "从家宽基准讲到企业现场落地。", "good"],
+          ["点击跳转", "点击 SVG 时间轴上的步骤可直接进入对应页面。", "good"],
+          ["串讲话术", "帮助讲师形成完整叙事链路。", "good"]
+        ],
+        compareTitle: "课堂串讲路径",
+        leftTitle: "前半段：产品能力铺垫",
+        leftItems: ["第一步：家宽共享基准", "第二步：DIA 独享公网出口", "第三步：安全专线 = 专线 + 安全", "第四步：SDH 传统稳定但弹性不足", "第五步：OTN 红色硬管道", "第六步：智能 OTN 可视可管", "第七步：云联网多点上云"],
+        rightTitle: "后半段：行业落地、问诊与考核",
+        rightItems: ["第八步：医院内部组网落地", "第九步：四川政务省市县云网", "第十步：四川政法专网与视频协同", "第十一步：四川银行金融双中心与网点", "第十二步：制造集团总部 + 全国 5 大分厂", "最后：产品地图、问题诊断、硬件地图和分组闯关收束"],
+        scenarios: ["培训开场", "课程收尾", "领导汇报", "售前串讲", "产品体系总览"],
+        boundaryTitle: "点击提示",
+        boundaryItems: ["点击时间轴任一步可跳转对应页面", "播放总览按钮会从 01 到 18 自动播放", "0/Q/W/E/R/T/Y/U/I 可快速跳到第 10-17 页"],
+        conclusion: "先讲“为什么家宽不够”，再讲“企业不同业务该选哪类网络能力”。",
+        speaker: "课堂串讲可以这样收束：先用家宽说明共享基准，再讲 DIA、安全专线、SDH、OTN、智能 OTN、组网这些能力，然后落到医院、政务、政法、金融、制造五类现场组网，最后用产品地图、问题诊断、硬件地图和闯关考核完成训战闭环。",
+        svg: svgClassOverview
+      }
+    ];
+
+    const navList = document.getElementById("navList");
+    const pageTitle = document.getElementById("pageTitle");
+    const pageSummary = document.getElementById("pageSummary");
+    const sceneEyebrow = document.getElementById("sceneEyebrow");
+    const pageCount = document.getElementById("pageCount");
+    const svgStage = document.getElementById("svgStage");
+    const tagRail = document.getElementById("tagRail");
+    const compareCard = document.getElementById("compareCard");
+    const scenarioCard = document.getElementById("scenarioCard");
+    const boundaryCard = document.getElementById("boundaryCard");
+    const coreConclusion = document.getElementById("coreConclusion");
+    const speakerCard = document.getElementById("speakerCard");
+    const speakerBtn = document.getElementById("speakerBtn");
+    const replayBtn = document.getElementById("replayBtn");
+    const overviewBtn = document.getElementById("overviewBtn");
+    const overviewProgress = document.getElementById("overviewProgress");
+    const overviewFill = document.getElementById("overviewFill");
+    const contentShell = document.getElementById("contentShell");
+
+    let currentIndex = 0;
+    let showSpeaker = false;
+    let overviewTimer = null;
+    let overviewReturnIndex = 0;
+    let currentMissionKey = "government";
+
+    const missionStorageKey = "privateNetworkDemoV3MissionAnswers";
+    const missionKeys = ["government", "justice", "finance", "manufacturing"];
+    const missions = {
+      government: {
+        label: "四川政务",
+        title: "省市县一体化政务云网",
+        brief: "场景：省级政务云和省大数据中心承载共享交换平台，21 个市州、区县乡镇窗口、厅局业务和互联网办事入口需要分级接入、安全隔离和统一运维。",
+        source: "参考今日 KDocs：互联网专线、互联网安全专线、政企组网专线、政企精品网/OTN 白皮书。",
+        pitch: "建议话术：先用云联网/政务外网把省、市、县和云资源池接成一张网；省级核心与灾备用 OTN/智能 OTN 承载；互联网办事入口必须叠加安全专线、WAF、抗 DDoS 和安全报告。",
+        nextSteps: ["约省大数据中心/政务云平台负责人", "梳理 21 市州和区县接入点清单", "确认互联网办事入口域名、IP 和等保整改节点", "盘点核心机房、灾备中心和现有 SDH/MSTP 线路"],
+        nodes: [
+          ["省大数据中心/政务云", "共享交换/云资源池", 420, 44, 168, 58, "#22d3ee"],
+          ["省级厅局", "部门业务专网", 116, 96, 140, 54, "#60a5fa"],
+          ["21 个市州节点", "市州汇聚", 432, 158, 150, 54, "#22c55e"],
+          ["区县乡镇窗口", "基层接入", 424, 276, 166, 54, "#14b8a6"],
+          ["互联网办事入口", "公众访问", 760, 96, 148, 54, "#f97316"],
+          ["安全边界/DMZ", "WAF/清洗/审计", 752, 202, 164, 56, "#ef4444"],
+          ["同城/异地灾备", "核心数据保护", 142, 270, 150, 56, "#e60012"]
+        ],
+        links: [
+          [0, 1, "#60a5fa", "厅局接入"],
+          [0, 2, "#22d3ee", "省市骨干"],
+          [2, 3, "#22c55e", "基层延伸"],
+          [4, 5, "#f97316", "公网入口"],
+          [5, 0, "#f97316", "安全访问"],
+          [0, 6, "#e60012", "灾备复制"]
+        ],
+        challenges: [
+          {
+            id: "arch",
+            title: "识别客户当前架构",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["three_level_cloud", "省-市-县三级政务云网", "省级平台、市州节点、区县乡镇逐级接入。", true],
+              ["internet_dmz", "互联网办事入口 + DMZ", "公众入口必须经过安全边界。", true],
+              ["home_broadband", "基层全部用家宽直连", "关键政务访问不能按家庭宽带思路设计。", false],
+              ["flat_network", "所有部门混在一张平面网", "跨部门需要权限、审计和安全隔离。", false]
+            ]
+          },
+          {
+            id: "pain",
+            title: "标注典型痛点",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["cross_dept", "跨部门数据共享难", "人口、法人、电子证照等数据要可控交换。", true],
+              ["security", "互联网入口暴露与等保压力", "固定公网 IP、域名和 API 需要监测防护。", true],
+              ["branch_ops", "基层链路多、运维看不见", "市县乡镇接入点多，故障定位困难。", true],
+              ["only_download", "只关心个人下载速度", "这不是政务云网主矛盾。", false]
+            ]
+          },
+          {
+            id: "architecture",
+            title: "拼推荐网络架构",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["cloud_network", "云联网/政务外网多点互联", "连接省、市、县、云资源池和部门节点。", true],
+              ["otn_dr", "OTN/智能 OTN 承载核心和灾备", "省级核心、灾备、关键市州用高等级链路。", true],
+              ["security_line", "安全专线保护互联网入口", "WAF、DDoS、监测、报告一起设计。", true],
+              ["single_dia", "只给省级平台开一条 DIA", "只解决公网出口，不能覆盖政务多点协同。", false]
+            ]
+          },
+          {
+            id: "product",
+            title: "匹配业务组合",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["dia_sec", "DIA + 安全专线", "公众服务、门户、统一认证和 API 入口。", true],
+              ["group_line", "组网专线/云联网", "省、市、县和厅局之间分级互联。", true],
+              ["smart_otn", "OTN/智能 OTN", "核心机房、灾备中心和高等级 SLA。", true],
+              ["consumer_wifi", "只卖办公 Wi-Fi", "可作为补充，不是主线商机。", false]
+            ]
+          },
+          {
+            id: "roles",
+            title: "选择攻坚对象",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["bigdata", "省大数据中心/政务云平台负责人", "掌握平台、云资源和网络规划。", true],
+              ["netinfo", "网信/信息中心安全负责人", "关注等保、安全边界和互联网入口。", true],
+              ["bureau_it", "重点厅局信息化负责人", "掌握业务系统和数据共享诉求。", true],
+              ["front_counter", "窗口大厅普通柜员", "能反馈体验，但通常不是方案决策人。", false]
+            ]
+          },
+          {
+            id: "qualified",
+            title: "判断商机是否合格",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["project_trigger", "有上云、等保、灾备或省市县贯通项目触发", "有明确建设窗口。", true],
+              ["sites_budget_sla", "有接入点、带宽、SLA、预算路径和验收指标", "具备方案与报价基础。", true],
+              ["decision_path", "能约到平台、网信、信息中心或厅局技术负责人", "能进入真实决策链。", true],
+              ["only_price", "客户只说越便宜越好且没有业务场景", "还需继续培育。", false]
+            ]
+          }
+        ]
+      },
+      justice: {
+        label: "四川政法",
+        title: "政法业务网、视频专网与跨域安全",
+        brief: "场景：省委政法委、公安、法院、检察、司法、监狱戒毒、综治中心和基层站点需要按域隔离、按权协同，视频资源和指挥调度需要大带宽与高可靠。",
+        source: "参考今日 KDocs：政企组网专线、PON 组网、互联网安全专线、政企精品网/OTN。",
+        pitch: "建议话术：政法客户不能只讲互通，要讲业务网、视频网、互联网区和跨域交换。核心指挥链路用 OTN/智能 OTN，多层节点用组网专线/PON 组网，互联网与移动入口叠加安全专线。",
+        nextSteps: ["约政法委信息中心和综治平台负责人", "约公安科信/指挥中心确认视频专网带宽", "梳理法院、检察、司法跨域交换要求", "盘点基层派出所、法庭、司法所接入方式"],
+        nodes: [
+          ["省政法委指挥中心", "协同调度", 418, 42, 172, 58, "#8b5cf6"],
+          ["公安视频平台", "视频图像/情指行", 126, 112, 150, 56, "#22b7ff"],
+          ["法院/检察/司法", "办案协同", 420, 150, 162, 54, "#ef4444"],
+          ["市州政法节点", "市州汇聚", 690, 118, 154, 54, "#a855f7"],
+          ["区县综治/派出所/法庭", "基层接入", 630, 282, 210, 56, "#22c55e"],
+          ["视频资源池", "天网/雪亮/执法", 120, 272, 160, 56, "#06b6d4"],
+          ["互联网/移动警务入口", "安全访问", 752, 32, 166, 54, "#f97316"],
+          ["跨域安全边界", "网闸/防火墙/审计", 400, 264, 186, 56, "#e60012"]
+        ],
+        links: [
+          [0, 1, "#22b7ff", "视频调度"],
+          [0, 2, "#ef4444", "办案协同"],
+          [0, 3, "#8b5cf6", "省市骨干"],
+          [3, 4, "#22c55e", "基层延伸"],
+          [1, 5, "#06b6d4", "视频汇聚"],
+          [6, 7, "#f97316", "安全接入"],
+          [7, 0, "#e60012", "跨域交换"]
+        ],
+        challenges: [
+          {
+            id: "arch",
+            title: "识别客户当前架构",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["domain_isolation", "政法业务网、视频网、互联网区分域", "政法场景必须分区分级。", true],
+              ["command_video", "省市县指挥调度 + 视频汇聚", "视频和指挥是核心承载对象。", true],
+              ["flat_all", "全部单位一张扁平网", "不符合安全边界和权限审计。", false],
+              ["public_cloud_only", "全部走普通公有云公网访问", "不适合政法核心协同。", false]
+            ]
+          },
+          {
+            id: "pain",
+            title: "标注典型痛点",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["video_bandwidth", "视频流量大、指挥调度不能卡", "摄像头、会议、执法视频都吃带宽。", true],
+              ["cross_domain", "跨单位协同要可控可审计", "法院、检察、公安、司法按权访问。", true],
+              ["security_boundary", "移动警务和互联网入口风险高", "公网入口需要安全监测与防护。", true],
+              ["only_email", "主要问题只是邮箱容量不够", "不是政法专网主线。", false]
+            ]
+          },
+          {
+            id: "architecture",
+            title: "拼推荐网络架构",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["otn_command", "OTN/智能 OTN 承载省级指挥和关键市州", "保障核心链路低时延、高可靠。", true],
+              ["vpn_cloudnet", "组网专线/云联网/MPLS VPN 连接多级节点", "适合市州、区县和基层多点接入。", true],
+              ["video_network", "视频专网单独规划带宽和汇聚", "避免业务网被视频流量挤压。", true],
+              ["single_export", "一个互联网出口解决所有问题", "不能替代政法专网和视频专网。", false]
+            ]
+          },
+          {
+            id: "product",
+            title: "匹配业务组合",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["pon_branch", "PON 组网/政企网关", "适合基层派出所、司法所、综治站点。", true],
+              ["security_line", "互联网安全专线", "保护移动警务、门户和外部协同入口。", true],
+              ["smart_otn", "智能 OTN", "核心指挥链路可视、可管、可保障。", true],
+              ["only_home", "只用家庭宽带降成本", "基层关键业务不能这样设计。", false]
+            ]
+          },
+          {
+            id: "roles",
+            title: "选择攻坚对象",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["political_it", "政法委信息中心/综治平台负责人", "掌握跨单位协同和平台建设。", true],
+              ["police_tech", "公安科信/指挥中心负责人", "掌握视频和指挥调度网络。", true],
+              ["court_proc_it", "法院/检察/司法信息技术负责人", "掌握办案系统和跨域要求。", true],
+              ["security_guard", "门岗保安", "可反馈现场，但不是网络方案攻坚对象。", false]
+            ]
+          },
+          {
+            id: "qualified",
+            title: "判断商机是否合格",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["video_growth", "视频扩容、指挥中心升级或综治平台建设", "有大带宽和高可靠触发。", true],
+              ["security_audit", "有等保、审计、跨域交换或互联网入口整改", "能匹配安全专线和安全设备。", true],
+              ["branch_count", "能列出市州、区县、基层站点和现网线路", "具备组网方案基础。", true],
+              ["no_owner", "没有业务负责人也没有接入点清单", "还不是合格商机。", false]
+            ]
+          }
+        ]
+      },
+      finance: {
+        label: "四川金融",
+        title: "省行、市行、网点、双中心与监管安全",
+        brief: "场景：成都省分行连接同城双活、异地灾备、市分行、营业网点、ATM、监管清算和互联网金融入口，核心要求是高可靠、低时延、强隔离、可审计。",
+        source: "参考今日 KDocs：政企精品网/OTN、智能 OTN、互联网安全专线、政企组网专线。",
+        pitch: "建议话术：银行网络先分核心交易、网点接入、互联网金融、监管外联四个域。核心和灾备用 OTN/智能 OTN，网点用 MPLS/云联网/SD-WAN 主备，互联网金融入口用安全专线、WAF、抗 DDoS 和 API 防护。",
+        nextSteps: ["约科技部/数据中心负责人确认双中心链路", "约网络运维负责人盘点网点主备", "约安全合规负责人确认等保和互联网金融入口", "约渠道/零售部门确认网点和自助设备体验痛点"],
+        nodes: [
+          ["省行总部/科技部", "核心交易/运维", 420, 44, 168, 58, "#0f766e"],
+          ["同城双活中心", "低时延同步", 146, 94, 154, 56, "#e60012"],
+          ["异地灾备中心", "灾备复制", 138, 272, 164, 56, "#f97316"],
+          ["市分行", "区域汇聚", 444, 166, 132, 54, "#22c55e"],
+          ["网点/ATM", "营业与自助", 432, 286, 150, 56, "#14b8a6"],
+          ["互联网金融 DMZ", "手机银行/API", 744, 96, 166, 56, "#f5c542"],
+          ["监管/清算外联区", "报送/征信/支付", 726, 276, 184, 56, "#60a5fa"]
+        ],
+        links: [
+          [0, 1, "#e60012", "双活"],
+          [0, 2, "#f97316", "灾备"],
+          [0, 3, "#22c55e", "省市骨干"],
+          [3, 4, "#14b8a6", "网点接入"],
+          [0, 5, "#f5c542", "互联网金融"],
+          [0, 6, "#60a5fa", "监管外联"]
+        ],
+        challenges: [
+          {
+            id: "arch",
+            title: "识别客户当前架构",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["dual_dc", "省行总部 + 同城双活 + 异地灾备", "银行核心系统常见高可靠架构。", true],
+              ["branch_network", "市行、网点、ATM 分级接入", "网点链路是金融专网重点。", true],
+              ["dmz_regulatory", "互联网金融 DMZ 与监管外联专区", "公网入口和监管连接要隔离。", true],
+              ["single_home", "所有网点只用一条家宽", "不符合网点连续性要求。", false]
+            ]
+          },
+          {
+            id: "pain",
+            title: "标注典型痛点",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["low_latency", "交易链路低时延和抖动敏感", "核心交易、清算、风控不能抖。", true],
+              ["branch_failover", "网点主备链路切换和 SLA 证据不足", "营业连续性是强痛点。", true],
+              ["internet_attack", "手机银行、API、固定公网 IP 暴露", "DDoS、WAF、API 安全必须评估。", true],
+              ["cheap_wifi", "客户只想换会议室 Wi-Fi 名称", "不是金融专网主商机。", false]
+            ]
+          },
+          {
+            id: "architecture",
+            title: "拼推荐网络架构",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["smart_otn", "OTN/智能 OTN 做双中心和灾备复制", "低时延、高可靠、可视化 SLA。", true],
+              ["mpls_cloudnet", "MPLS VPN/云联网连接市行和网点", "分级接入、统一路由和运维。", true],
+              ["sec_dmz", "DIA + 安全专线保护互联网金融入口", "固定 IP、网站/API、DDoS、WAF。", true],
+              ["one_public_vpn", "全部业务混跑公网 VPN", "核心交易不能靠这种架构承载。", false]
+            ]
+          },
+          {
+            id: "product",
+            title: "匹配业务组合",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["dual_carrier", "双运营商/双路由主备", "数据中心和网点避免单点故障。", true],
+              ["security_stack", "安全专线 + WAF + 抗 DDoS + 日志审计", "互联网金融与合规审计组合。", true],
+              ["sla_monitor", "智能 OTN/SLA 可视化", "交易链路需要可证明的质量。", true],
+              ["consumer_router", "用家用路由器替换核心设备", "不符合金融设备和合规要求。", false]
+            ]
+          },
+          {
+            id: "roles",
+            title: "选择攻坚对象",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["tech_dept", "科技部/数据中心负责人", "掌握核心系统、双中心和预算。", true],
+              ["net_ops", "网络运维负责人", "掌握线路、路由、主备和故障。", true],
+              ["security_compliance", "安全合规/风险管理负责人", "掌握等保、审计和互联网金融风险。", true],
+              ["lobby_manager", "大厅值班经理", "能反馈网点体验，但通常不是网络建设决策人。", false]
+            ]
+          },
+          {
+            id: "qualified",
+            title: "判断商机是否合格",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["dc_project", "有双中心、灾备、核心系统升级或监管整改项目", "高等级链路触发明确。", true],
+              ["branch_inventory", "有网点数量、带宽、主备、现有供应商和故障记录", "可以做网点组网方案。", true],
+              ["dmz_assets", "有域名、IP、API、攻击告警和安全报表诉求", "可推进安全专线组合。", true],
+              ["no_sla", "客户拒绝提供任何链路和业务信息", "还需要继续摸排。", false]
+            ]
+          }
+        ]
+      },
+      manufacturing: {
+        label: "制造集团",
+        title: "四川总部 + 全国五大分厂云网工厂互联",
+        brief: "场景：四川总部统一管控 ERP、MES、PLM、供应链和安全运营，全国五大分厂有办公网、生产 OT 网、仓储物流、视频安防、供应商远程运维和云边协同。",
+        source: "参考今日 KDocs：政企组网专线、PON 组网、互联网专线/安全专线、OTN/政企精品网。",
+        pitch: "建议话术：制造客户按总部、五大分厂、IT/OT、云边协同和远程运维五件事讲。总部到核心工厂或灾备用 OTN，分厂多点互联用云联网/组网专线/SD-WAN，工厂公网出口用 DIA + 安全专线，IT/OT 边界加工业防火墙和零信任。",
+        nextSteps: ["约 CIO/信息部确认 ERP/MES/PLM 和云上系统", "约生产/设备/自动化负责人确认 OT 网络边界", "约各分厂厂长或信息主管盘点链路和故障", "约采购/财务确认全国线路到期和预算节奏"],
+        nodes: [
+          ["四川总部", "ERP/MES/PLM/SOC", 420, 42, 162, 58, "#f97316"],
+          ["全国 5 大分厂", "华东/华南/华中/华北/西北", 406, 168, 190, 56, "#22c55e"],
+          ["总部数据中心/灾备", "核心同步", 132, 96, 166, 56, "#e60012"],
+          ["云平台/数据湖", "研发/供应链/BI", 728, 98, 168, 56, "#8b5cf6"],
+          ["IT 办公网", "PC/AP/打印/视频", 156, 282, 150, 56, "#22b7ff"],
+          ["OT 生产网", "PLC/SCADA/产线", 420, 286, 160, 56, "#f5c542"],
+          ["供应商远程运维", "VPN/零信任/堡垒机", 716, 284, 188, 56, "#ef4444"],
+          ["工厂互联网出口", "DIA/安全专线", 724, 206, 164, 54, "#14b8a6"]
+        ],
+        links: [
+          [0, 1, "#22c55e", "分厂组网"],
+          [0, 2, "#e60012", "核心/灾备"],
+          [0, 3, "#8b5cf6", "云边协同"],
+          [1, 4, "#22b7ff", "办公接入"],
+          [1, 5, "#f5c542", "生产接入"],
+          [6, 5, "#ef4444", "受控运维"],
+          [7, 1, "#14b8a6", "公网出口"]
+        ],
+        challenges: [
+          {
+            id: "arch",
+            title: "识别客户当前架构",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["hq_factory", "四川总部 + 全国五大分厂多点互联", "集团型制造的基本网络结构。", true],
+              ["it_ot", "IT 办公网和 OT 生产网分区", "生产连续性和安全边界必须清楚。", true],
+              ["cloud_edge", "云平台、数据中心、工厂边缘协同", "研发、供应链、BI 和生产数据需要互联。", true],
+              ["single_wifi", "所有工厂只靠一个 Wi-Fi", "完全不能承载制造集团核心网络。", false]
+            ]
+          },
+          {
+            id: "pain",
+            title: "标注典型痛点",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["production_stop", "链路中断影响生产、仓储或发货", "制造客户最怕停线停产。", true],
+              ["it_ot_risk", "IT/OT 混跑和供应商远程运维风险", "工业防火墙、堡垒机、零信任是机会。", true],
+              ["branch_ops", "全国分厂线路多、质量和故障不可视", "统一运维和主备链路是机会。", true],
+              ["personal_game", "员工个人娱乐网速慢", "不是集团专线主线痛点。", false]
+            ]
+          },
+          {
+            id: "architecture",
+            title: "拼推荐网络架构",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["cloudnet_sdwan", "云联网/组网专线/SD-WAN 连接总部和分厂", "全国多点互联、统一路由和策略。", true],
+              ["otn_core", "OTN/智能 OTN 承载总部、核心工厂、灾备", "大带宽、低时延、可视 SLA。", true],
+              ["security_itot", "DIA + 安全专线 + 工业防火墙/零信任", "公网出口和远程运维双重防护。", true],
+              ["all_public", "所有生产系统都暴露公网", "高风险，不可取。", false]
+            ]
+          },
+          {
+            id: "product",
+            title: "匹配业务组合",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["pon_campus", "PON 组网/政企网关覆盖园区楼宇和小分支", "适合厂区内多楼宇、多弱电间、低成本接入。", true],
+              ["dia_sec", "DIA/安全专线保护工厂出口和远程入口", "固定 IP、VPN、远程维护和网站入口。", true],
+              ["ops_dashboard", "统一链路监控和 SLA 报表", "让总部看见五大分厂在线状态。", true],
+              ["only_phone", "只推手机套餐", "可叠加，但不是本题网络主方案。", false]
+            ]
+          },
+          {
+            id: "roles",
+            title: "选择攻坚对象",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["cio", "CIO/信息部负责人", "掌握集团 IT、云、网络和预算。", true],
+              ["production", "生产/设备/自动化负责人", "掌握 OT 网络和停产风险。", true],
+              ["factory_manager", "分厂厂长/分厂信息主管", "掌握分厂链路故障和落地资源。", true],
+              ["random_worker", "产线普通临时工", "可以反馈体验，但不是攻坚对象。", false]
+            ]
+          },
+          {
+            id: "qualified",
+            title: "判断商机是否合格",
+            kind: "多选",
+            multi: true,
+            options: [
+              ["five_factories", "能列出五大分厂地址、业务系统、带宽和现网线路", "具备组网设计基础。", true],
+              ["trigger", "有新厂投产、MES/ERP 上线、灾备建设或安全整改触发", "有项目窗口。", true],
+              ["risk_cost", "客户能量化停产损失、故障频次或运维成本", "痛点可转化为价值。", true],
+              ["no_business", "只有一句想了解一下，没有站点和业务信息", "还不是合格商机。", false]
+            ]
+          }
+        ]
+      }
+    };
+
+    let missionAnswers = loadMissionAnswers();
+
+    function loadMissionAnswers() {
+      try {
+        return JSON.parse(localStorage.getItem(missionStorageKey) || "{}") || {};
+      } catch (error) {
+        return {};
+      }
+    }
+
+    function saveMissionAnswers() {
+      try {
+        localStorage.setItem(missionStorageKey, JSON.stringify(missionAnswers));
+      } catch (error) {
+        // 本地文件或隐私模式可能禁用 localStorage，互动仍可在当前页面继续。
+      }
+    }
+
+    function escapeHTML(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function colorFor(page) {
+      return colors[page.key] || colors.dia;
+    }
+
+    function listMarkup(items) {
+      return `<ul>${items.map(item => `<li>${item}</li>`).join("")}</ul>`;
+    }
+
+    function renderNav() {
+      navList.innerHTML = pages.map((page, index) => {
+        const [accent, accent2] = colorFor(page);
+        return `
+          <button class="nav-item ${index === currentIndex ? "active" : ""}" type="button" data-index="${index}" style="--accent:${accent};--accent2:${accent2}">
+            <span class="nav-icon">${page.icon}</span>
+            <span>
+              <span class="nav-kicker"><span class="nav-no">${page.no}</span><span class="nav-title">${page.nav}</span></span>
+              <span class="nav-note">${page.note}</span>
+            </span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderScene(index, options = {}) {
+      currentIndex = (index + pages.length) % pages.length;
+      const page = pages[currentIndex];
+      const [accent, accent2] = colorFor(page);
+      document.documentElement.style.setProperty("--accent-current", accent);
+      document.documentElement.style.setProperty("--accent-current-2", accent2);
+      if (!options.keepSpeaker) showSpeaker = false;
+
+      renderNav();
+      sceneEyebrow.textContent = page.eyebrow;
+      pageTitle.textContent = page.title;
+      pageSummary.textContent = page.summary;
+      pageCount.textContent = `${page.no} / ${String(pages.length).padStart(2, "0")}`;
+
+      if (page.type === "mission") {
+        contentShell.classList.add("mission-mode");
+        renderMissionPage(page);
+        speakerCard.classList.toggle("visible", showSpeaker);
+        speakerBtn.setAttribute("aria-expanded", String(showSpeaker));
+        contentShell.style.animation = "none";
+        void contentShell.offsetWidth;
+        contentShell.style.animation = "";
+        return;
+      }
+
+      contentShell.classList.remove("mission-mode");
+      svgStage.innerHTML = page.svg();
+
+      tagRail.innerHTML = page.tags.map(([text, tip, type]) =>
+        `<span class="tag ${type}" data-tip="${tip}">${text}</span>`
+      ).join("");
+
+      compareCard.innerHTML = `
+        <h2 class="compare-title">${page.compareTitle}</h2>
+        <div class="compare-columns">
+          <div class="mini-panel">
+            <div class="mini-title">${page.leftTitle}</div>
+            ${listMarkup(page.leftItems)}
+          </div>
+          <div class="mini-panel recommend">
+            <div class="mini-title">${page.rightTitle}</div>
+            ${listMarkup(page.rightItems)}
+          </div>
+        </div>
+      `;
+
+      scenarioCard.innerHTML = `
+        <h2 class="side-title">适合场景</h2>
+        <div class="scenario-list">${page.scenarios.map(item => `<span class="scenario">${item}</span>`).join("")}</div>
+      `;
+
+      boundaryCard.innerHTML = `
+        <h2 class="side-title">${page.boundaryTitle}</h2>
+        ${listMarkup(page.boundaryItems)}
+      `;
+
+      coreConclusion.innerHTML = `<strong>核心结论</strong><span>${page.conclusion}</span>`;
+      speakerCard.textContent = page.speaker;
+      speakerCard.classList.toggle("visible", showSpeaker);
+      speakerBtn.setAttribute("aria-expanded", String(showSpeaker));
+
+      contentShell.style.animation = "none";
+      void contentShell.offsetWidth;
+      contentShell.style.animation = "";
+    }
+
+    function selectedOptionsFor(missionKey, challengeId) {
+      const bucket = missionAnswers[missionKey] || {};
+      return new Set(bucket[challengeId] || []);
+    }
+
+    function isChallengeCorrect(missionKey, challenge) {
+      const selected = selectedOptionsFor(missionKey, challenge.id);
+      const correct = challenge.options.filter(option => option[3]).map(option => option[0]);
+      return selected.size === correct.length && correct.every(id => selected.has(id));
+    }
+
+    function scoreMission(missionKey) {
+      const mission = missions[missionKey] || missions.government;
+      const answered = mission.challenges.filter(challenge => selectedOptionsFor(missionKey, challenge.id).size > 0).length;
+      const hit = mission.challenges.filter(challenge => isChallengeCorrect(missionKey, challenge)).length;
+      const total = mission.challenges.length;
+      const missed = mission.challenges
+        .filter(challenge => !isChallengeCorrect(missionKey, challenge))
+        .map(challenge => challenge.title);
+      return {
+        answered,
+        hit,
+        total,
+        percent: Math.round((hit / total) * 100),
+        missed
+      };
+    }
+
+    function renderMissionPage() {
+      const mission = missions[currentMissionKey] || missions.government;
+      const score = scoreMission(currentMissionKey);
+      const status = score.answered === 0
+        ? "先完成右侧选择，系统会即时显示命中和漏项。"
+        : score.hit === score.total
+          ? "本组已通过，可以准备向全班讲解你的方案。"
+          : `待补：${score.missed.slice(0, 3).join("、")}${score.missed.length > 3 ? "等" : ""}`;
+
+      svgStage.innerHTML = `
+        <div class="mission-shell">
+          <section class="mission-board" aria-label="行业场景拓扑">
+            <div class="mission-tabs">
+              ${missionKeys.map(key => `
+                <button class="mission-tab ${key === currentMissionKey ? "active" : ""}" type="button" data-mission-key="${key}">
+                  ${escapeHTML(missions[key].label)}
+                </button>
+              `).join("")}
+            </div>
+            <div class="mission-brief">
+              <h2>${escapeHTML(mission.title)}</h2>
+              <p>${escapeHTML(mission.brief)}</p>
+            </div>
+            <div class="mission-topology">${missionTopologySvg(mission)}</div>
+            <div class="mission-footnote">
+              <span class="source-pill">资料口径：严格专线类</span>
+              <span>${escapeHTML(mission.source)}</span>
+            </div>
+          </section>
+          <section class="mission-panel" aria-label="行业闯关题目">
+            <div class="mission-scorebar">
+              <div>
+                <div class="score-title">${escapeHTML(mission.label)}闯关进度</div>
+                <div class="score-subtitle">${escapeHTML(status)}</div>
+              </div>
+              <div class="score-badge">${score.percent}</div>
+            </div>
+            <div class="mission-challenges">
+              ${mission.challenges.map((challenge, index) => renderChallenge(currentMissionKey, challenge, index)).join("")}
+            </div>
+            <div class="mission-result">
+              <div class="result-box">
+                <strong>推荐话术</strong>
+                <span>${escapeHTML(mission.pitch)}</span>
+              </div>
+              <div class="result-box">
+                <strong>下一步拜访清单</strong>
+                <span>${escapeHTML(mission.nextSteps.join(" / "))}</span>
+                <button class="mission-reset" type="button" data-reset-mission="${currentMissionKey}">清空本组选择</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      `;
+    }
+
+    function renderChallenge(missionKey, challenge, index) {
+      const selected = selectedOptionsFor(missionKey, challenge.id);
+      return `
+        <article class="challenge-card">
+          <div class="challenge-head">
+            <span class="challenge-no">${String(index + 1).padStart(2, "0")}</span>
+            <div class="challenge-title">${escapeHTML(challenge.title)}</div>
+            <div class="challenge-kind">${escapeHTML(challenge.kind)}</div>
+          </div>
+          <div class="option-grid">
+            ${challenge.options.map(([id, label, detail, correct]) => {
+              const isSelected = selected.has(id);
+              const stateClass = isSelected ? `selected ${correct ? "correct" : "wrong"}` : "";
+              return `
+                <button class="mission-option ${stateClass}" type="button" data-challenge-id="${challenge.id}" data-option-id="${id}">
+                  <span class="option-label">${escapeHTML(label)}</span>
+                  <span class="option-detail">${escapeHTML(detail)}</span>
+                </button>
+              `;
+            }).join("")}
+          </div>
+        </article>
+      `;
+    }
+
+    function missionTopologySvg(mission) {
+      const nodes = mission.nodes.map(([label, note, x, y, w, h, color]) => ({ label, note, x, y, w, h, color }));
+      const center = node => ({ x: node.x + node.w / 2, y: node.y + node.h / 2 });
+      const lines = mission.links.map(([from, to, color, label]) => {
+        const a = center(nodes[from]);
+        const b = center(nodes[to]);
+        const midX = (a.x + b.x) / 2;
+        const midY = (a.y + b.y) / 2;
+        return `
+          <path class="link-back" style="--flow:${color};--flow-width:4px" d="M${a.x} ${a.y} C${midX} ${a.y} ${midX} ${b.y} ${b.x} ${b.y}"/>
+          <path class="link-flow" style="--flow:${color};--flow-width:4px" d="M${a.x} ${a.y} C${midX} ${a.y} ${midX} ${b.y} ${b.x} ${b.y}"/>
+          <text class="node-note" x="${midX}" y="${midY - 6}" text-anchor="middle">${escapeHTML(label)}</text>
+        `;
+      }).join("");
+      return `
+        <svg viewBox="0 0 1000 380" preserveAspectRatio="xMidYMin meet" role="img" aria-label="${escapeHTML(mission.title)}拓扑">
+          ${svgDefs().replace('<rect class="svg-grid" width="1000" height="430"/>', '<rect class="svg-grid" width="1000" height="380"/>').replace('<rect width="1000" height="430" fill="url(#tinyGrid)" opacity=".72"/>', '<rect width="1000" height="380" fill="url(#tinyGrid)" opacity=".72"/>')}
+          <text class="svg-title" x="28" y="34">${escapeHTML(mission.label)}场景拓扑</text>
+          <text class="svg-subtitle" x="28" y="56">读图顺序：核心平台 / 分支节点 / 互联网入口 / 安全边界 / 灾备或生产区域</text>
+          ${lines}
+          ${nodes.map((node, index) => `
+            <g class="device fade-${(index % 6) + 1}">
+              <rect class="glass-node" x="${node.x}" y="${node.y}" width="${node.w}" height="${node.h}" rx="9" stroke="${node.color}"/>
+              <circle cx="${node.x + 18}" cy="${node.y + 19}" r="6" fill="${node.color}" class="pulse"/>
+              <text class="node-label" x="${node.x + node.w / 2}" y="${node.y + 24}" text-anchor="middle">${escapeHTML(node.label)}</text>
+              <text class="node-note" x="${node.x + node.w / 2}" y="${node.y + 43}" text-anchor="middle">${escapeHTML(node.note)}</text>
+            </g>
+          `).join("")}
+          <rect class="badge badge-blue" x="30" y="338" width="180" height="28" rx="14"/>
+          <text class="badge-text" x="120" y="357" text-anchor="middle">先读拓扑</text>
+          <rect class="badge badge-warn" x="230" y="338" width="180" height="28" rx="14"/>
+          <text class="badge-text" x="320" y="357" text-anchor="middle">再标痛点</text>
+          <rect class="badge badge-good" x="430" y="338" width="180" height="28" rx="14"/>
+          <text class="badge-text" x="520" y="357" text-anchor="middle">最后拼方案</text>
+          <rect class="badge badge-purple" x="630" y="338" width="250" height="28" rx="14"/>
+          <text class="badge-text" x="755" y="357" text-anchor="middle">找对甲方人员与项目触发点</text>
+        </svg>
+      `;
+    }
+
+    function selectMission(key) {
+      if (!missions[key]) return;
+      currentMissionKey = key;
+      const missionIndex = pages.findIndex(page => page.key === "mission");
+      if (missionIndex >= 0) currentIndex = missionIndex;
+      if (window.history && window.history.replaceState) {
+        const url = new URL(window.location.href);
+        url.searchParams.delete("page");
+        url.searchParams.set("mission", key);
+        window.history.replaceState(null, "", url);
+      }
+      renderScene(currentIndex, { keepSpeaker: true });
+    }
+
+    function toggleMissionOption(challengeId, optionId) {
+      const mission = missions[currentMissionKey];
+      const challenge = mission.challenges.find(item => item.id === challengeId);
+      if (!challenge) return;
+      const bucket = missionAnswers[currentMissionKey] || {};
+      const current = new Set(bucket[challengeId] || []);
+      if (challenge.multi) {
+        current.has(optionId) ? current.delete(optionId) : current.add(optionId);
+      } else {
+        current.clear();
+        current.add(optionId);
+      }
+      bucket[challengeId] = Array.from(current);
+      missionAnswers[currentMissionKey] = bucket;
+      saveMissionAnswers();
+      renderMissionPage();
+    }
+
+    function resetMission(key) {
+      if (!missions[key]) return;
+      missionAnswers[key] = {};
+      saveMissionAnswers();
+      renderMissionPage();
+    }
+
+    function goToScene(index, manual = true) {
+      if (manual) stopOverview(false);
+      renderScene(index);
+    }
+
+    function toggleSpeaker() {
+      showSpeaker = !showSpeaker;
+      speakerCard.classList.toggle("visible", showSpeaker);
+      speakerBtn.setAttribute("aria-expanded", String(showSpeaker));
+    }
+
+    function replayCurrent() {
+      renderScene(currentIndex, { keepSpeaker: true });
+    }
+
+    function startOverview() {
+      if (overviewTimer) {
+        stopOverview(true);
+        return;
+      }
+      overviewReturnIndex = currentIndex;
+      overviewBtn.innerHTML = `<svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 6h4v12H7zM13 6h4v12h-4z" fill="currentColor"/></svg>停止总览`;
+      overviewProgress.classList.add("visible");
+      overviewFill.style.transition = "none";
+      overviewFill.style.width = "0%";
+      void overviewFill.offsetWidth;
+      runOverviewStep(0);
+    }
+
+    function runOverviewStep(step) {
+      if (step >= pages.length) {
+        stopOverview(true);
+        return;
+      }
+      renderScene(step);
+      overviewFill.style.transition = "width 8s linear";
+      requestAnimationFrame(() => {
+        overviewFill.style.width = `${((step + 1) / pages.length) * 100}%`;
+      });
+      overviewTimer = window.setTimeout(() => runOverviewStep(step + 1), 8000);
+    }
+
+    function stopOverview(restorePage) {
+      if (overviewTimer) {
+        window.clearTimeout(overviewTimer);
+        overviewTimer = null;
+      }
+      overviewProgress.classList.remove("visible");
+      overviewFill.style.transition = "none";
+      overviewFill.style.width = "0%";
+      overviewBtn.innerHTML = `<svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>播放总览`;
+      if (restorePage) renderScene(overviewReturnIndex);
+    }
+
+    navList.addEventListener("click", event => {
+      const button = event.target.closest("[data-index]");
+      if (!button) return;
+      goToScene(Number(button.dataset.index));
+    });
+
+    svgStage.addEventListener("click", event => {
+      const missionTab = event.target.closest("[data-mission-key]");
+      if (missionTab) {
+        selectMission(missionTab.dataset.missionKey);
+        return;
+      }
+      const missionOption = event.target.closest("[data-challenge-id][data-option-id]");
+      if (missionOption) {
+        toggleMissionOption(missionOption.dataset.challengeId, missionOption.dataset.optionId);
+        return;
+      }
+      const resetButton = event.target.closest("[data-reset-mission]");
+      if (resetButton) {
+        resetMission(resetButton.dataset.resetMission);
+        return;
+      }
+      const jump = event.target.closest("[data-jump]");
+      if (!jump) return;
+      goToScene(Number(jump.dataset.jump));
+    });
+
+    speakerBtn.addEventListener("click", toggleSpeaker);
+    replayBtn.addEventListener("click", replayCurrent);
+    overviewBtn.addEventListener("click", startOverview);
+
+    window.addEventListener("keydown", event => {
+      const key = event.key.toLowerCase();
+      if (key === "arrowright") goToScene(currentIndex + 1);
+      if (key === "arrowleft") goToScene(currentIndex - 1);
+      if (/^[1-9]$/.test(event.key) && !event.shiftKey) goToScene(Number(event.key) - 1);
+      if (event.key === "0") goToScene(9);
+      if (key === "q") goToScene(10);
+      if (key === "w") goToScene(11);
+      if (key === "e") goToScene(12);
+      if (key === "r") goToScene(13);
+      if (key === "t") goToScene(14);
+      if (key === "y") goToScene(15);
+      if (key === "u") goToScene(16);
+      if (key === "i" || (event.shiftKey && event.key === "!")) goToScene(17);
+    });
+
+    renderScene(0);
+
+    // PDF 导出辅助：访问 ?page=10 时直接显示第 10 页；?mission=finance 可直达行业闯关。
+    const query = new URLSearchParams(window.location.search);
+    const requestedMission = query.get("mission");
+    const requestedPage = Number(query.get("page"));
+    if (requestedMission && missions[requestedMission]) {
+      currentMissionKey = requestedMission;
+      const missionIndex = pages.findIndex(page => page.key === "mission");
+      if (missionIndex >= 0) window.requestAnimationFrame(() => renderScene(missionIndex));
+    } else if (Number.isInteger(requestedPage) && requestedPage >= 1 && requestedPage <= pages.length) {
+      window.requestAnimationFrame(() => renderScene(requestedPage - 1));
+    }
+
+    function svgDefs() {
+      return `
+        <defs>
+          <linearGradient id="stageBg" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="#071a33"/>
+            <stop offset=".58" stop-color="#0b2547"/>
+            <stop offset="1" stop-color="#06101f"/>
+          </linearGradient>
+          <pattern id="tinyGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+            <path d="M30 0H0V30" fill="none" stroke="rgba(174,214,255,.12)" stroke-width="1"/>
+          </pattern>
+          <linearGradient id="diaGrad" x1="0" x2="1"><stop offset="0" stop-color="#22b7ff"/><stop offset="1" stop-color="#26d4ff"/></linearGradient>
+          <linearGradient id="securityGrad" x1="0" x2="1"><stop offset="0" stop-color="#f97316"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient>
+          <linearGradient id="cloudGrad" x1="0" x2="1"><stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient>
+          <linearGradient id="greenGrad" x1="0" x2="1"><stop offset="0" stop-color="#22c55e"/><stop offset="1" stop-color="#14b8a6"/></linearGradient>
+          <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <rect class="svg-grid" width="1000" height="430"/>
+        <rect width="1000" height="430" fill="url(#tinyGrid)" opacity=".72"/>
+      `;
+    }
+
+    function building(x, y, w, h, label, note = "") {
+      return `
+        <g class="device">
+          <rect class="glass-node" x="${x}" y="${y}" width="${w}" height="${h}" rx="8"/>
+          <path d="M${x + w * .18} ${y + h * .73}V${y + h * .38}l${w * .32}-${h * .22} ${w * .32} ${h * .22}v${h * .35}" fill="none" stroke="#bfe5ff" stroke-width="2.2"/>
+          <text class="node-label" x="${x + w / 2}" y="${y + h + 24}" text-anchor="middle">${label}</text>
+          ${note ? `<text class="node-note" x="${x + w / 2}" y="${y + h + 41}" text-anchor="middle">${note}</text>` : ""}
+        </g>`;
+    }
+
+    function server(x, y, w, h, label, note = "") {
+      return `
+        <g class="device">
+          <rect class="glass-node" x="${x}" y="${y}" width="${w}" height="${h}" rx="8"/>
+          <rect x="${x + 18}" y="${y + 19}" width="${w - 36}" height="15" rx="3" fill="rgba(34,183,255,.18)" stroke="rgba(191,229,255,.45)"/>
+          <rect x="${x + 18}" y="${y + 42}" width="${w - 36}" height="15" rx="3" fill="rgba(34,183,255,.12)" stroke="rgba(191,229,255,.36)"/>
+          <circle cx="${x + 30}" cy="${y + 26}" r="3" fill="#22c55e"/>
+          <circle cx="${x + 30}" cy="${y + 49}" r="3" fill="#f5c542"/>
+          <text class="node-label" x="${x + w / 2}" y="${y + h + 24}" text-anchor="middle">${label}</text>
+          ${note ? `<text class="node-note" x="${x + w / 2}" y="${y + h + 41}" text-anchor="middle">${note}</text>` : ""}
+        </g>`;
+    }
+
+    function cloud(x, y, label, note = "", color = "#7fbfff") {
+      return `
+        <g class="device float">
+          <path d="M${x + 36} ${y + 90}c-26 0-47-18-47-40 0-18 15-34 35-38 10-21 33-35 60-35 37 0 67 26 67 58 0 4 0 7-1 10 18 7 31 23 31 41 0 23-23 42-51 42H${x + 36}z" fill="rgba(255,255,255,.1)" stroke="${color}" stroke-width="2"/>
+          <text class="node-label" x="${x + 86}" y="${y + 66}" text-anchor="middle">${label}</text>
+          ${note ? `<text class="node-note" x="${x + 86}" y="${y + 86}" text-anchor="middle">${note}</text>` : ""}
+        </g>`;
+    }
+
+    function badge(x, y, w, text, cls = "badge-blue") {
+      return `<g><rect class="badge ${cls}" x="${x}" y="${y}" width="${w}" height="27" rx="13.5"/><text class="badge-text" x="${x + w / 2}" y="${y + 18}" text-anchor="middle">${text}</text></g>`;
+    }
+
+    function miniDevice(x, y, w, h, label, color = "#bfe5ff") {
+      return `<g class="device"><rect class="glass-node" x="${x}" y="${y}" width="${w}" height="${h}" rx="8"/><circle cx="${x + 20}" cy="${y + h / 2}" r="7" fill="${color}" opacity=".75"/><text class="node-label" x="${x + w / 2 + 9}" y="${y + h / 2 + 4}" text-anchor="middle">${label}</text></g>`;
+    }
+
+    function svgPPPoE() {
+      const users = [
+        ["用户 A", 38, 84], ["用户 B", 38, 146], ["用户 C", 38, 208], ["用户 D", 38, 270], ["小微办公室", 38, 332]
+      ].map(([name, x, y], i) => `
+        <g class="fade-${Math.min(i + 1, 6)}">
+          <rect class="glass-node" x="${x}" y="${y}" width="118" height="46" rx="8"/>
+          <path d="M${x + 18} ${y + 34}v-18l20-13 20 13v18" fill="none" stroke="#9fb6cf" stroke-width="2"/>
+          <text class="node-label" x="${x + 80}" y="${y + 29}" text-anchor="middle">${name}</text>
+          <path class="link-muted" d="M156 ${y + 23} C190 ${y + 23} 200 213 232 213"/>
+        </g>`).join("");
+      return `
+        <svg viewBox="0 0 1000 430" role="img" aria-label="家宽 PPPoE 共享宽带基准">
+          ${svgDefs()}
+          <text class="svg-title" x="32" y="40">五个家庭/小微用户共享同一个带宽池，高峰期拥堵与动态 IP 同时出现</text>
+          <text class="svg-subtitle" x="32" y="64">共享带宽池：1000M，总量固定；用户抢占越多，其他用户体验越波动</text>
+          ${users}
+          <g class="device fade-2">
+            <rect class="glass-node" x="232" y="92" width="174" height="242" rx="10"/>
+            <text class="node-label" x="319" y="120" text-anchor="middle">共享带宽池：1000M</text>
+            <rect x="262" y="145" width="40" height="150" rx="6" fill="rgba(124,155,189,.18)" stroke="rgba(159,182,207,.55)"/>
+            <rect class="liquid-a" x="262" y="145" width="40" height="150" rx="6" fill="#7c9bbd"/>
+            <text class="node-note" x="282" y="318" text-anchor="middle">A 400M</text>
+            <rect x="318" y="145" width="40" height="150" rx="6" fill="rgba(124,155,189,.18)" stroke="rgba(159,182,207,.55)"/>
+            <rect class="liquid-b" x="318" y="145" width="40" height="150" rx="6" fill="#9fb6cf"/>
+            <text class="node-note" x="338" y="318" text-anchor="middle">B 300M</text>
+            <rect x="374" y="145" width="20" height="150" rx="6" fill="rgba(124,155,189,.18)" stroke="rgba(159,182,207,.55)"/>
+            <rect class="liquid-c" x="374" y="145" width="20" height="150" rx="6" fill="#ef4444"/>
+            <text class="node-note" x="384" y="318" text-anchor="middle">波动</text>
+            <circle class="pulse" cx="378" cy="145" r="8" fill="#ef4444"/>
+            <circle class="pulse" cx="354" cy="138" r="6" fill="#f97316" style="animation-delay:.3s"/>
+            ${badge(272, 54, 86, "高峰拥堵", "badge-risk")}
+          </g>
+          <path class="link-muted" d="M406 213H458"/>
+          <g class="device fade-3">
+            <rect class="glass-node" x="458" y="176" width="82" height="74" rx="8"/>
+            <rect x="479" y="199" width="40" height="23" rx="5" fill="rgba(159,182,207,.25)" stroke="#9fb6cf"/>
+            <text class="node-label" x="499" y="274" text-anchor="middle">光猫</text>
+          </g>
+          <path class="link-muted" d="M540 213H578"/>
+          <g class="device fade-4">
+            <rect class="glass-node" x="578" y="176" width="94" height="74" rx="8"/>
+            <rect x="601" y="202" width="48" height="22" rx="11" fill="rgba(159,182,207,.2)" stroke="#9fb6cf"/>
+            <path d="M612 197v-14M638 197v-14" stroke="#9fb6cf" stroke-width="3" stroke-linecap="round"/>
+            <text class="node-label" x="625" y="274" text-anchor="middle">家用路由器</text>
+          </g>
+          <path class="link-muted" d="M672 213H714"/>
+          <g class="device fade-5">
+            <circle cx="760" cy="213" r="42" fill="rgba(255,255,255,.08)" stroke="#9fb6cf" stroke-width="3"/>
+            <circle class="auth-ring" cx="760" cy="213" r="42" fill="none" stroke="#9fb6cf" stroke-width="2"/>
+            <text class="node-label" x="760" y="210" text-anchor="middle">PPPoE</text>
+            <text class="node-note" x="760" y="228" text-anchor="middle">拨号认证</text>
+          </g>
+          <path class="link-muted" d="M802 213H838"/>
+          <g class="device fade-6">
+            <rect class="glass-node" x="838" y="172" width="116" height="82" rx="8"/>
+            <text class="node-label" x="896" y="207" text-anchor="middle">BRAS / BNG</text>
+            <text class="node-note ip-1" x="896" y="230" text-anchor="middle">IP: 112.23.45.18</text>
+            <text class="node-note ip-2" x="896" y="230" text-anchor="middle">IP: 112.23.47.92</text>
+            <text class="node-note ip-3" x="896" y="230" text-anchor="middle">IP: 112.23.51.06</text>
+          </g>
+          ${cloud(820, 52, "公共互联网", "公网地址不固定", "#9fb6cf")}
+          <g class="fade-5">
+            <path d="M602 334h94" stroke="#26d4ff" stroke-width="8" stroke-linecap="round"/>
+            <path d="M602 363h94" stroke="#9fb6cf" stroke-width="3" stroke-linecap="round"/>
+            <path d="M692 334l18 0m-10-8l10 8-10 8" stroke="#26d4ff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M606 363l-18 0m10-8l-10 8 10 8" stroke="#9fb6cf" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <text class="node-label" x="650" y="394" text-anchor="middle">上下行不对称：下载粗 / 上传细</text>
+          </g>
+          ${badge(720, 328, 66, "SLA 弱", "badge-warn")}
+          ${badge(794, 328, 78, "尽力而为", "badge-warn")}
+          ${badge(880, 328, 96, "普通客服响应", "badge-warn")}
+        </svg>`;
+    }
+
+    function svgDIA() {
+      return `
+        <svg viewBox="0 0 1000 430" role="img" aria-label="DIA 与家宽对比">
+          ${svgDefs()}
+          <text class="svg-title" x="32" y="40">共享宽带 vs 企业独享公网出口</text>
+          <text class="svg-subtitle" x="32" y="64">左侧是共享道路和动态 IP，右侧是企业专属车道、固定公网 IP 与 SLA 承诺</text>
+          <line x1="500" y1="86" x2="500" y2="388" stroke="rgba(255,255,255,.18)" stroke-dasharray="8 8"/>
+          <text class="node-label" x="250" y="100" text-anchor="middle">家宽 / 普通宽带</text>
+          <text class="node-label" x="750" y="100" text-anchor="middle">DIA / 互联网专线</text>
+          <g class="stage-ordinary">
+            ${miniDevice(62, 145, 110, 44, "家庭 A", "#7c9bbd")}
+            ${miniDevice(62, 205, 110, 44, "家庭 B", "#7c9bbd")}
+            ${miniDevice(62, 265, 110, 44, "小微办公", "#7c9bbd")}
+            <path class="link-muted" d="M172 167 C230 167 260 215 322 215"/>
+            <path class="link-muted" d="M172 227 C230 227 260 215 322 215"/>
+            <path class="link-muted" d="M172 287 C230 287 260 215 322 215"/>
+            <rect class="glass-node" x="322" y="155" width="126" height="120" rx="10"/>
+            <text class="node-label" x="385" y="182" text-anchor="middle">共享道路/泳池</text>
+            <rect x="352" y="202" width="68" height="42" rx="6" fill="rgba(124,155,189,.25)" stroke="#7c9bbd"/>
+            <rect class="liquid-a" x="352" y="202" width="68" height="42" rx="6" fill="#7c9bbd" opacity=".8"/>
+            <circle class="pulse" cx="382" cy="204" r="8" fill="#ef4444"/>
+            <text class="node-note ip-1" x="385" y="302" text-anchor="middle">IP: 112.23.45.18</text>
+            <text class="node-note ip-2" x="385" y="302" text-anchor="middle">IP: 112.23.47.92</text>
+            <text class="node-note ip-3" x="385" y="302" text-anchor="middle">IP: 112.23.51.06</text>
+            ${badge(340, 320, 76, "SLA 灰色", "badge-warn")}
+          </g>
+          <g class="stage-recommend">
+            ${building(548, 164, 128, 84, "企业办公楼", "员工 / 服务器")}
+            <path class="link-back" style="--flow:#26d4ff;--flow-width:11px" d="M676 206H888"/>
+            <path class="link-flow" style="--flow:#26d4ff;--flow-width:11px" d="M676 206H888"/>
+            ${cloud(820, 130, "公共互联网", "SaaS / 官网 / 云应用", "#26d4ff")}
+            <text class="node-label" x="782" y="188" text-anchor="middle">独享 / 保障带宽</text>
+            <g class="device">
+              <rect class="glass-node" x="684" y="252" width="188" height="58" rx="8"/>
+              <path d="M720 281v-12a18 18 0 0 1 36 0v12" fill="none" stroke="#22c55e" stroke-width="4"/>
+              <rect x="713" y="278" width="50" height="24" rx="5" fill="rgba(34,197,94,.18)" stroke="#22c55e"/>
+              <text class="node-label" x="802" y="292" text-anchor="middle">固定公网 IP 202.X.X.X</text>
+            </g>
+            <g>
+              <path d="M586 335h70m-16-10l16 10-16 10" stroke="#26d4ff" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M656 362h-70m16-10l-16 10 16 10" stroke="#26d4ff" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <text class="node-label" x="622" y="394" text-anchor="middle">上下行对称</text>
+            </g>
+            ${badge(718, 336, 54, "SLA", "badge-good")}
+            ${badge(780, 336, 90, "企业级运维", "badge-good")}
+            ${badge(878, 336, 72, "故障响应", "badge-good")}
+          </g>
+        </svg>`;
+    }
+
+    function svgSecurityLine() {
+      return `
+        <svg viewBox="0 0 1000 430" role="img" aria-label="互联网安全专线攻击拦截演示">
+          ${svgDefs()}
+          <text class="svg-title" x="32" y="40">互联网安全专线：攻击先被监测和清洗，正常流量再回注企业</text>
+          <text class="svg-subtitle" x="32" y="64">阶段一：攻击直冲企业；阶段二：安全平台出现；阶段三：一点受理到一点结算</text>
+          ${building(52, 150, 128, 88, "企业网络", "办公终端 / 业务服务器")}
+          ${miniDevice(220, 118, 110, 44, "出口路由器", "#22b7ff")}
+          ${miniDevice(220, 184, 110, 44, "防火墙", "#f97316")}
+          ${server(220, 250, 110, 76, "业务服务器")}
+          <g class="stage-ordinary">
+            <path class="link-muted" d="M330 140 C438 126 548 132 665 148"/>
+            <path class="attack-flow" d="M900 110 C720 100 520 106 330 140"/>
+            <path class="attack-red" d="M902 198 C700 192 514 190 330 206"/>
+            <path class="attack-flow" d="M902 284 C704 274 522 284 330 288"/>
+            ${badge(784, 86, 82, "DDoS 攻击", "badge-risk")}
+            ${badge(796, 176, 76, "漏洞攻击", "badge-risk")}
+            ${badge(784, 264, 86, "异常外联", "badge-risk")}
+            ${badge(356, 84, 76, "端口暴露", "badge-risk")}
+            ${badge(356, 328, 76, "网站篡改", "badge-risk")}
+          </g>
+          <g class="stage-recommend">
+            <rect x="424" y="96" width="220" height="236" rx="12" fill="rgba(249,115,22,.12)" stroke="url(#securityGrad)" stroke-width="3" filter="url(#glow)"/>
+            <text class="node-label" x="534" y="126" text-anchor="middle">中国联通互联网安全专线</text>
+            <text class="node-note" x="534" y="146" text-anchor="middle">安全能力平台</text>
+            <rect class="badge badge-warn" x="450" y="166" width="78" height="28" rx="14"/><text class="badge-text" x="489" y="185" text-anchor="middle">攻击监测</text>
+            <rect class="badge badge-purple" x="540" y="166" width="78" height="28" rx="14"/><text class="badge-text" x="579" y="185" text-anchor="middle">流量清洗</text>
+            <rect class="badge badge-warn" x="450" y="212" width="98" height="28" rx="14"/><text class="badge-text" x="499" y="231" text-anchor="middle">域名/网站监测</text>
+            <rect class="badge badge-purple" x="560" y="212" width="78" height="28" rx="14"/><text class="badge-text" x="599" y="231" text-anchor="middle">漏洞扫描</text>
+            <rect class="glass-node" x="468" y="260" width="130" height="46" rx="8"/>
+            <text class="node-label" x="533" y="288" text-anchor="middle">安全报告</text>
+            <path class="attack-flow" d="M902 112 C770 116 704 144 644 176"/>
+            <path class="attack-red" d="M902 200 C780 198 706 202 644 214"/>
+            <path class="link-flow" style="--flow:#f97316;--flow-width:7px" d="M424 212 C382 210 360 204 330 204"/>
+            <path class="link-flow" style="--flow:#22c55e;--flow-width:6px" d="M645 146 C730 142 802 140 902 140"/>
+            <text class="node-label" x="784" y="138" text-anchor="middle">正常访问用户</text>
+          </g>
+          ${cloud(800, 60, "公共互联网", "正常访问 / 黑客 / 扫描", "#f97316")}
+          <g class="fade-5">
+            <path d="M190 372H808" stroke="rgba(255,255,255,.18)" stroke-width="2"/>
+            ${["一点受理", "一点开通", "一点计费", "一点出账", "一点结算"].map((t, i) => `
+              <circle cx="${230 + i * 140}" cy="372" r="14" fill="url(#securityGrad)"/>
+              <text class="node-note" x="${230 + i * 140}" y="402" text-anchor="middle">${t}</text>
+            `).join("")}
+          </g>
+        </svg>`;
+    }
+
+    function svgSDH() {
+      const slots = Array.from({ length: 12 }, (_, i) => `
+        <rect x="${258 + i * 32}" y="180" width="26" height="58" rx="4" fill="rgba(111,179,184,.18)" stroke="#6fb3b8"/>
+        <text class="node-note" x="${271 + i * 32}" y="205" text-anchor="middle">${i % 2 ? "E1" : "2M"}</text>
+        <text class="node-note" x="${271 + i * 32}" y="224" text-anchor="middle">固定</text>
+      `).join("");
+      return `
+        <svg viewBox="0 0 1000 430" role="img" aria-label="SDH MSTP 传统电路型专线">
+          ${svgDefs()}
+          <text class="svg-title" x="32" y="40">SDH / MSTP：固定小格子很稳，但遇到大带宽业务不够灵活</text>
+          <text class="svg-subtitle" x="32" y="64">传统 E1、语音、老系统适配度高；视频、PACS、云系统、大数据让固定颗粒显得吃力</text>
+          ${building(48, 140, 126, 88, "传统客户分支", "E1 语音 / 柜面终端")}
+          ${server(820, 140, 126, 88, "总部机房", "传统业务系统")}
+          <g class="device">
+            <rect class="glass-node" x="230" y="126" width="540" height="168" rx="12"/>
+            <text class="node-label" x="500" y="154" text-anchor="middle">SDH / MSTP 传输网：时隙 / 固定电路</text>
+            ${slots}
+            <path class="link-flow" style="--flow:#6fb3b8;--flow-width:5px" d="M174 184H230M770 184H820"/>
+            <text class="node-note" x="500" y="270" text-anchor="middle">数据流按固定格子传输：稳定，但容量颗粒固定</text>
+          </g>
+          <g class="fade-3">
+            <rect x="302" y="318" width="92" height="42" rx="8" fill="rgba(239,68,68,.18)" stroke="#ef4444"/>
+            <text class="node-label" x="348" y="344" text-anchor="middle">视频会议</text>
+            <rect x="414" y="318" width="92" height="42" rx="8" fill="rgba(239,68,68,.18)" stroke="#ef4444"/>
+            <text class="node-label" x="460" y="344" text-anchor="middle">PACS 影像</text>
+            <rect x="526" y="318" width="92" height="42" rx="8" fill="rgba(239,68,68,.18)" stroke="#ef4444"/>
+            <text class="node-label" x="572" y="344" text-anchor="middle">云系统</text>
+            <rect x="638" y="318" width="92" height="42" rx="8" fill="rgba(239,68,68,.18)" stroke="#ef4444"/>
+            <text class="node-label" x="684" y="344" text-anchor="middle">大数据</text>
+          </g>
+          ${badge(260, 82, 76, "扩容慢", "badge-warn")}
+          ${badge(350, 82, 86, "颗粒固定", "badge-warn")}
+          ${badge(450, 82, 106, "大带宽不经济", "badge-risk")}
+          <g class="fade-4">
+            <path class="link-back" style="--flow:#e60012;--flow-width:12px" d="M272 386H482"/>
+            <path class="link-flow" style="--flow:#e60012;--flow-width:12px" d="M272 386H482"/>
+            <text class="node-label" x="377" y="410" text-anchor="middle">OTN：红色大管道</text>
+            <path class="link-flow" style="--flow:#8b5cf6;--flow-width:8px" d="M540 386 C620 354 710 354 790 386"/>
+            <text class="node-label" x="664" y="410" text-anchor="middle">云联网：蓝紫弹性云网</text>
+          </g>
+        </svg>`;
+    }
+
+    function svgOTN() {
+      return `
+        <svg viewBox="0 0 1000 430" role="img" aria-label="OTN 精品专线红色硬管道">
+          ${svgDefs()}
+          <text class="svg-title" x="32" y="40">OTN 精品专线：两个核心地点之间的红色硬管道</text>
+          <text class="svg-subtitle" x="32" y="64">灰色公网/VPN 绕行路径会抖动，红色 OTN 光路点到点直连、双向流光</text>
+          ${server(58, 154, 150, 118, "总部数据中心")}
+          ${server(792, 154, 150, 118, "灾备数据中心")}
+          <g class="jitter">
+            <path class="link-muted" d="M208 182 C342 58 654 54 792 182"/>
+            ${cloud(404, 70, "公共互联网 / VPN", "路径不确定、抖动、受公网影响", "#7c9bbd")}
+          </g>
+          <g class="fade-2">
+            <path class="link-back" style="--flow:#e60012;--flow-width:13px" d="M208 216H792"/>
+            <path class="link-flow" style="--flow:#e60012;--flow-width:13px" d="M208 216H792"/>
+            <path class="link-flow flow-reverse" style="--flow:#ff4b5c;--flow-width:7px" d="M792 238H208"/>
+            <rect x="405" y="162" width="190" height="96" rx="10" fill="rgba(230,0,18,.14)" stroke="#e60012" stroke-width="3" filter="url(#glow)"/>
+            <text class="node-label" x="500" y="205" text-anchor="middle">OTN 光传送网</text>
+            <text class="node-note" x="500" y="228" text-anchor="middle">大带宽 / 低时延 / 高可靠 / 不走公网</text>
+          </g>
+          ${badge(290, 278, 72, "大带宽", "badge-risk")}
+          ${badge(392, 306, 72, "低时延", "badge-risk")}
+          ${badge(536, 306, 72, "高可靠", "badge-risk")}
+          ${badge(638, 278, 86, "不走公网", "badge-risk")}
+        </svg>`;
+    }
+
+    function svgSmartOTN() {
+      return `
+        <svg viewBox="0 0 1000 430" role="img" aria-label="智能 OTN 可视可管可调度">
+          ${svgDefs()}
+          <text class="svg-title" x="32" y="40">智能 OTN：主链路故障后，业务流量自动切到保护链路</text>
+          <text class="svg-subtitle" x="32" y="64">红色硬管道 + 金色控制面，让专线从“有”升级到“可视、可管、可调度”</text>
+          <rect class="glass-node" x="48" y="106" width="356" height="252" rx="10"/>
+          <text class="node-label" x="78" y="138">传统 OTN</text>
+          ${server(84, 202, 84, 64, "DC1")}
+          ${server(284, 202, 84, 64, "DC2")}
+          <path d="M168 234H284" stroke="#e60012" stroke-width="9" stroke-linecap="round"/>
+          <text class="node-note" x="226" y="184" text-anchor="middle">固定带宽 / 人工开通 / 人工排障</text>
+          ${badge(88, 306, 80, "可视化弱", "badge-warn")}
+          ${badge(186, 306, 70, "调整慢", "badge-warn")}
+          ${badge(274, 306, 80, "人工运维", "badge-warn")}
+          <rect class="glass-node" x="452" y="106" width="500" height="252" rx="10"/>
+          <text class="node-label" x="482" y="138">智能 OTN / 高品质 OTN</text>
+          ${server(486, 218, 84, 58, "DC1")}
+          ${server(846, 218, 84, 58, "DC2")}
+          <path class="fault-main" d="M570 224 C670 145 760 145 846 224" fill="none" stroke="#e60012" stroke-width="9" stroke-linecap="round"/>
+          <path class="backup-on" d="M570 266 C672 338 758 338 846 266" fill="none" stroke="#f5c542" stroke-width="9" stroke-linecap="round" opacity=".35"/>
+          <path class="link-flow" style="--flow:#f5c542;--flow-width:6px" d="M570 266 C672 338 758 338 846 266"/>
+          <circle class="pulse" cx="704" cy="164" r="8" fill="#ef4444"/>
+          <text class="node-note" x="704" y="151" text-anchor="middle" fill="#ff9a9a">主链路故障</text>
+          <rect x="638" y="178" width="144" height="80" rx="10" fill="rgba(245,197,66,.16)" stroke="#f5c542" stroke-width="2" filter="url(#glow)"/>
+          <text class="node-label" x="710" y="210" text-anchor="middle">智能控制平台</text>
+          <text class="node-note" x="710" y="232" text-anchor="middle">调度 / 保护 / 可视</text>
+          <rect class="glass-node" x="608" y="112" width="298" height="56" rx="8"/>
+          <text class="node-note" x="628" y="135">带宽：10G / 100G</text>
+          <text class="node-note" x="748" y="135">时延：低</text>
+          <text class="node-note" x="820" y="135">SLA：99.99%</text>
+          <text class="node-note ip-1" x="628" y="156" fill="#22c55e">状态：正常</text>
+          <text class="node-note ip-2" x="628" y="156" fill="#f5c542">状态：已切换</text>
+          ${badge(506, 316, 66, "可视化", "badge-risk")}
+          ${badge(596, 316, 78, "快速开通", "badge-risk")}
+          ${badge(696, 316, 78, "弹性带宽", "badge-risk")}
+          ${badge(796, 316, 78, "智能保护", "badge-risk")}
+        </svg>`;
+    }
+
+    function svgCloudConnect() {
+      return `
+        <svg viewBox="0 0 1000 430" role="img" aria-label="云联网多点组网与上云">
+          ${svgDefs()}
+          <text class="svg-title" x="32" y="40">云联网：从多条点到点拉线，升级为统一的蓝紫色枢纽网络</text>
+          <text class="svg-subtitle" x="32" y="64">混乱线条逐渐淡出，云联网平台出现后形成清晰的星型/枢纽型网络</text>
+          ${building(70, 170, 118, 72, "企业总部")}
+          ${miniDevice(226, 92, 118, 56, "分支机构 A", "#8b5cf6")}
+          ${miniDevice(226, 290, 118, 56, "分支机构 B", "#8b5cf6")}
+          ${server(648, 290, 134, 56, "本地数据中心")}
+          ${cloud(646, 72, "政务云 / 公有云", "", "#8b5cf6")}
+          ${miniDevice(830, 178, 118, 56, "SaaS / 云应用", "#2563eb")}
+          <g class="stage-ordinary">
+            <path class="link-muted" d="M188 194 C330 42 568 44 680 122"/>
+            <path class="link-muted" d="M344 120 C500 96 610 104 680 122"/>
+            <path class="link-muted" d="M344 318 C492 244 602 168 680 122"/>
+            <path class="link-muted" d="M715 290 C720 230 720 178 725 143"/>
+            <path class="link-muted" d="M188 214 C352 282 498 320 648 318"/>
+            <path class="link-muted" d="M344 120 C554 186 716 197 830 206"/>
+            <path class="link-muted" d="M344 318 C548 260 718 224 830 206"/>
+            <text class="node-note" x="478" y="88" text-anchor="middle" fill="#f5c542">线路多、路由复杂、管理困难、安全策略分散、扩展慢</text>
+          </g>
+          <g class="stage-recommend">
+            <circle cx="500" cy="214" r="74" fill="url(#cloudGrad)" stroke="#bfe5ff" stroke-width="2" filter="url(#glow)"/>
+            <text class="node-label" x="500" y="210" text-anchor="middle">云联网平台</text>
+            <text class="node-note" x="500" y="232" text-anchor="middle">多点互联 / 统一路由</text>
+            ${["M188 206H426", "M344 120 C400 142 430 168 454 190", "M344 318 C406 292 434 260 456 236", "M574 188 C608 152 638 128 680 108", "M574 236 C610 272 642 300 648 318", "M574 214H830"].map(d => `
+              <path class="link-back" style="--flow:#8b5cf6;--flow-width:8px" d="${d}"/>
+              <path class="link-flow" style="--flow:#8b5cf6;--flow-width:8px" d="${d}"/>
+            `).join("")}
+            ${badge(386, 92, 78, "多点互联", "badge-purple")}
+            ${badge(536, 92, 78, "统一管理", "badge-purple")}
+            ${badge(384, 338, 78, "灵活上云", "badge-purple")}
+            ${badge(536, 338, 78, "扩展方便", "badge-purple")}
+          </g>
+        </svg>`;
+    }
+
+    function svgCloudAdvantage() {
+      return `
+        <svg viewBox="0 0 1000 430" role="img" aria-label="联通云联网优势一点接入全球通达">
+          ${svgDefs()}
+          <text class="svg-title" x="32" y="40">联通云联网优势：一点接入，全球通达</text>
+          <text class="svg-subtitle" x="32" y="64">通过一个云联网入口，连接区域节点、行业云、公有云、数据中心和跨境业务</text>
+          <circle cx="500" cy="214" r="82" fill="url(#cloudGrad)" stroke="#bfe5ff" stroke-width="2" filter="url(#glow)"/>
+          <text class="node-label" x="500" y="207" text-anchor="middle">一点接入</text>
+          <text class="node-note" x="500" y="229" text-anchor="middle">中国联通云联网</text>
+          ${[
+            [120, 108, "华北节点", "#22b7ff"],
+            [112, 286, "华南节点", "#26d4ff"],
+            [346, 86, "政务云", "#8b5cf6"],
+            [346, 330, "行业云", "#8b5cf6"],
+            [646, 86, "公有云", "#2563eb"],
+            [646, 330, "数据中心", "#22c55e"],
+            [820, 112, "海外节点", "#f5c542"],
+            [820, 282, "集团分支", "#22b7ff"]
+          ].map(([x, y, label, color]) => `
+            ${miniDevice(x, y, 120, 54, label, color)}
+            <path class="link-flow" style="--flow:${color};--flow-width:6px" d="M${x + 60} ${y + 27} C${(x + 60 + 500) / 2} ${y < 214 ? y + 70 : y - 70} ${(x + 60 + 500) / 2} ${214} 500 214"/>
+          `).join("")}
+          <path d="M272 214 C372 92 628 92 728 214 C628 336 372 336 272 214z" fill="none" stroke="rgba(191,229,255,.18)" stroke-width="2"/>
+          ${badge(414, 112, 78, "全球通达", "badge-purple")}
+          ${badge(512, 112, 78, "云网协同", "badge-blue")}
+          ${badge(392, 304, 78, "统一运维", "badge-blue")}
+          ${badge(512, 304, 78, "弹性扩展", "badge-purple")}
+        </svg>`;
+    }
+
+    function svgHospital() {
+      const pill = (x, y, w, text, color) =>
+        `<rect x="${x}" y="${y}" width="${w}" height="20" rx="6" fill="rgba(255,255,255,.08)" stroke="${color}" opacity=".94"/>
+         <text class="node-note" x="${x + w / 2}" y="${y + 14}" text-anchor="middle">${text}</text>`;
+      const deptCard = (x, y, title, terminals, sw, color) => `
+        <g class="device">
+          <rect x="${x}" y="${y}" width="168" height="74" rx="9" fill="rgba(34,197,94,.08)" stroke="${color}" stroke-width="1.5"/>
+          <text class="node-label" x="${x + 84}" y="${y + 18}" text-anchor="middle">${title}</text>
+          <text class="node-note" x="${x + 84}" y="${y + 38}" text-anchor="middle">${terminals}</text>
+          <rect x="${x + 23}" y="${y + 49}" width="122" height="18" rx="9" fill="rgba(34,197,94,.15)" stroke="${color}"/>
+          <text class="node-note" x="${x + 84}" y="${y + 62}" text-anchor="middle">${sw}</text>
+        </g>`;
+      const aggBox = (x, y, title, note, color = "#22c55e") => `
+        <g class="device">
+          <rect class="glass-node" x="${x}" y="${y}" width="118" height="46" rx="8" stroke="${color}"/>
+          <text class="node-label" x="${x + 59}" y="${y + 19}" text-anchor="middle">${title}</text>
+          <text class="node-note" x="${x + 59}" y="${y + 36}" text-anchor="middle">${note}</text>
+        </g>`;
+      return `
+        <svg viewBox="0 0 1000 430" role="img" aria-label="三甲医院企业内部组网示意">
+          ${svgDefs()}
+          <defs>
+            <marker id="hArrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#22c55e"/></marker>
+            <marker id="hArrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#26d4ff"/></marker>
+            <marker id="hArrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#e60012"/></marker>
+            <marker id="hArrowPurple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8b5cf6"/></marker>
+            <marker id="hArrowAttack" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#ef4444"/></marker>
+          </defs>
+          <text class="svg-title" x="32" y="34">三甲医院网络：部门终端先接入，再汇聚到双核心，最后访问业务系统或外部专线</text>
+          <text class="svg-subtitle" x="32" y="55">绿色=内网业务，蓝青=公网出口，橙紫=安全防护，红色=OTN/灾备，蓝紫=云联网/分院/政务云，黑红=攻击流量</text>
+
+          <rect class="glass-node" x="28" y="70" width="944" height="48" rx="9"/>
+          <text class="node-label" x="44" y="99">外部网络/专线入口</text>
+          ${pill(150, 84, 86, "公共互联网", "#26d4ff")}
+          ${pill(244, 84, 116, "DIA/互联网安全专线", "#26d4ff")}
+          ${pill(368, 84, 86, "OTN灾备", "#e60012")}
+          ${pill(462, 84, 92, "云联网", "#8b5cf6")}
+          ${pill(562, 84, 86, "医保专网", "#8b5cf6")}
+          ${pill(656, 84, 112, "政务云/卫健委", "#8b5cf6")}
+          ${pill(776, 84, 96, "医联体/分院", "#8b5cf6")}
+          ${pill(884, 84, 72, "黑客攻击", "#ef4444")}
+
+          <rect class="glass-node" x="28" y="130" width="270" height="112" rx="10"/>
+          <text class="node-label" x="44" y="154">边界安全区</text>
+          ${pill(48, 168, 76, "出口路由器", "#26d4ff")}
+          ${pill(132, 168, 88, "下一代防火墙", "#f97316")}
+          ${pill(48, 198, 60, "WAF", "#f97316")}
+          ${pill(116, 198, 86, "上网行为管理", "#f97316")}
+          ${pill(210, 198, 72, "VPN/零信任", "#f97316")}
+          ${pill(48, 222, 84, "抗DDoS平台", "#8b5cf6")}
+          ${pill(140, 222, 60, "堡垒机", "#f97316")}
+          ${pill(208, 222, 74, "日志/SIEM", "#f97316")}
+
+          <rect class="glass-node" x="326" y="130" width="302" height="112" rx="10"/>
+          <text class="node-label" x="342" y="154">核心网络区</text>
+          <g class="device">
+            <rect x="380" y="172" width="92" height="44" rx="8" fill="rgba(34,197,94,.12)" stroke="#22c55e" stroke-width="2"/>
+            <text class="node-label" x="426" y="198" text-anchor="middle">核心交换机 A</text>
+            <rect x="486" y="172" width="92" height="44" rx="8" fill="rgba(34,197,94,.12)" stroke="#22c55e" stroke-width="2"/>
+            <text class="node-label" x="532" y="198" text-anchor="middle">核心交换机 B</text>
+            <path d="M472 194H486" stroke="#22c55e" stroke-width="4" stroke-linecap="round"/>
+          </g>
+          ${pill(354, 220, 78, "无线控制器", "#22c55e")}
+          ${pill(442, 220, 84, "院区路由策略", "#22c55e")}
+          ${pill(536, 220, 74, "核心防火墙", "#f97316")}
+
+          <rect class="glass-node" x="660" y="130" width="312" height="112" rx="10"/>
+          <text class="node-label" x="676" y="154">数据中心/业务系统区</text>
+          ${pill(680, 168, 54, "HIS", "#22c55e")}
+          ${pill(742, 168, 54, "EMR", "#22c55e")}
+          ${pill(804, 168, 54, "LIS", "#22c55e")}
+          ${pill(866, 168, 60, "PACS", "#22c55e")}
+          ${pill(680, 198, 82, "互联网医院", "#26d4ff")}
+          ${pill(770, 198, 62, "数据库", "#22c55e")}
+          ${pill(840, 198, 62, "存储", "#22c55e")}
+          ${pill(910, 198, 50, "备份", "#22c55e")}
+          ${pill(720, 222, 86, "数据中心交换机", "#22c55e")}
+          ${pill(816, 222, 74, "虚拟化平台", "#22c55e")}
+
+          ${aggBox(76, 262, "门诊楼汇聚", "门急诊/收费", "#22c55e")}
+          ${aggBox(256, 262, "住院楼汇聚", "病区/护理", "#22c55e")}
+          ${aggBox(436, 262, "医技楼汇聚", "检验/影像", "#22c55e")}
+          ${aggBox(616, 262, "业务楼汇聚", "药房/窗口", "#22c55e")}
+          ${aggBox(796, 262, "物联隔离汇聚", "安防/访客", "#14b8a6")}
+          <text class="node-note" x="42" y="256" fill="#22c55e">楼宇/科室汇聚层</text>
+
+          ${deptCard(32, 338, "门急诊部门", "医生站 / 收费 / 自助机", "门诊接入交换机", "#22c55e")}
+          ${deptCard(212, 338, "住院病区", "护士站 / 移动护理 / AP", "病区接入交换机", "#22c55e")}
+          ${deptCard(392, 338, "医技科室", "LIS终端 / 影像设备", "医技接入交换机", "#22c55e")}
+          ${deptCard(572, 338, "药房收费", "药房终端 / 打印机", "业务接入交换机", "#22c55e")}
+          ${deptCard(752, 338, "安防物联/访客", "摄像头 / 门禁 / 访客Wi-Fi", "物联接入交换机", "#14b8a6")}
+          <text class="node-note" x="42" y="332" fill="#22c55e">部门终端 + 接入交换机</text>
+
+          <path class="link-flow" style="--flow:#22c55e;--flow-width:4px" marker-end="url(#hArrowGreen)" d="M116 338V308"/>
+          <path class="link-flow" style="--flow:#22c55e;--flow-width:4px" marker-end="url(#hArrowGreen)" d="M296 338V308"/>
+          <path class="link-flow" style="--flow:#22c55e;--flow-width:4px" marker-end="url(#hArrowGreen)" d="M476 338V308"/>
+          <path class="link-flow" style="--flow:#22c55e;--flow-width:4px" marker-end="url(#hArrowGreen)" d="M656 338V308"/>
+          <path class="link-flow" style="--flow:#14b8a6;--flow-width:4px" marker-end="url(#hArrowGreen)" d="M836 338V308"/>
+          <path class="link-flow" style="--flow:#22c55e;--flow-width:5px" marker-end="url(#hArrowGreen)" d="M135 262 C222 242 324 220 380 194"/>
+          <path class="link-flow" style="--flow:#22c55e;--flow-width:5px" marker-end="url(#hArrowGreen)" d="M315 262 C354 238 390 216 426 216"/>
+          <path class="link-flow" style="--flow:#22c55e;--flow-width:5px" marker-end="url(#hArrowGreen)" d="M495 262 C508 238 520 218 532 216"/>
+          <path class="link-flow" style="--flow:#22c55e;--flow-width:5px" marker-end="url(#hArrowGreen)" d="M675 262 C632 236 590 212 578 194"/>
+          <path class="link-flow" style="--flow:#14b8a6;--flow-width:4px" marker-end="url(#hArrowGreen)" d="M855 262 C744 240 642 216 578 194"/>
+          <path class="link-back" style="--flow:#22c55e;--flow-width:6px" d="M578 194 C620 186 640 190 680 214"/>
+          <path class="link-flow" style="--flow:#22c55e;--flow-width:6px" marker-end="url(#hArrowGreen)" d="M578 194 C620 186 640 190 680 214"/>
+
+          <path class="link-flow" style="--flow:#26d4ff;--flow-width:5px" marker-end="url(#hArrowBlue)" d="M196 94 C134 118 92 136 86 168"/>
+          <path class="link-flow" style="--flow:#26d4ff;--flow-width:5px" marker-end="url(#hArrowBlue)" d="M302 94 C214 116 154 142 124 168"/>
+          <path class="link-flow" style="--flow:#26d4ff;--flow-width:5px" marker-end="url(#hArrowBlue)" d="M124 168 C190 176 260 184 326 192"/>
+          <path class="link-flow flow-reverse" style="--flow:#26d4ff;--flow-width:4px" marker-end="url(#hArrowBlue)" d="M426 172 C312 138 220 128 86 168"/>
+          <text class="node-note" x="238" y="142" fill="#26d4ff">公网访问：终端 → 核心 → 防火墙/安全专线 → 公网</text>
+
+          <path class="link-flow" style="--flow:#e60012;--flow-width:6px" marker-end="url(#hArrowRed)" d="M410 94 C420 122 428 146 426 172"/>
+          <text class="node-note" x="430" y="122" fill="#ff9a9a">OTN：核心机房/灾备直连</text>
+          <path class="link-flow" style="--flow:#8b5cf6;--flow-width:6px" marker-end="url(#hArrowPurple)" d="M508 94 C526 126 536 150 532 172"/>
+          <path class="link-flow" style="--flow:#8b5cf6;--flow-width:5px" marker-end="url(#hArrowPurple)" d="M608 94 C580 126 552 150 532 172"/>
+          <path class="link-flow" style="--flow:#8b5cf6;--flow-width:5px" marker-end="url(#hArrowPurple)" d="M712 94 C642 122 586 148 532 172"/>
+          <path class="link-flow" style="--flow:#8b5cf6;--flow-width:5px" marker-end="url(#hArrowPurple)" d="M824 94 C700 124 608 150 532 172"/>
+          <text class="node-note" x="650" y="122" fill="#c4b5fd">云联网/医保/政务/分院：进入核心业务网</text>
+
+          <path class="attack-flow" marker-end="url(#hArrowAttack)" d="M920 94 C800 112 560 112 220 198"/>
+          <path class="attack-red" marker-end="url(#hArrowAttack)" d="M920 94 C778 138 520 150 220 222"/>
+          <circle class="pulse" cx="220" cy="198" r="8" fill="#f97316"/>
+          <text class="node-note" x="750" y="144" fill="#ff9a9a">攻击流量：安全平台 / 防火墙 / WAF 拦截</text>
+        </svg>`;
+    }
+
+    function svgIndustryNetwork(cfg) {
+      const chip = (x, y, w, text, color) => `
+        <rect x="${x}" y="${y}" width="${w}" height="22" rx="7" fill="rgba(255,255,255,.08)" stroke="${color}" opacity=".95"/>
+        <text class="node-note" x="${x + w / 2}" y="${y + 15}" text-anchor="middle">${text}</text>`;
+      const site = (x, y, title, note, color) => `
+        <g class="device">
+          <rect x="${x}" y="${y}" width="142" height="58" rx="9" fill="rgba(255,255,255,.07)" stroke="${color}" stroke-width="1.7"/>
+          <text class="node-label" x="${x + 71}" y="${y + 22}" text-anchor="middle">${title}</text>
+          <text class="node-note" x="${x + 71}" y="${y + 42}" text-anchor="middle">${note}</text>
+        </g>`;
+      const systems = cfg.systems.map((text, i) => {
+        const x = 660 + (i % 3) * 88;
+        const y = 174 + Math.floor(i / 3) * 30;
+        return chip(x, y, 78, text, cfg.main);
+      }).join("");
+      const branches = cfg.branches.map((item, i) => {
+        const x = 72 + i * 176;
+        return `
+          ${site(x, 330, item[0], item[1], item[2] || cfg.main)}
+          <path class="link-flow" style="--flow:${item[2] || cfg.main};--flow-width:4px" d="M${x + 71} 330 C${x + 84} 296 348 276 426 220"/>
+        `;
+      }).join("");
+      const external = cfg.external.map((item, i) => chip(150 + i * 112, 86, 102, item[0], item[1])).join("");
+      return `
+        <svg viewBox="0 0 1000 430" role="img" aria-label="${cfg.title}">
+          ${svgDefs()}
+          <text class="svg-title" x="32" y="34">${cfg.title}</text>
+          <text class="svg-subtitle" x="32" y="56">${cfg.subtitle}</text>
+
+          <rect class="glass-node" x="32" y="72" width="936" height="52" rx="10"/>
+          <text class="node-label" x="48" y="101">外部连接 / 专线入口</text>
+          ${external}
+
+          <rect class="glass-node" x="36" y="142" width="248" height="112" rx="10"/>
+          <text class="node-label" x="54" y="166">安全边界区</text>
+          ${chip(58, 184, 76, "出口路由器", "#26d4ff")}
+          ${chip(142, 184, 76, "防火墙", "#f97316")}
+          ${chip(226, 184, 44, "WAF", "#f97316")}
+          ${chip(58, 216, 82, "抗DDoS", "#8b5cf6")}
+          ${chip(148, 216, 70, "堡垒机", "#f97316")}
+          ${chip(226, 216, 46, "审计", "#f97316")}
+
+          <rect x="336" y="142" width="190" height="112" rx="12" fill="rgba(255,255,255,.08)" stroke="${cfg.main}" stroke-width="2.5" filter="url(#glow)"/>
+          <text class="node-label" x="431" y="178" text-anchor="middle">${cfg.hubTitle}</text>
+          <text class="node-note" x="431" y="202" text-anchor="middle">${cfg.hubNote}</text>
+          <text class="node-note" x="431" y="226" text-anchor="middle">${cfg.coreNote}</text>
+
+          <rect class="glass-node" x="626" y="142" width="342" height="112" rx="10"/>
+          <text class="node-label" x="644" y="166">${cfg.systemTitle}</text>
+          ${systems}
+
+          <rect class="glass-node" x="48" y="292" width="904" height="96" rx="10"/>
+          <text class="node-label" x="64" y="316">${cfg.branchTitle}</text>
+          ${branches}
+
+          <path class="link-back" style="--flow:${cfg.main};--flow-width:7px" d="M526 198H626"/>
+          <path class="link-flow" style="--flow:${cfg.main};--flow-width:7px" d="M526 198H626"/>
+          <path class="link-flow" style="--flow:#26d4ff;--flow-width:5px" d="M202 96 C150 122 108 146 96 184"/>
+          <path class="link-flow" style="--flow:#26d4ff;--flow-width:5px" d="M252 96 C244 122 226 158 218 184"/>
+          <path class="link-flow" style="--flow:#f97316;--flow-width:5px" d="M284 198H336"/>
+          <path class="link-flow" style="--flow:#e60012;--flow-width:6px" d="M374 96 C386 116 410 134 431 142"/>
+          <path class="link-flow" style="--flow:#8b5cf6;--flow-width:6px" d="M486 96 C478 124 462 134 431 142"/>
+          <path class="attack-flow" d="M914 96 C760 120 520 126 218 216"/>
+          <path class="attack-red" d="M914 96 C780 145 518 150 270 206"/>
+          <circle class="pulse" cx="218" cy="216" r="8" fill="#f97316"/>
+
+          ${badge(60, 262, 88, "公网/攻击先过边界", "badge-warn")}
+          ${badge(350, 262, 86, cfg.centerBadge, "badge-good")}
+          ${badge(642, 262, 90, cfg.systemBadge, "badge-good")}
+          ${badge(748, 262, 96, cfg.remoteBadge, "badge-purple")}
+          <text class="node-note" x="500" y="410" text-anchor="middle">${cfg.footer}</text>
+        </svg>`;
+    }
+
+    function svgSichuanGov() {
+      return svgIndustryNetwork({
+        title: "四川政务行业组网：省、市、县、乡镇统一接入政务云网",
+        subtitle: "省级政务云/大数据中心是核心，市州区县通过政务外网和云联网接入，互联网办事入口先过安全边界。",
+        main: "#22d3ee",
+        hubTitle: "省大数据中心",
+        hubNote: "省级政务云 / 共享交换",
+        coreNote: "统一身份 / 目录 / 接口 / 审计",
+        systemTitle: "政务应用与数据平台",
+        systemBadge: "数据共享交换",
+        centerBadge: "省级核心平台",
+        remoteBadge: "市县多点接入",
+        branchTitle: "市州 / 区县 / 厅局 / 乡镇接入",
+        footer: "推荐路径：市县通过云联网/政务外网汇聚，省级核心和灾备用 OTN，互联网服务用安全专线。",
+        external: [["政务外网", "#22d3ee"], ["云联网", "#8b5cf6"], ["OTN灾备", "#e60012"], ["互联网办事", "#26d4ff"], ["医保/人社", "#8b5cf6"], ["公众访问", "#26d4ff"], ["攻击流量", "#ef4444"]],
+        systems: ["一网通办", "电子证照", "数据共享", "统一身份", "信用平台", "态势感知"],
+        branches: [["21个市州", "市级政务节点", "#22d3ee"], ["区县政务中心", "窗口/审批", "#22c55e"], ["乡镇便民中心", "基层服务", "#22c55e"], ["省级厅局", "部门业务网", "#8b5cf6"], ["政务大厅", "办事终端", "#22d3ee"]]
+      });
+    }
+
+    function svgSichuanJustice() {
+      return svgIndustryNetwork({
+        title: "四川政法行业组网：政法专网、视频专网、跨域安全协同",
+        subtitle: "政法委统筹，公安、法院、检察、司法、监狱戒毒和综治中心按域隔离、按权协同。",
+        main: "#8b5cf6",
+        hubTitle: "省级政法指挥中心",
+        hubNote: "综治 / 指挥调度 / 跨域交换",
+        coreNote: "政法业务网 + 视频专网分域",
+        systemTitle: "政法业务与视频平台",
+        systemBadge: "视频与办案协同",
+        centerBadge: "指挥中心",
+        remoteBadge: "跨单位协同",
+        branchTitle: "政法单位 / 基层站点接入",
+        footer: "推荐路径：核心指挥和视频汇聚用高等级专线，多单位协同用云联网/MPLS VPN，跨域交换必须过安全边界。",
+        external: [["政法专网", "#8b5cf6"], ["视频专网", "#22d3ee"], ["OTN指挥", "#e60012"], ["移动警务", "#26d4ff"], ["互联网安全", "#f97316"], ["跨域交换", "#8b5cf6"], ["攻击流量", "#ef4444"]],
+        systems: ["综治平台", "警务协同", "法院办案", "检察业务", "视频汇聚", "跨域交换"],
+        branches: [["公安厅/市局", "警务/视频", "#7c3aed"], ["法院系统", "庭审/卷宗", "#8b5cf6"], ["检察系统", "办案/监督", "#8b5cf6"], ["司法监狱", "监管/会见", "#ef4444"], ["综治中心", "网格/指挥", "#22d3ee"]]
+      });
+    }
+
+    function svgSichuanFinance() {
+      return svgIndustryNetwork({
+        title: "四川银行金融行业组网：双中心、灾备、网点与监管安全",
+        subtitle: "成都总部/省分行连接同城双活、异地灾备、营业网点、ATM 和互联网金融入口，强调低时延和高可靠。",
+        main: "#0f766e",
+        hubTitle: "成都总部/省分行",
+        hubNote: "核心交易 / 风控 / 渠道",
+        coreNote: "双核心 + 双运营商 + SLA 可视",
+        systemTitle: "金融核心系统与外联专区",
+        systemBadge: "核心交易承载",
+        centerBadge: "金融双中心",
+        remoteBadge: "网点主备接入",
+        branchTitle: "数据中心 / 分行 / 网点 / 自助设备接入",
+        footer: "推荐路径：核心交易和双活灾备用 OTN/智能 OTN，网点用 MPLS VPN/云联网主备，互联网金融入口用安全专线。",
+        external: [["OTN双活", "#e60012"], ["云联网", "#8b5cf6"], ["MPLS VPN", "#0f766e"], ["DIA安全专线", "#f97316"], ["监管报送", "#f5c542"], ["第三方支付", "#22d3ee"], ["攻击流量", "#ef4444"]],
+        systems: ["核心交易", "支付清算", "风控反欺诈", "手机银行", "监管报送", "数据仓库"],
+        branches: [["同城双活", "主/备中心", "#e60012"], ["异地灾备", "复制/演练", "#e60012"], ["市州分行", "区域汇聚", "#0f766e"], ["营业网点", "柜面/自助", "#22c55e"], ["ATM/自助银行", "交易终端", "#f5c542"]]
+      });
+    }
+
+    function svgManufacturingGroup() {
+      return svgIndustryNetwork({
+        title: "大型制造企业组网：四川总部 + 全国 5 家大型分厂",
+        subtitle: "总部统一管控，五大分厂接入集团专网；办公 IT、生产 OT、仓储物流、云上协同分区承载。",
+        main: "#f97316",
+        hubTitle: "四川总部",
+        hubNote: "集团数据中心 / 安全运营",
+        coreNote: "ERP / MES / PLM / 供应链",
+        systemTitle: "集团应用与工业数据平台",
+        systemBadge: "云边协同",
+        centerBadge: "总部统一管控",
+        remoteBadge: "五大分厂互联",
+        branchTitle: "全国 5 家大型分厂接入",
+        footer: "推荐路径：总部和核心分厂用云联网/OTN，普通工厂主备链路用云联网 + DIA VPN/5G，IT/OT 边界用工业防火墙隔离。",
+        external: [["云联网", "#8b5cf6"], ["OTN核心厂", "#e60012"], ["DIA安全专线", "#f97316"], ["5G备份", "#22d3ee"], ["供应商VPN", "#26d4ff"], ["公有云", "#8b5cf6"], ["攻击流量", "#ef4444"]],
+        systems: ["ERP", "MES", "PLM", "SCM", "工业数据湖", "安全运营"],
+        branches: [["华东分厂", "生产/仓储", "#f97316"], ["华南分厂", "生产/物流", "#f97316"], ["华中分厂", "制造基地", "#f97316"], ["华北分厂", "供应链", "#f97316"], ["西北分厂", "远程运维", "#f97316"]]
+      });
+    }
+
+    function svgProblemDiagnostic() {
+      const rows = [
+        ["家宽/普通宽带误用", "共享带宽、会话数、上行、SLA", "DIA/互联网专线 + 企业路由", "#7c9bbd"],
+        ["固定公网 IP 暴露", "官网/API/VPN/远程桌面暴露", "互联网安全专线 + WAF/清洗", "#f97316"],
+        ["总部和分支拼 VPN", "多网点、路由复杂、故障难定位", "组网专线/PON/云联网/MPLS", "#22c55e"],
+        ["核心链路低时延诉求", "双中心、灾备、交易、PACS、MES", "OTN/智能 OTN 红色硬管道", "#e60012"],
+        ["存量 SDH/MSTP 扩容慢", "E1 老业务、颗粒小、看不见 SLA", "SDH 迁转 + OTN/IP 化组网", "#6fb3b8"]
+      ];
+      return `
+        <svg viewBox="0 0 1000 430" role="img" aria-label="专线问题诊断商机雷达">
+          ${svgDefs()}
+          <text class="svg-title" x="32" y="40">专线问题诊断：从客户痛点识别商机</text>
+          <text class="svg-subtitle" x="32" y="64">问诊链路：典型问题 -> 判断条件 -> 对应方案 -> 商机信号 -> 攻坚对象</text>
+          <rect class="badge badge-risk" x="40" y="82" width="210" height="30" rx="15"/>
+          <text class="badge-text" x="145" y="102" text-anchor="middle">典型问题</text>
+          <rect class="badge badge-blue" x="322" y="82" width="250" height="30" rx="15"/>
+          <text class="badge-text" x="447" y="102" text-anchor="middle">判断条件</text>
+          <rect class="badge badge-good" x="650" y="82" width="300" height="30" rx="15"/>
+          <text class="badge-text" x="800" y="102" text-anchor="middle">推荐方案和商机动作</text>
+          ${rows.map(([problem, condition, solution, color], index) => {
+            const y = 128 + index * 55;
+            return `
+              <path class="link-flow" style="--flow:${color};--flow-width:3px" d="M250 ${y + 24} C286 ${y + 24} 288 ${y + 24} 322 ${y + 24}"/>
+              <path class="link-flow" style="--flow:${color};--flow-width:3px" d="M572 ${y + 24} C612 ${y + 24} 614 ${y + 24} 650 ${y + 24}"/>
+              <g class="device fade-${(index % 5) + 1}">
+                <rect class="glass-node" x="40" y="${y}" width="210" height="46" rx="8" stroke="${color}"/>
+                <circle cx="62" cy="${y + 23}" r="7" fill="${color}" class="pulse"/>
+                <text class="node-label" x="145" y="${y + 28}" text-anchor="middle">${problem}</text>
+              </g>
+              <g class="device fade-${(index % 5) + 1}">
+                <rect class="glass-node" x="322" y="${y}" width="250" height="46" rx="8" stroke="${color}"/>
+                <text class="node-label" x="447" y="${y + 21}" text-anchor="middle">${condition}</text>
+                <text class="node-note" x="447" y="${y + 36}" text-anchor="middle">问清业务、带宽、IP、路由、SLA、设备</text>
+              </g>
+              <g class="device fade-${(index % 5) + 1}">
+                <rect class="glass-node" x="650" y="${y}" width="300" height="46" rx="8" stroke="${color}"/>
+                <text class="node-label" x="800" y="${y + 21}" text-anchor="middle">${solution}</text>
+                <text class="node-note" x="800" y="${y + 36}" text-anchor="middle">找信息中心/运维/安全/业务负责人</text>
+              </g>
+            `;
+          }).join("")}
+          <rect class="glass-node" x="118" y="382" width="764" height="32" rx="10" stroke="#14b8a6"/>
+          <text class="node-note" x="500" y="403" text-anchor="middle">合格商机 = 业务场景明确 + 痛点可量化 + 建设触发点 + 预算路径 + 决策/技术负责人可接触</text>
+        </svg>`;
+    }
+
+    function svgHardwareMap() {
+      return `
+        <svg viewBox="0 0 1000 430" role="img" aria-label="专线客户侧设备地图">
+          ${svgDefs()}
+          <text class="svg-title" x="32" y="40">客户侧设备地图：专线最终要落在客户自己的网络架构里</text>
+          <text class="svg-subtitle" x="32" y="64">看位置、看瓶颈、看主备、看安全边界，才能把线路升级成组合方案</text>
+
+          <g class="device fade-1">
+            <rect class="glass-node" x="36" y="154" width="142" height="80" rx="10" stroke="#22b7ff"/>
+            <text class="node-label" x="107" y="184" text-anchor="middle">运营商网络</text>
+            <text class="node-note" x="107" y="205" text-anchor="middle">DIA / OTN / PON</text>
+            <text class="node-note" x="107" y="220" text-anchor="middle">组网专线</text>
+          </g>
+          <path class="link-flow" style="--flow:#22b7ff;--flow-width:6px" d="M178 194 C204 194 210 194 236 194"/>
+          <g class="device fade-2">
+            <rect class="glass-node" x="236" y="154" width="142" height="80" rx="10" stroke="#14b8a6"/>
+            <text class="node-label" x="307" y="178" text-anchor="middle">路由器 / CPE</text>
+            <text class="node-note" x="307" y="198" text-anchor="middle">路由、NAT、VPN</text>
+            <text class="node-note" x="307" y="214" text-anchor="middle">主备切换</text>
+          </g>
+          <path class="link-flow" style="--flow:#f97316;--flow-width:5px" d="M378 184 C410 150 430 132 460 124"/>
+          <path class="link-flow" style="--flow:#22c55e;--flow-width:5px" d="M378 206 C414 238 430 256 460 268"/>
+          <g class="device fade-3">
+            <rect class="glass-node" x="460" y="84" width="158" height="82" rx="10" stroke="#f97316"/>
+            <text class="node-label" x="539" y="110" text-anchor="middle">防火墙 / NGFW</text>
+            <text class="node-note" x="539" y="131" text-anchor="middle">出口、DMZ、IT/OT 边界</text>
+            <text class="node-note" x="539" y="147" text-anchor="middle">访问控制 / 审计</text>
+          </g>
+          <g class="device fade-3">
+            <rect class="glass-node" x="460" y="236" width="158" height="82" rx="10" stroke="#22c55e"/>
+            <text class="node-label" x="539" y="262" text-anchor="middle">核心交换机</text>
+            <text class="node-note" x="539" y="283" text-anchor="middle">数据中心 / 楼宇汇聚</text>
+            <text class="node-note" x="539" y="299" text-anchor="middle">VLAN / 三层互联</text>
+          </g>
+          <path class="link-flow" style="--flow:#ef4444;--flow-width:5px" d="M618 124 C648 124 658 124 688 124"/>
+          <path class="link-flow" style="--flow:#22c55e;--flow-width:5px" d="M618 276 C650 276 658 276 688 276"/>
+          <g class="device fade-4">
+            <rect class="glass-node" x="688" y="84" width="142" height="82" rx="10" stroke="#ef4444"/>
+            <text class="node-label" x="759" y="108" text-anchor="middle">WAF / 抗 DDoS</text>
+            <text class="node-note" x="759" y="130" text-anchor="middle">网站 / API / 固定 IP</text>
+            <text class="node-note" x="759" y="146" text-anchor="middle">监测、清洗、报告</text>
+          </g>
+          <g class="device fade-4">
+            <rect class="glass-node" x="688" y="236" width="142" height="82" rx="10" stroke="#22d3ee"/>
+            <text class="node-label" x="759" y="262" text-anchor="middle">汇聚 / 接入交换</text>
+            <text class="node-note" x="759" y="283" text-anchor="middle">楼宇、科室、工厂</text>
+            <text class="node-note" x="759" y="299" text-anchor="middle">PC/AP/摄像头/终端</text>
+          </g>
+          <path class="link-flow" style="--flow:#8b5cf6;--flow-width:4px" d="M830 276 C858 276 870 276 900 276"/>
+          <g class="device fade-5">
+            <rect class="glass-node" x="900" y="236" width="78" height="82" rx="10" stroke="#8b5cf6"/>
+            <text class="node-label" x="939" y="264" text-anchor="middle">终端</text>
+            <text class="node-note" x="939" y="286" text-anchor="middle">业务</text>
+            <text class="node-note" x="939" y="302" text-anchor="middle">现场</text>
+          </g>
+
+          <rect class="badge badge-blue" x="36" y="352" width="162" height="28" rx="14"/>
+          <text class="badge-text" x="117" y="371" text-anchor="middle">ONU/ONT：数百至千元级</text>
+          <rect class="badge badge-good" x="214" y="352" width="180" height="28" rx="14"/>
+          <text class="badge-text" x="304" y="371" text-anchor="middle">接入交换：千元至万元级</text>
+          <rect class="badge badge-warn" x="410" y="352" width="190" height="28" rx="14"/>
+          <text class="badge-text" x="505" y="371" text-anchor="middle">路由/防火墙：万元至十万元级</text>
+          <rect class="badge badge-risk" x="616" y="352" width="168" height="28" rx="14"/>
+          <text class="badge-text" x="700" y="371" text-anchor="middle">WAF/抗D：按规格确认</text>
+          <rect class="badge badge-purple" x="800" y="352" width="160" height="28" rx="14"/>
+          <text class="badge-text" x="880" y="371" text-anchor="middle">OTN CPE：本地报价</text>
+          <text class="node-note" x="500" y="406" text-anchor="middle">价格为训战参考区间，不作正式报价；正式资费以本地产品、项目规格和审批为准。</text>
+        </svg>`;
+    }
+
+    function svgChoiceMap() {
+      const items = [
+        ["只是普通上网", "家宽 / 商务宽带", "#7c9bbd", 105, 104],
+        ["稳定公网出口", "DIA / 互联网专线", "#22b7ff", 720, 104],
+        ["出口要防护", "互联网安全专线", "#f97316", 98, 184],
+        ["E1 / 老系统", "SDH / MSTP 存量评估", "#6fb3b8", 720, 184],
+        ["核心机房直连", "OTN 精品专线", "#e60012", 98, 264],
+        ["可视可管", "智能 OTN", "#f5c542", 720, 264],
+        ["多点上云", "云联网", "#8b5cf6", 258, 338],
+        ["这条线接到哪里", "企业内部组网拓扑分析", "#22c55e", 558, 338]
+      ];
+      return `
+        <svg viewBox="0 0 1000 430" role="img" aria-label="产品选择地图">
+          ${svgDefs()}
+          <text class="svg-title" x="32" y="40">客户说：我要一条专线</text>
+          <text class="svg-subtitle" x="32" y="64">先判断业务目的，再选择产品路径；别一听“专线”就直接报价</text>
+          <circle cx="500" cy="214" r="78" fill="rgba(255,255,255,.1)" stroke="#f97316" stroke-width="3" filter="url(#glow)"/>
+          <text class="node-label" x="500" y="205" text-anchor="middle">客户说</text>
+          <text class="svg-title" x="500" y="235" text-anchor="middle">我要一条专线</text>
+          ${items.map(([need, product, color, x, y]) => `
+            <path class="link-flow" style="--flow:${color};--flow-width:5px" d="M500 214 C${x < 500 ? 390 : 610} ${y} ${x < 500 ? x + 180 : x - 80} ${y} ${x + 74} ${y + 34}"/>
+            <g class="device">
+              <rect class="glass-node" x="${x}" y="${y}" width="180" height="66" rx="9" stroke="${color}"/>
+              <text class="node-label" x="${x + 90}" y="${y + 25}" text-anchor="middle">${need}</text>
+              <text class="node-note" x="${x + 90}" y="${y + 48}" text-anchor="middle">${product}</text>
+            </g>
+          `).join("")}
+        </svg>`;
+    }
+
+    function svgClassOverview() {
+      const steps = [
+        [0, "家宽共享基准", "#7c9bbd", "01"],
+        [1, "DIA 独享公网出口", "#22b7ff", "02"],
+        [2, "安全专线 + 防护", "#f97316", "03"],
+        [3, "SDH 存量电路", "#6fb3b8", "04"],
+        [4, "OTN 红色硬管道", "#e60012", "05"],
+        [5, "智能 OTN 可视运维", "#f5c542", "06"],
+        [6, "云联网多点上云", "#8b5cf6", "07"],
+        [7, "联通云联网优势", "#22b7ff", "08"],
+        [8, "医院内部组网", "#22c55e", "09"],
+        [9, "四川政务云网", "#22d3ee", "10"],
+        [10, "四川政法专网", "#8b5cf6", "11"],
+        [11, "四川金融双中心", "#0f766e", "12"],
+        [12, "制造集团五分厂", "#f97316", "13"],
+        [13, "产品选择地图", "#22b7ff", "14"],
+        [14, "问题诊断商机", "#14b8a6", "15"],
+        [15, "客户侧硬件地图", "#64748b", "16"],
+        [16, "分组闯关考核", "#f5c542", "17"],
+        [17, "课堂收束总览", "#e60012", "18"]
+      ];
+      return `
+        <svg viewBox="0 0 1000 430" role="img" aria-label="课堂演示总览时间轴">
+          ${svgDefs()}
+          <text class="svg-title" x="32" y="40">课堂演示总览：18 页课程地图，产品能力 + 行业落地 + 闯关考核</text>
+          <text class="svg-subtitle" x="32" y="64">点击任一卡片可跳转；播放总览会从 01 到 18 自动串讲</text>
+          ${steps.map(([jump, label, color, icon], i) => {
+            const col = i % 6;
+            const row = Math.floor(i / 6);
+            const x = 34 + col * 158;
+            const y = 90 + row * 91;
+            return `
+              <g class="timeline-step fade-${(i % 6) + 1}" data-jump="${jump}">
+                <rect class="glass-node" x="${x}" y="${y}" width="132" height="68" rx="9" stroke="${color}"/>
+                <circle cx="${x + 28}" cy="${y + 35}" r="18" fill="${color}" opacity=".88" filter="url(#glow)"/>
+                <text x="${x + 28}" y="${y + 40}" text-anchor="middle" fill="#fff" font-size="12" font-weight="900">${icon}</text>
+                <text class="node-label" x="${x + 82}" y="${y + 30}" text-anchor="middle" font-size="11">${label}</text>
+                <text class="node-note" x="${x + 82}" y="${y + 52}" text-anchor="middle">${jump < 8 ? "产品能力" : jump < 13 ? "行业组网" : "训战工具"}</text>
+              </g>
+            `;
+          }).join("")}
+          <rect class="glass-node" x="136" y="380" width="728" height="36" rx="10"/>
+          <text class="node-note" x="500" y="403" text-anchor="middle">串讲主线：产品能力 -> 医院/政务/政法/金融/制造落地 -> 产品选择 -> 问题诊断 -> 硬件地图 -> 闯关考核。</text>
+        </svg>`;
+    }
+  </script>
+</body>
+</html>

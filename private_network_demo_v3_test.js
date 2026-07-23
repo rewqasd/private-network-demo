@@ -44,8 +44,9 @@ function assert(condition, message) {
     { name: "page-01", query: "?page=1", expectMission: false },
     { name: "page-15-diagnostic", query: "?page=15", expectMission: false },
     { name: "page-16-hardware", query: "?page=16", expectMission: false },
-    { name: "page-17-mission-default", query: "?page=17", expectMission: true, active: "四川政务" },
-    { name: "page-18-overview", query: "?page=18", expectMission: false },
+    { name: "page-17-paper", query: "?page=17", expectMission: false, expectPaper: true },
+    { name: "page-18-mission-default", query: "?page=18", expectMission: true, active: "四川政务" },
+    { name: "page-19-overview", query: "?page=19", expectMission: false },
     { name: "mission-government", query: "?mission=government", expectMission: true, active: "四川政务" },
     { name: "mission-justice", query: "?mission=justice", expectMission: true, active: "四川政法" },
     { name: "mission-finance", query: "?mission=finance", expectMission: true, active: "四川金融" },
@@ -69,23 +70,34 @@ function assert(condition, message) {
         count: document.getElementById("pageCount")?.textContent || "",
         navCount: document.querySelectorAll(".nav-item").length,
         missionMode: document.getElementById("contentShell")?.classList.contains("mission-mode") || false,
+        paperMode: document.getElementById("contentShell")?.classList.contains("paper-mode") || false,
         challengeCount: document.querySelectorAll(".challenge-card").length,
         optionCount: document.querySelectorAll(".mission-option").length,
         activeMission: document.querySelector(".mission-tab.active")?.textContent.trim() || "",
+        paperCardCount: document.querySelectorAll(".paper-card").length,
+        paperOutputCount: document.querySelectorAll(".paper-output").length,
+        a1Title: document.querySelector(".a1-title")?.textContent.trim() || "",
         bodyWidth: document.body.scrollWidth,
         viewportWidth: innerWidth
       }));
 
       assert(errors.length === 0, `${testCase.name} has browser errors: ${errors.join(" | ")}`);
-      assert(state.navCount === 18, `${testCase.name} expected 18 nav items, got ${state.navCount}`);
-      assert(state.count.endsWith("/ 18"), `${testCase.name} expected page count / 18, got ${state.count}`);
+      assert(state.navCount === 19, `${testCase.name} expected 19 nav items, got ${state.navCount}`);
+      assert(state.count.endsWith("/ 19"), `${testCase.name} expected page count / 19, got ${state.count}`);
       assert(state.missionMode === testCase.expectMission, `${testCase.name} mission mode mismatch`);
+      assert(state.paperMode === Boolean(testCase.expectPaper), `${testCase.name} paper mode mismatch`);
       assert(state.bodyWidth <= state.viewportWidth + 2, `${testCase.name} has horizontal overflow`);
 
       if (testCase.expectMission) {
         assert(state.challengeCount === 6, `${testCase.name} expected 6 challenges`);
         assert(state.optionCount === 24, `${testCase.name} expected 24 options`);
         assert(state.activeMission === testCase.active, `${testCase.name} active mission mismatch: ${state.activeMission}`);
+      }
+
+      if (testCase.expectPaper) {
+        assert(state.a1Title.includes("四川某地市政务服务中心"), `${testCase.name} missing A1 sample title`);
+        assert(state.paperCardCount === 4, `${testCase.name} expected 4 paper cases, got ${state.paperCardCount}`);
+        assert(state.paperOutputCount === 28, `${testCase.name} expected 28 paper output blocks, got ${state.paperOutputCount}`);
       }
 
       if (shouldScreenshot) {

@@ -1159,6 +1159,388 @@
       border-color: rgba(38, 212, 255, 0.55);
     }
 
+    .paper-mode .stage {
+      height: auto;
+      min-height: min(940px, calc(100vh - 136px));
+      padding: 14px;
+      overflow: auto;
+    }
+
+    .paper-mode .tag-rail,
+    .paper-mode .lower-grid,
+    .paper-mode .footer-line {
+      display: none;
+    }
+
+    .paper-shell {
+      display: grid;
+      gap: 14px;
+    }
+
+    .paper-section {
+      min-width: 0;
+      border-radius: var(--radius);
+      border: 1px solid rgba(191, 221, 255, 0.18);
+      background: rgba(0, 0, 0, 0.16);
+      overflow: hidden;
+    }
+
+    .paper-section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 13px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.11);
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .paper-section-head h2 {
+      margin: 0;
+      color: #fff;
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    .paper-section-head p {
+      margin: 4px 0 0;
+      color: #afc4de;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .paper-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      color: #102033;
+      background: linear-gradient(135deg, #f8fafc, #c9f3ff);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.35;
+      max-width: 560px;
+      text-align: right;
+    }
+
+    .a1-scroll {
+      padding: 14px;
+      overflow: auto;
+    }
+
+    .a1-canvas {
+      width: min(1220px, 100%);
+      min-width: 980px;
+      margin: 0 auto;
+      aspect-ratio: 1414 / 1000;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 12px;
+      padding: 18px;
+      color: #102033;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.96), rgba(240,248,255,.98)),
+        repeating-linear-gradient(0deg, rgba(37,99,235,.06) 0, rgba(37,99,235,.06) 1px, transparent 1px, transparent 26px),
+        repeating-linear-gradient(90deg, rgba(37,99,235,.06) 0, rgba(37,99,235,.06) 1px, transparent 1px, transparent 26px);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.86);
+      box-shadow: 0 24px 55px rgba(0, 0, 0, 0.22);
+    }
+
+    .a1-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: end;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #102033;
+    }
+
+    .a1-title {
+      color: #102033;
+      font-size: 24px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .a1-subtitle {
+      margin-top: 4px;
+      color: #475569;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .a1-timebox {
+      min-width: 160px;
+      padding: 8px 10px;
+      border: 2px solid #102033;
+      color: #102033;
+      font-size: 12px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .a1-main-grid {
+      display: grid;
+      grid-template-columns: 25% minmax(0, 45%) 30%;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .a1-panel {
+      min-width: 0;
+      padding: 10px;
+      border: 2px solid rgba(15, 23, 42, 0.72);
+      background: rgba(255, 255, 255, 0.62);
+    }
+
+    .a1-panel h3,
+    .a1-topology h3 {
+      margin: 0 0 8px;
+      color: #0f172a;
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .a1-panel ul,
+    .paper-card ul,
+    .paper-layout ul,
+    .paper-rubric ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .a1-panel li {
+      margin: 6px 0;
+      padding-left: 12px;
+      color: #26364c;
+      font-size: 11.8px;
+      line-height: 1.36;
+    }
+
+    .a1-panel li::before,
+    .paper-card li::before,
+    .paper-layout li::before,
+    .paper-rubric li::before {
+      top: 0.68em;
+    }
+
+    .a1-note-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .a1-note {
+      padding: 7px;
+      border: 1px solid rgba(15, 23, 42, 0.28);
+      background: rgba(34, 183, 255, 0.08);
+      color: #18304d;
+      font-size: 11px;
+      line-height: 1.32;
+      font-weight: 800;
+    }
+
+    .a1-topology {
+      min-width: 0;
+      padding: 10px;
+      border: 2px solid #2563eb;
+      background: rgba(219, 234, 254, 0.54);
+    }
+
+    .a1-topology svg {
+      width: 100%;
+      height: calc(100% - 24px);
+      min-height: 360px;
+      display: block;
+    }
+
+    .a1-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1.25fr;
+      gap: 8px;
+      padding-top: 10px;
+      border-top: 3px solid #102033;
+    }
+
+    .a1-action {
+      min-height: 58px;
+      padding: 8px;
+      color: #102033;
+      border: 1.6px solid rgba(15, 23, 42, 0.62);
+      background: rgba(255, 255, 255, 0.64);
+      font-size: 11px;
+      line-height: 1.32;
+    }
+
+    .a1-action strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #0f172a;
+      font-size: 12px;
+    }
+
+    .paper-layout {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      padding: 14px;
+    }
+
+    .paper-layout-card {
+      min-width: 0;
+      padding: 12px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.065);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .paper-layout-card strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #fff;
+      font-size: 13px;
+    }
+
+    .paper-layout-card li,
+    .paper-rubric li {
+      color: #c6d8ee;
+      font-size: 11.2px;
+      line-height: 1.38;
+    }
+
+    .paper-cases {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      padding: 14px;
+    }
+
+    .paper-card {
+      min-width: 0;
+      display: grid;
+      gap: 10px;
+      padding: 13px;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.055));
+      border: 1px solid rgba(255, 255, 255, 0.13);
+    }
+
+    .paper-card-head {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .paper-case-no {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius);
+      color: #fff;
+      background: linear-gradient(135deg, var(--case-color, var(--cyan)), var(--case-color-2, var(--purple)));
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .paper-card h3 {
+      margin: 0;
+      color: #fff;
+      font-size: 16px;
+      line-height: 1.25;
+    }
+
+    .paper-card p {
+      margin: 0;
+      color: #afc4de;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .paper-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .paper-mini,
+    .paper-output {
+      min-width: 0;
+      padding: 9px;
+      border-radius: var(--radius);
+      background: rgba(0, 0, 0, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+    }
+
+    .paper-mini strong,
+    .paper-output strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #fff;
+      font-size: 12px;
+    }
+
+    .paper-mini li,
+    .paper-output li {
+      margin: 5px 0;
+      color: #c3d5ec;
+      font-size: 10.8px;
+      line-height: 1.34;
+    }
+
+    .paper-output-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .paper-output {
+      padding: 8px 7px;
+    }
+
+    .paper-output strong {
+      margin: 0;
+      color: color-mix(in srgb, var(--case-color, var(--cyan)) 84%, white 12%);
+      font-size: 11px;
+      line-height: 1.25;
+    }
+
+    .paper-output span {
+      display: block;
+      margin-top: 4px;
+      color: #b8cae1;
+      font-size: 9.6px;
+      line-height: 1.28;
+    }
+
+    .paper-rubric {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+      padding: 14px;
+    }
+
+    .paper-rubric-item {
+      min-width: 0;
+      padding: 10px;
+      border-radius: var(--radius);
+      background: color-mix(in srgb, var(--accent-current, var(--cyan)) 13%, rgba(255,255,255,.06));
+      border: 1px solid color-mix(in srgb, var(--accent-current, var(--cyan)) 34%, rgba(255,255,255,.12));
+    }
+
+    .paper-rubric-item strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #fff;
+      font-size: 12px;
+    }
+
     @media (max-width: 1280px) {
       :root { --nav-width: 282px; }
       .main { padding: 18px; }
@@ -1167,6 +1549,15 @@
       .mission-shell { grid-template-columns: 1fr; }
       .mission-mode .stage { height: auto; min-height: 0; }
       .mission-challenges { grid-template-columns: 1fr; }
+      .paper-layout,
+      .paper-cases,
+      .paper-rubric {
+        grid-template-columns: 1fr;
+      }
+      .paper-mini-grid,
+      .paper-output-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
       body { overflow: auto; }
     }
 
@@ -1178,6 +1569,12 @@
       .option-grid,
       .mission-result { grid-template-columns: 1fr; }
       .mission-shell { grid-template-columns: 1fr; }
+      .a1-scroll { padding: 10px; }
+      .a1-canvas { min-width: 940px; padding: 14px; }
+      .paper-mini-grid,
+      .paper-output-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -1188,11 +1585,11 @@
         <div class="brand-mark">政企</div>
         <div>
           <div class="brand-title">专网产品动态演示 V3</div>
-          <div class="brand-subtitle">18 个板块串讲产品、硬件、行业组网与闯关考核</div>
+          <div class="brand-subtitle">19 个板块串讲产品、硬件、行业组网与闯关考核</div>
         </div>
       </div>
       <nav class="nav-list" id="navList"></nav>
-      <div class="sidebar-foot">数字键 1-9 跳转前 9 页；0 跳四川政务；Q/W/E/R/T/Y/U/I 跳政法、金融、制造、地图、问题诊断、硬件地图、闯关考核、课堂总览。</div>
+      <div class="sidebar-foot">数字键 1-9 跳转前 9 页；0 跳四川政务；Q/W/E/R/T/Y/U/I/O 跳政法、金融、制造、地图、问题诊断、硬件地图、大白纸题、闯关考核、课堂总览。</div>
     </aside>
 
     <main class="main">
@@ -1200,7 +1597,7 @@
         <div>
           <div class="eyebrow-row">
             <div class="eyebrow" id="sceneEyebrow">共享宽带基准</div>
-            <div class="page-count" id="pageCount">01 / 18</div>
+            <div class="page-count" id="pageCount">01 / 19</div>
           </div>
           <h1 class="page-title" id="pageTitle">家宽 PPPoE：共享宽带基准</h1>
           <p class="page-summary" id="pageSummary"></p>
@@ -1267,6 +1664,7 @@
       map: ["#f97316", "#22b7ff"],
       diagnostic: ["#14b8a6", "#f97316"],
       hardware: ["#64748b", "#22d3ee"],
+      paper: ["#f5c542", "#22d3ee"],
       mission: ["#e60012", "#f5c542"],
       overview: ["#e60012", "#22b7ff"]
     };
@@ -1722,8 +2120,20 @@
         svg: svgHardwareMap
       },
       {
-        key: "mission",
+        key: "paper",
         no: "17",
+        nav: "大白纸方案题",
+        icon: "纸",
+        note: "A1 示例 + 四行业题",
+        eyebrow: "线下小组方案输出",
+        title: "大白纸方案题：四行业固网组网训战",
+        summary: "先看一张 A1 白纸完整成品示例，再按政务、政法、金融、制造四个四川场景画出架构、拓扑、业务组合和攻坚路径。",
+        type: "paper",
+        speaker: "这页用于线下分组。讲师先用 A1 示例示范一张好答案长什么样，再让四个小组分别认领行业题。要求不是写长报告，而是在一张纸上讲清客户、痛点、拓扑、产品和攻坚对象。"
+      },
+      {
+        key: "mission",
+        no: "18",
         nav: "分组闯关考核",
         icon: "闯",
         note: "四行业互动任务",
@@ -1750,13 +2160,13 @@
       },
       {
         key: "overview",
-        no: "18",
+        no: "19",
         nav: "课堂演示总览",
         icon: "总",
         note: "一键串讲",
         eyebrow: "一键串讲时间轴",
         title: "课堂演示总览：一键串讲",
-        summary: "按“共享基准 → 产品能力 → 客户现场 → 四个行业落地 → 问诊工具 → 硬件地图 → 闯关考核”完成 18 页课堂串讲。",
+        summary: "按“共享基准 → 产品能力 → 客户现场 → 四个行业落地 → 问诊工具 → 硬件地图 → 大白纸演练 → 闯关考核”完成 19 页课堂串讲。",
         tags: [
           ["时间轴", "从家宽基准讲到企业现场落地。", "good"],
           ["点击跳转", "点击 SVG 时间轴上的步骤可直接进入对应页面。", "good"],
@@ -1766,12 +2176,12 @@
         leftTitle: "前半段：产品能力铺垫",
         leftItems: ["第一步：家宽共享基准", "第二步：DIA 独享公网出口", "第三步：安全专线 = 专线 + 安全", "第四步：SDH 传统稳定但弹性不足", "第五步：OTN 红色硬管道", "第六步：智能 OTN 可视可管", "第七步：云联网多点上云"],
         rightTitle: "后半段：行业落地、问诊与考核",
-        rightItems: ["第八步：医院内部组网落地", "第九步：四川政务省市县云网", "第十步：四川政法专网与视频协同", "第十一步：四川银行金融双中心与网点", "第十二步：制造集团总部 + 全国 5 大分厂", "最后：产品地图、问题诊断、硬件地图和分组闯关收束"],
+        rightItems: ["第八步：医院内部组网落地", "第九步：四川政务省市县云网", "第十步：四川政法专网与视频协同", "第十一步：四川银行金融双中心与网点", "第十二步：制造集团总部 + 全国 5 大分厂", "最后：产品地图、问题诊断、硬件地图、大白纸方案题和分组闯关收束"],
         scenarios: ["培训开场", "课程收尾", "领导汇报", "售前串讲", "产品体系总览"],
         boundaryTitle: "点击提示",
-        boundaryItems: ["点击时间轴任一步可跳转对应页面", "播放总览按钮会从 01 到 18 自动播放", "0/Q/W/E/R/T/Y/U/I 可快速跳到第 10-17 页"],
+        boundaryItems: ["点击时间轴任一步可跳转对应页面", "播放总览按钮会从 01 到 19 自动播放", "0/Q/W/E/R/T/Y/U/I/O 可快速跳到第 10-19 页"],
         conclusion: "先讲“为什么家宽不够”，再讲“企业不同业务该选哪类网络能力”。",
-        speaker: "课堂串讲可以这样收束：先用家宽说明共享基准，再讲 DIA、安全专线、SDH、OTN、智能 OTN、组网这些能力，然后落到医院、政务、政法、金融、制造五类现场组网，最后用产品地图、问题诊断、硬件地图和闯关考核完成训战闭环。",
+        speaker: "课堂串讲可以这样收束：先用家宽说明共享基准，再讲 DIA、安全专线、SDH、OTN、智能 OTN、组网这些能力，然后落到医院、政务、政法、金融、制造五类现场组网，最后用产品地图、问题诊断、硬件地图、大白纸方案题和闯关考核完成训战闭环。",
         svg: svgClassOverview
       }
     ];
@@ -1803,6 +2213,93 @@
 
     const missionStorageKey = "privateNetworkDemoV3MissionAnswers";
     const missionKeys = ["government", "justice", "finance", "manufacturing"];
+    const paperSourceDocs = [
+      "★互联网专线业务-202607 - 地市.pptx",
+      "4、★政企组网专线业务-202606.pptx",
+      "2、联通 行客一指禅_SDH迁转 政企精品网 2P-CU20250407.pdf",
+      "全省投标能力培训_四川农商银行OTN案例.pptx"
+    ];
+    const paperOutputModules = [
+      ["1. 客户现网架构", "总部/省级、市州、区县、基层站点、数据中心、云和互联网出口。"],
+      ["2. 关键痛点风险", "共享带宽、固定公网 IP 暴露、时延、主备、安全隔离、老旧 SDH/MSTP。"],
+      ["3. 目标组网拓扑", "核心节点、分支节点、云节点、主备链路、业务分区和安全边界。"],
+      ["4. 固网业务组合", "DIA/安全专线、精品 OTN、云联网/SD-WAN/MPLS VPN、PON 组网如何组合。"],
+      ["5. 客户侧硬件", "路由器、核心/汇聚/接入交换机、防火墙、WAF、抗 DDoS、CPE、ONU/ONT。"],
+      ["6. 甲方攻坚路径", "先找谁、谁提需求、谁管安全、谁管预算、谁拍板、谁协助试点。"],
+      ["7. 合格商机判断", "站点数量、带宽、SLA、预算窗口、现网故障、上云/灾备/整改/迁改事件。"]
+    ];
+    const paperLayoutBlocks = [
+      ["左 25% 现网", ["画客户组织层级", "标出现有出口/专线", "写 3-5 个痛点"]],
+      ["中 45% 拓扑", ["只画关键节点", "标主备链路和安全边界", "用颜色区分 DIA/OTN/云联网"]],
+      ["右 30% 方案", ["写业务组合", "写客户侧硬件", "写攻坚对象与商机判断"]],
+      ["底部 15% 行动", ["下一步拜访清单", "需要客户补充的数据", "3 分钟汇报结论"]]
+    ];
+    const paperRubric = [
+      ["架构清楚", "组织层级、站点、云、数据中心、互联网出口是否一眼看懂。"],
+      ["链路合理", "DIA、OTN、云联网/SD-WAN、PON 的位置是否匹配业务。"],
+      ["风险识别", "公网暴露、主备不足、共享带宽、时延、安全隔离是否被标出。"],
+      ["设备落地", "客户侧路由、交换、防火墙、WAF/CPE/ONU 是否放在正确位置。"],
+      ["攻坚准确", "是否分清提需求、管安全、管运维、管预算和拍板的人。"],
+      ["商机可推进", "是否写出预算窗口、触发事件、下一步拜访和需补充材料。"]
+    ];
+    const paperCases = [
+      {
+        key: "government",
+        no: "政务",
+        label: "四川政务：地市一体化政务服务与城市运行",
+        subtitle: "背景参考：四川某川东北地市，市大数据中心牵头，连接市级政务云、区县政务服务中心、乡镇便民窗口和互联网办事大厅。",
+        colors: ["#2563eb", "#22d3ee"],
+        background: "该市正在推进一体化政务服务和城市运行管理平台，市本级已有政务云资源池、政务外网汇聚区和互联网办事大厅，20 多个委办局陆续把业务系统迁到云上。区县政务服务中心、乡镇便民服务站、部门自建小系统仍存在多条老旧专线、普通宽带和临时 VPN 混用，公众门户和移动端接口通过固定公网 IP 发布，近期出现高峰访问慢、跨部门数据共享不稳定、等保整改要求补齐安全监测和灾备链路的问题。",
+        hints: {
+          scene: ["画出市级政务云/数据中心、区县、乡镇窗口、委办局、互联网办事大厅和灾备节点。", "区分政务内网/外网、互联网服务区、数据共享交换区和运维管理区。", "不要画所有部门，只选 4-6 个代表性节点展示层级。"],
+          product: ["区县和委办局多点互联优先考虑云联网/MPLS VPN/SD-WAN。", "公众门户、移动端接口和统一互联网出口匹配 DIA + 互联网安全专线。", "市级数据中心到灾备或省级平台的高等级链路匹配精品 OTN/智能 OTN。"],
+          attack: ["先找市大数据中心/信息中心负责人梳理平台和链路，再找网信/安全负责人确认等保和公网暴露。", "财政采购和分管副秘书长决定预算节奏，重点委办局提供业务牵引。", "商机合格要看到区县站点数、带宽、云迁移计划、等保整改或灾备建设窗口。"]
+        },
+        outputs: ["省市县乡四级节点、政务云、互联网大厅、灾备中心。", "公众入口慢、固定公网 IP 暴露、跨部门共享不稳、老线多。", "市级双出口、区县云联网接入、核心灾备 OTN、互联网安全区。", "云联网 + DIA 安全专线 + 精品 OTN + PON/SD-WAN 基层接入。", "出口路由、防火墙/WAF、核心交换、CPE、ONU/ONT。", "大数据中心、网信安全、委办局信息科、财政采购、分管领导。", "站点清单、整改文件、灾备项目、预算批复、旧线到期。"]
+      },
+      {
+        key: "justice",
+        no: "政法",
+        label: "四川政法：市州政法协同与基层视频专网",
+        subtitle: "背景参考：四川某川西市州，政法委统筹综治中心，公安科信、法院、检察、司法和基层派出所共同接入。",
+        colors: ["#7c3aed", "#ef4444"],
+        background: "该市州正在升级市级综治中心和执法办案协同平台，原有公安视频专网、政法业务专网、法院检察专线和司法所接入分别建设，基层派出所、法庭、司法所、网格化视频点位众多。平台要打通视频调度、案件协同、移动警务和跨部门共享，但现网存在视频流量大、专网边界不清、基层链路带宽小、互联网入口和移动警务入口安全压力高的问题。客户希望既保障指挥调度，又满足跨部门权限隔离和审计。",
+        hints: {
+          scene: ["画出政法委综治中心、公安指挥中心、法院/检察/司法、基层站点、视频平台和移动警务入口。", "把业务专网、视频专网、互联网区、跨域交换和安全审计区分开。", "基层站点很多时，用代表节点加数量标注，不要把所有派出所逐个画满。"],
+          product: ["市级指挥中心、视频平台和灾备之间匹配 OTN/智能 OTN。", "跨部门多点互联匹配云联网/MPLS VPN，基层小站点可用 PON 组网或 SD-WAN。", "移动警务、公众服务入口和视频互联网出口匹配 DIA + 安全专线/WAF/抗 DDoS。"],
+          attack: ["先找政法委信息化/综治中心确认统筹目标，再找公安科信和指挥中心确认视频与业务流量。", "法院、检察、司法信息技术岗决定跨部门接入边界，网安/安全负责人关注审计和等保。", "商机合格要看到视频点位规模、基层站点数、跨部门平台上线、重大活动保障或安全整改。"]
+        },
+        outputs: ["综治中心、公安、法院、检察、司法、基层站点、视频平台。", "视频大流量、基层带宽小、跨域边界模糊、移动入口风险。", "指挥核心 OTN、基层云联网/PON、互联网安全区、跨域交换。", "精品 OTN + 云联网/MPLS VPN + PON/SD-WAN + DIA 安全专线。", "核心交换、视频网防火墙、边界网闸/防火墙、CPE、WAF。", "政法委、公安科信、指挥中心、网安、法院检察技术岗、财政采购。", "平台建设批复、视频扩容、基层站点清单、等保整改、活动保障。"]
+      },
+      {
+        key: "finance",
+        no: "金融",
+        label: "四川金融：省行双中心与市州网点高可靠接入",
+        subtitle: "背景参考：四川省内某农商行/城商行，成都省行科技部统筹，覆盖市州分行、县域支行、营业网点、自助设备和互联网金融区。",
+        colors: ["#0f766e", "#f5c542"],
+        background: "该银行省行科技部正在规划核心系统承载和网点链路升级。成都主数据中心和同城备中心承载核心交易、柜面、风控、渠道和统一运维，另有异地灾备中心。21 个市州分行、数百个营业网点和 ATM/自助银行通过存量专线、MPLS VPN 或公网备份接入。手机银行、网上银行、开放 API 和第三方支付接口位于互联网金融 DMZ。现网痛点是部分网点单链路、主备切换慢，核心数据同步时延敏感，公网入口攻击风险高，监管报送和第三方外联需要强隔离和可审计。",
+        hints: {
+          scene: ["画出省行、主备数据中心、异地灾备、市州分行、县域支行、营业网点、互联网金融 DMZ 和监管外联区。", "区分核心交易链路、网点生产链路、办公互联网出口、监管/清算外联和互联网金融入口。", "网点数量很多时，用市州/县域/网点三级抽象画法。"],
+          product: ["双中心、灾备复制和核心骨干链路匹配金融精品网/智能 OTN。", "市州分行和营业网点多点接入匹配云联网/MPLS VPN，重要网点可叠加 SD-WAN 或双路由备份。", "手机银行、网上银行和 API 入口匹配 DIA + 互联网安全专线/WAF/抗 DDoS。"],
+          attack: ["先找省行科技部/数据中心主任确认核心链路和网点现状，再找网络运维负责人拿链路清单。", "安全合规/风险管理关注监管和互联网入口，零售/渠道部门提供网点体验牵引。", "商机合格要看到 SLA 要求、网点主备改造、灾备复制窗口、监管检查或骨干线路招采。"]
+        },
+        outputs: ["省行、双中心、异地灾备、市州分行、县域支行、网点、DMZ。", "核心低时延、网点单点、主备慢、DDoS/API 风险、监管隔离。", "双中心 OTN 环、网点云联网接入、DIA 安全出口、监管专区。", "金融精品网/智能 OTN + 云联网/MPLS VPN + SD-WAN 备份 + DIA 安全专线。", "双路由、核心交换、NGFW/WAF、抗 DDoS、SD-WAN CPE。", "科技部、数据中心、网络运维、安全合规、渠道部门、采购/分管行领导。", "网点数、带宽/SLA、故障记录、招采计划、监管整改、旧合同到期。"]
+      },
+      {
+        key: "manufacturing",
+        no: "制造",
+        label: "四川规上大型制造：总部 + 全国 5 家大型分厂",
+        subtitle: "背景参考：四川成都/德阳某装备制造或新能源材料集团，四川总部管控全国 5 个大型生产基地。",
+        colors: ["#f97316", "#22c55e"],
+        background: "该集团四川总部建设集团数据中心和工业互联网平台，全国 5 家大型分厂分布在华东、华南、华中、华北和西北。总部统一承载 ERP、财务、人资、供应链、研发 PLM 和安全运营，各分厂有 MES、SCADA、仓储物流、视频安防、办公网和生产 OT 网。现网中部分分厂靠公网 VPN 或普通专线访问总部系统，远程设备厂商通过临时 VPN 维护产线，云上数据湖和总部 BI 需要汇聚生产数据。客户担心生产系统中断、IT/OT 混通、安全审计不足、跨区域访问慢和新工厂快速接入难。",
+        hints: {
+          scene: ["画出四川总部、集团数据中心、工业互联网平台、全国 5 家分厂、云资源、供应商远程运维和灾备节点。", "区分办公 IT 网、生产 OT 网、视频/安防网、云平台访问和供应商远程入口。", "5 家分厂用五个节点即可，不要展开每条产线。"],
+          product: ["总部、分厂、云资源多点互联匹配云联网/SD-WAN/MPLS VPN。", "总部到核心分厂、灾备或大数据同步链路匹配 OTN/智能 OTN。", "各工厂互联网出口和远程运维入口匹配 DIA + 安全专线，园区接入可考虑 PON/FTTO/政企网关。"],
+          attack: ["先找集团 CIO/信息中心梳理总部和分厂网络，再找生产/设备/自动化负责人确认产线影响。", "分厂厂长和分厂信息主管决定本地配合，工控安全负责人关注 IT/OT 隔离，采购和财务决定框架预算。", "商机合格要看到分厂数量、云平台建设、产线停机风险、旧 VPN 问题、远程运维合规整改或新厂投产。"]
+        },
+        outputs: ["四川总部、集团数据中心、5 分厂、工业云、供应商入口、灾备。", "公网 VPN 拼接、IT/OT 混通、远程运维不审计、跨域慢、主备弱。", "总部云联网枢纽、核心工厂 OTN、分厂 SD-WAN、DIA 安全出口。", "云联网/SD-WAN/MPLS VPN + 精品 OTN + DIA 安全专线 + PON/园区接入。", "SD-WAN CPE、工业防火墙、核心/接入交换、堡垒机、ONU/ONT。", "CIO、生产设备、自动化、分厂厂长、工控安全、采购财务、分管副总。", "新厂投产、云平台上线、产线故障、远程运维整改、框架集采。"]
+      }
+    ];
     const missions = {
       government: {
         label: "四川政务",
@@ -2272,6 +2769,7 @@
 
       if (page.type === "mission") {
         contentShell.classList.add("mission-mode");
+        contentShell.classList.remove("paper-mode");
         renderMissionPage(page);
         speakerCard.classList.toggle("visible", showSpeaker);
         speakerBtn.setAttribute("aria-expanded", String(showSpeaker));
@@ -2281,7 +2779,20 @@
         return;
       }
 
-      contentShell.classList.remove("mission-mode");
+      if (page.type === "paper") {
+        contentShell.classList.add("paper-mode");
+        contentShell.classList.remove("mission-mode");
+        renderPaperPage();
+        speakerCard.textContent = page.speaker;
+        speakerCard.classList.toggle("visible", showSpeaker);
+        speakerBtn.setAttribute("aria-expanded", String(showSpeaker));
+        contentShell.style.animation = "none";
+        void contentShell.offsetWidth;
+        contentShell.style.animation = "";
+        return;
+      }
+
+      contentShell.classList.remove("mission-mode", "paper-mode");
       svgStage.innerHTML = page.svg();
 
       tagRail.innerHTML = page.tags.map(([text, tip, type]) =>
@@ -2348,6 +2859,220 @@
         percent: Math.round((hit / total) * 100),
         missed
       };
+    }
+
+    function renderPaperList(items) {
+      return `<ul>${items.map(item => `<li>${escapeHTML(item)}</li>`).join("")}</ul>`;
+    }
+
+    function renderPaperOutputGrid(item) {
+      return `
+        <div class="paper-output-grid" aria-label="${escapeHTML(item.no)}白纸输出板块">
+          ${paperOutputModules.map(([title], index) => `
+            <div class="paper-output">
+              <strong>${escapeHTML(title)}</strong>
+              <span>${escapeHTML(item.outputs[index])}</span>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderPaperCase(item, index) {
+      return `
+        <article class="paper-card" style="--case-color:${item.colors[0]};--case-color-2:${item.colors[1]}">
+          <div class="paper-card-head">
+            <div class="paper-case-no">${escapeHTML(item.no)}</div>
+            <div>
+              <h3>${String(index + 1).padStart(2, "0")} ${escapeHTML(item.label)}</h3>
+              <p>${escapeHTML(item.subtitle)}</p>
+            </div>
+          </div>
+          <p>${escapeHTML(item.background)}</p>
+          <div class="paper-mini-grid">
+            <div class="paper-mini">
+              <strong>场景线索</strong>
+              ${renderPaperList(item.hints.scene)}
+            </div>
+            <div class="paper-mini">
+              <strong>产品匹配线索</strong>
+              ${renderPaperList(item.hints.product)}
+            </div>
+            <div class="paper-mini">
+              <strong>攻坚线索</strong>
+              ${renderPaperList(item.hints.attack)}
+            </div>
+          </div>
+          ${renderPaperOutputGrid(item)}
+        </article>
+      `;
+    }
+
+    function renderPaperPage() {
+      svgStage.innerHTML = `
+        <div class="paper-shell">
+          <section class="paper-section" aria-label="A1 白纸成品示例">
+            <div class="paper-section-head">
+              <div>
+                <h2>A1 白纸完整成品示例：四川某地市政务服务中心</h2>
+                <p>示例是训战参考成品，不是唯一标准答案。控制节点、产品和文字密度，保证 A1 横向纸能画得下、3 分钟讲得清。</p>
+              </div>
+              <span class="paper-badge">A1 横向 / 左 25% 中 45% 右 30%</span>
+            </div>
+            <div class="a1-scroll">
+              <div class="a1-canvas" role="img" aria-label="A1 大白纸方案成品示例">
+                <div class="a1-head">
+                  <div>
+                    <div class="a1-title">四川某地市政务服务中心云网专线升级方案</div>
+                    <div class="a1-subtitle">客户画像：市大数据中心牵头，覆盖市本级、区县、乡镇窗口、政务云、互联网办事大厅和灾备中心。</div>
+                  </div>
+                  <div class="a1-timebox">小组汇报 3 分钟<br>只讲客户、痛点、拓扑、产品、找谁谈</div>
+                </div>
+                <div class="a1-main-grid">
+                  <div class="a1-panel">
+                    <h3>左栏：现网架构与痛点</h3>
+                    ${renderPaperList([
+                      "市级政务云承载 20+ 委办局系统，区县/乡镇通过多种线路接入。",
+                      "公众门户和移动端接口使用固定公网 IP，缺少持续安全监测。",
+                      "部分基层窗口使用普通宽带或临时 VPN，高峰期业务慢、故障难定位。",
+                      "市级数据中心与灾备中心链路带宽不足，容灾演练窗口紧。",
+                      "委办局、区县、云资源路由分散，新增接入审批和割接周期长。"
+                    ])}
+                    <div class="a1-note-grid">
+                      <div class="a1-note">不要把 20 多个委办局全部画出来，选 4 个代表节点即可。</div>
+                      <div class="a1-note">每个痛点都要能对应到一个产品或攻坚动作。</div>
+                    </div>
+                  </div>
+                  <div class="a1-topology">
+                    <h3>中栏：目标组网拓扑</h3>
+                    ${renderA1TopologySvg()}
+                  </div>
+                  <div class="a1-panel">
+                    <h3>右栏：业务组合与攻坚</h3>
+                    ${renderPaperList([
+                      "云联网/MPLS VPN：市级平台、区县、委办局、云资源统一接入。",
+                      "精品 OTN/智能 OTN：市级数据中心到灾备中心，承载核心数据同步。",
+                      "DIA + 互联网安全专线：公众门户、移动端接口、统一互联网出口。",
+                      "PON/SD-WAN：乡镇便民窗口和小型基层站点低成本接入。",
+                      "客户侧设备：出口路由、防火墙/WAF、核心交换、CPE、ONU/ONT。",
+                      "攻坚对象：市大数据中心、网信安全、重点委办局、财政采购、分管领导。",
+                      "合格商机：有站点清单、带宽/SLA、等保整改、灾备建设、预算窗口。"
+                    ])}
+                  </div>
+                </div>
+                <div class="a1-bottom">
+                  <div class="a1-action"><strong>下一步 1</strong>向大数据中心要现网链路、区县站点、政务云访问和公网 IP 清单。</div>
+                  <div class="a1-action"><strong>下一步 2</strong>约网信/安全负责人确认等保整改、WAF、抗 DDoS 和安全报告诉求。</div>
+                  <div class="a1-action"><strong>下一步 3</strong>约财政采购确认旧线到期、新平台上线、灾备建设和预算窗口。</div>
+                  <div class="a1-action"><strong>汇报结论</strong>本项目不是单条专线报价，而是政务云网统一接入 + 核心灾备硬管道 + 公网安全出口的组合商机。</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="paper-section" aria-label="白纸画法约束">
+            <div class="paper-section-head">
+              <div>
+                <h2>白纸画法约束：避免发散，按 4 个区域和 7 个板块输出</h2>
+                <p>每组只画关键节点、关键链路、业务分区、安全边界和主备关系，不追求把客户所有设备画完。</p>
+              </div>
+              <span class="paper-badge">10-15 分钟画图 / 3 分钟汇报</span>
+            </div>
+            <div class="paper-layout">
+              ${paperLayoutBlocks.map(([title, items]) => `
+                <div class="paper-layout-card">
+                  <strong>${escapeHTML(title)}</strong>
+                  ${renderPaperList(items)}
+                </div>
+              `).join("")}
+            </div>
+          </section>
+
+          <section class="paper-section" aria-label="四行业大白纸题目">
+            <div class="paper-section-head">
+              <div>
+                <h2>四道行业小组题：四川背景 + 固网业务组合 + 攻坚路径</h2>
+                <p>每题都必须覆盖 7 个输出板块。提示只给方向，不直接给唯一标准答案。</p>
+              </div>
+              <span class="paper-badge">资料口径：${paperSourceDocs.map(escapeHTML).join(" / ")}</span>
+            </div>
+            <div class="paper-cases">
+              ${paperCases.map((item, index) => renderPaperCase(item, index)).join("")}
+            </div>
+          </section>
+
+          <section class="paper-section" aria-label="讲师评分规则">
+            <div class="paper-section-head">
+              <div>
+                <h2>讲师评分 Rubric：看方案是否能转成下一步客户拜访</h2>
+                <p>评分重点不是画得漂亮，而是架构、链路、产品、设备、人员和商机判断是否能闭环。</p>
+              </div>
+              <span class="paper-badge">建议每项 0-5 分</span>
+            </div>
+            <div class="paper-rubric">
+              ${paperRubric.map(([title, detail]) => `
+                <div class="paper-rubric-item">
+                  <strong>${escapeHTML(title)}</strong>
+                  <ul><li>${escapeHTML(detail)}</li></ul>
+                </div>
+              `).join("")}
+            </div>
+          </section>
+        </div>
+      `;
+    }
+
+    function renderA1TopologySvg() {
+      return `
+        <svg viewBox="0 0 720 430" preserveAspectRatio="xMidYMin meet" role="img" aria-label="四川政务 A1 示例目标组网拓扑">
+          <defs>
+            <filter id="paperGlow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="4" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <rect x="8" y="8" width="704" height="414" fill="rgba(255,255,255,.42)" stroke="#93c5fd" stroke-width="2"/>
+          <rect x="242" y="34" width="180" height="44" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+          <text x="332" y="61" fill="#0f172a" font-size="14" font-weight="900" text-anchor="middle">省级政务平台/云资源</text>
+          <rect x="246" y="150" width="170" height="58" fill="#fff" stroke="#2563eb" stroke-width="2"/>
+          <text x="331" y="174" fill="#0f172a" font-size="14" font-weight="900" text-anchor="middle">市级政务云</text>
+          <text x="331" y="194" fill="#475569" font-size="11" font-weight="800" text-anchor="middle">数据共享/统一认证/运维</text>
+          <rect x="508" y="150" width="140" height="58" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+          <text x="578" y="174" fill="#0f172a" font-size="13" font-weight="900" text-anchor="middle">灾备中心</text>
+          <text x="578" y="194" fill="#475569" font-size="11" font-weight="800" text-anchor="middle">核心数据同步</text>
+          <rect x="38" y="145" width="150" height="68" fill="#fee2e2" stroke="#ef4444" stroke-width="2"/>
+          <text x="113" y="170" fill="#0f172a" font-size="13" font-weight="900" text-anchor="middle">互联网服务区</text>
+          <text x="113" y="190" fill="#475569" font-size="11" font-weight="800" text-anchor="middle">门户/APP/API/WAF</text>
+          <rect x="48" y="292" width="118" height="48" fill="#ecfeff" stroke="#06b6d4" stroke-width="2"/>
+          <text x="107" y="321" fill="#0f172a" font-size="12" font-weight="900" text-anchor="middle">A 区县中心</text>
+          <rect x="206" y="292" width="118" height="48" fill="#ecfeff" stroke="#06b6d4" stroke-width="2"/>
+          <text x="265" y="321" fill="#0f172a" font-size="12" font-weight="900" text-anchor="middle">B 区县中心</text>
+          <rect x="364" y="292" width="118" height="48" fill="#ecfeff" stroke="#06b6d4" stroke-width="2"/>
+          <text x="423" y="321" fill="#0f172a" font-size="12" font-weight="900" text-anchor="middle">C 区县中心</text>
+          <rect x="526" y="292" width="118" height="48" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+          <text x="585" y="321" fill="#0f172a" font-size="12" font-weight="900" text-anchor="middle">重点委办局</text>
+          <rect x="126" y="366" width="124" height="38" fill="#f8fafc" stroke="#64748b" stroke-width="1.6"/>
+          <text x="188" y="390" fill="#0f172a" font-size="11" font-weight="900" text-anchor="middle">乡镇便民窗口</text>
+          <rect x="314" y="366" width="124" height="38" fill="#f8fafc" stroke="#64748b" stroke-width="1.6"/>
+          <text x="376" y="390" fill="#0f172a" font-size="11" font-weight="900" text-anchor="middle">部门基层站点</text>
+          <path d="M332 78 C332 110 331 120 331 150" fill="none" stroke="#2563eb" stroke-width="5" stroke-linecap="round"/>
+          <text x="370" y="118" fill="#2563eb" font-size="11" font-weight="900">云联网</text>
+          <path d="M416 178 C458 178 470 178 508 178" fill="none" stroke="#f59e0b" stroke-width="5" stroke-linecap="round"/>
+          <text x="462" y="166" fill="#b45309" font-size="11" font-weight="900" text-anchor="middle">精品 OTN</text>
+          <path d="M188 179 C218 179 226 179 246 179" fill="none" stroke="#ef4444" stroke-width="5" stroke-linecap="round"/>
+          <text x="215" y="166" fill="#dc2626" font-size="11" font-weight="900" text-anchor="middle">DIA + 安全专线</text>
+          <path d="M300 208 C240 240 160 250 107 292" fill="none" stroke="#06b6d4" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 7"/>
+          <path d="M321 208 C302 248 284 260 265 292" fill="none" stroke="#06b6d4" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 7"/>
+          <path d="M352 208 C380 248 402 260 423 292" fill="none" stroke="#06b6d4" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 7"/>
+          <path d="M384 208 C458 246 520 250 585 292" fill="none" stroke="#22c55e" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 7"/>
+          <text x="337" y="254" fill="#0891b2" font-size="11" font-weight="900" text-anchor="middle">区县/部门多点接入：云联网/MPLS VPN</text>
+          <path d="M150 340 C160 352 172 358 188 366" fill="none" stroke="#64748b" stroke-width="3" stroke-linecap="round"/>
+          <path d="M342 340 C354 352 366 358 376 366" fill="none" stroke="#64748b" stroke-width="3" stroke-linecap="round"/>
+          <text x="282" y="414" fill="#475569" font-size="11" font-weight="900" text-anchor="middle">基层小站点：PON/SD-WAN/政企网关，按成本和 SLA 分层接入</text>
+          <circle cx="113" cy="116" r="13" fill="#ef4444" opacity=".9" filter="url(#paperGlow)"/>
+          <text x="113" y="120" fill="#fff" font-size="11" font-weight="900" text-anchor="middle">安</text>
+        </svg>
+      `;
     }
 
     function renderMissionPage() {
@@ -2608,12 +3333,13 @@
       if (key === "t") goToScene(14);
       if (key === "y") goToScene(15);
       if (key === "u") goToScene(16);
-      if (key === "i" || (event.shiftKey && event.key === "!")) goToScene(17);
+      if (key === "i") goToScene(17);
+      if (key === "o" || (event.shiftKey && event.key === "!")) goToScene(18);
     });
 
     renderScene(0);
 
-    // PDF 导出辅助：访问 ?page=10 时直接显示第 10 页；?mission=finance 可直达行业闯关。
+    // 深链辅助：访问 ?page=10 时直接显示第 10 页；?mission=finance 可直达行业闯关。
     const query = new URLSearchParams(window.location.search);
     const requestedMission = query.get("mission");
     const requestedPage = Number(query.get("page"));
@@ -3482,31 +4208,32 @@
         [13, "产品选择地图", "#22b7ff", "14"],
         [14, "问题诊断商机", "#14b8a6", "15"],
         [15, "客户侧硬件地图", "#64748b", "16"],
-        [16, "分组闯关考核", "#f5c542", "17"],
-        [17, "课堂收束总览", "#e60012", "18"]
+        [16, "大白纸方案题", "#f5c542", "17"],
+        [17, "分组闯关考核", "#ef4444", "18"],
+        [18, "课堂收束总览", "#e60012", "19"]
       ];
       return `
         <svg viewBox="0 0 1000 430" role="img" aria-label="课堂演示总览时间轴">
           ${svgDefs()}
-          <text class="svg-title" x="32" y="40">课堂演示总览：18 页课程地图，产品能力 + 行业落地 + 闯关考核</text>
-          <text class="svg-subtitle" x="32" y="64">点击任一卡片可跳转；播放总览会从 01 到 18 自动串讲</text>
+          <text class="svg-title" x="32" y="40">课堂演示总览：19 页课程地图，产品能力 + 行业落地 + 大白纸演练 + 闯关考核</text>
+          <text class="svg-subtitle" x="32" y="64">点击任一卡片可跳转；播放总览会从 01 到 19 自动串讲</text>
           ${steps.map(([jump, label, color, icon], i) => {
-            const col = i % 6;
-            const row = Math.floor(i / 6);
-            const x = 34 + col * 158;
-            const y = 90 + row * 91;
+            const col = i % 5;
+            const row = Math.floor(i / 5);
+            const x = 36 + col * 190;
+            const y = 86 + row * 72;
             return `
               <g class="timeline-step fade-${(i % 6) + 1}" data-jump="${jump}">
-                <rect class="glass-node" x="${x}" y="${y}" width="132" height="68" rx="9" stroke="${color}"/>
-                <circle cx="${x + 28}" cy="${y + 35}" r="18" fill="${color}" opacity=".88" filter="url(#glow)"/>
-                <text x="${x + 28}" y="${y + 40}" text-anchor="middle" fill="#fff" font-size="12" font-weight="900">${icon}</text>
-                <text class="node-label" x="${x + 82}" y="${y + 30}" text-anchor="middle" font-size="11">${label}</text>
-                <text class="node-note" x="${x + 82}" y="${y + 52}" text-anchor="middle">${jump < 8 ? "产品能力" : jump < 13 ? "行业组网" : "训战工具"}</text>
+                <rect class="glass-node" x="${x}" y="${y}" width="160" height="56" rx="9" stroke="${color}"/>
+                <circle cx="${x + 28}" cy="${y + 29}" r="16" fill="${color}" opacity=".88" filter="url(#glow)"/>
+                <text x="${x + 28}" y="${y + 34}" text-anchor="middle" fill="#fff" font-size="11" font-weight="900">${icon}</text>
+                <text class="node-label" x="${x + 94}" y="${y + 24}" text-anchor="middle" font-size="10.6">${label}</text>
+                <text class="node-note" x="${x + 94}" y="${y + 44}" text-anchor="middle">${jump < 8 ? "产品能力" : jump < 13 ? "行业组网" : "训战工具"}</text>
               </g>
             `;
           }).join("")}
           <rect class="glass-node" x="136" y="380" width="728" height="36" rx="10"/>
-          <text class="node-note" x="500" y="403" text-anchor="middle">串讲主线：产品能力 -> 医院/政务/政法/金融/制造落地 -> 产品选择 -> 问题诊断 -> 硬件地图 -> 闯关考核。</text>
+          <text class="node-note" x="500" y="403" text-anchor="middle">串讲主线：产品能力 -> 医院/政务/政法/金融/制造落地 -> 产品选择 -> 问题诊断 -> 硬件地图 -> 大白纸题 -> 闯关考核。</text>
         </svg>`;
     }
   </script>

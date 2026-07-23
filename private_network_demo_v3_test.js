@@ -39,9 +39,19 @@ function assert(condition, message) {
 
 (async () => {
   const baseUrl = resolveBaseUrl(input);
+  if (baseUrl.startsWith("file:")) {
+    const htmlSource = fs.readFileSync(new URL(baseUrl), "utf8");
+    assert(!/(www\.kdocs\.cn|365\.kdocs\.cn|link_id|token)/i.test(htmlSource), "HTML source leaks KDocs links, link_id, or token text");
+  }
+
   const browser = await chromium.launch({ headless: true });
   const cases = [
     { name: "page-01", query: "?page=1", expectMission: false },
+    { name: "page-03-security", query: "?page=3", expectMission: false, expectText: "固定公网 IP 暴露" },
+    { name: "page-10-government", query: "?page=10", expectMission: false, expectText: "行政层级", expectTopologyClass: "gov-layer-topology" },
+    { name: "page-11-justice", query: "?page=11", expectMission: false, expectText: "分域隔离", expectTopologyClass: "justice-domain-topology" },
+    { name: "page-12-finance", query: "?page=12", expectMission: false, expectText: "双中心", expectTopologyClass: "finance-ring-topology" },
+    { name: "page-13-manufacturing", query: "?page=13", expectMission: false, expectText: "IT/OT", expectTopologyClass: "manufacturing-factory-topology" },
     { name: "page-15-diagnostic", query: "?page=15", expectMission: false },
     { name: "page-16-hardware", query: "?page=16", expectMission: false },
     { name: "page-17-paper", query: "?page=17", expectMission: false, expectPaper: true },
@@ -78,7 +88,14 @@ function assert(condition, message) {
         paperOutputCount: document.querySelectorAll(".paper-output").length,
         a1Title: document.querySelector(".a1-title")?.textContent.trim() || "",
         bodyWidth: document.body.scrollWidth,
-        viewportWidth: innerWidth
+        viewportWidth: innerWidth,
+        viewportHeight: innerHeight,
+        promptCount: document.querySelectorAll(".tag.question").length,
+        answerTop: document.querySelector("#answerZone")?.getBoundingClientRect().top || 0,
+        answerTagCount: document.querySelectorAll(".answer-tag").length,
+        topologyClasses: ["gov-layer-topology", "justice-domain-topology", "finance-ring-topology", "manufacturing-factory-topology"]
+          .filter(className => document.querySelector(`.${className}`)),
+        bodyText: document.body.innerText
       }));
 
       assert(errors.length === 0, `${testCase.name} has browser errors: ${errors.join(" | ")}`);
@@ -87,6 +104,28 @@ function assert(condition, message) {
       assert(state.missionMode === testCase.expectMission, `${testCase.name} mission mode mismatch`);
       assert(state.paperMode === Boolean(testCase.expectPaper), `${testCase.name} paper mode mismatch`);
       assert(state.bodyWidth <= state.viewportWidth + 2, `${testCase.name} has horizontal overflow`);
+
+      if (!testCase.expectMission && !testCase.expectPaper) {
+        assert(state.promptCount >= 3, `${testCase.name} expected at least 3 classroom prompt chips`);
+        assert(state.answerTagCount >= 3, `${testCase.name} expected answer tags in the teaching detail zone`);
+        assert(state.answerTop > state.viewportHeight - 4, `${testCase.name} answer zone is visible in the first viewport`);
+        await page.locator("#answerZone").scrollIntoViewIfNeeded();
+        await page.waitForTimeout(120);
+        const answerState = await page.evaluate(() => ({
+          compareTop: document.querySelector("#compareCard")?.getBoundingClientRect().top || 9999,
+          compareText: document.querySelector("#compareCard")?.innerText || ""
+        }));
+        assert(answerState.compareTop < state.viewportHeight, `${testCase.name} answer zone did not appear after scrolling`);
+        assert(answerState.compareText.includes("讲解区"), `${testCase.name} answer zone missing teaching source note`);
+      }
+
+      if (testCase.expectText) {
+        assert(state.bodyText.includes(testCase.expectText), `${testCase.name} missing expected text: ${testCase.expectText}`);
+      }
+
+      if (testCase.expectTopologyClass) {
+        assert(state.topologyClasses.includes(testCase.expectTopologyClass), `${testCase.name} missing topology class ${testCase.expectTopologyClass}`);
+      }
 
       if (testCase.expectMission) {
         assert(state.challengeCount === 6, `${testCase.name} expected 6 challenges`);

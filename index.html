@@ -115,6 +115,7 @@
       margin-top: 4px;
       color: var(--muted);
       font-size: 12px;
+      line-height: 1.35;
     }
 
     .nav-list {
@@ -376,7 +377,7 @@
     }
 
     .stage {
-      height: clamp(360px, 38vh, 410px);
+      height: clamp(390px, 54vh, 610px);
       border-radius: var(--radius);
       overflow: hidden;
     }
@@ -429,6 +430,17 @@
       background: rgba(249, 115, 22, 0.14);
     }
 
+    .tag.question {
+      border-style: dashed;
+      color: #f5fbff;
+      background: color-mix(in srgb, var(--accent-current, var(--cyan)) 15%, rgba(255, 255, 255, 0.06));
+      border-color: color-mix(in srgb, var(--accent-current, var(--cyan)) 46%, rgba(255, 255, 255, 0.12));
+    }
+
+    .tag.question::after {
+      display: none;
+    }
+
     .tag::after {
       content: attr(data-tip);
       position: absolute;
@@ -453,6 +465,100 @@
     .tag:hover::after {
       opacity: 1;
       transform: translate(-50%, 0);
+    }
+
+    .scroll-cue {
+      justify-self: center;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 32px;
+      padding: 6px 12px;
+      color: #dcecff;
+      background: rgba(255, 255, 255, 0.075);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .scroll-cue::after {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(45deg) translateY(-1px);
+      animation: cueDrop 1.2s ease-in-out infinite;
+    }
+
+    .answer-zone {
+      display: grid;
+      gap: 12px;
+      margin-top: clamp(210px, 27vh, 310px);
+      padding-top: 10px;
+      scroll-margin-top: 112px;
+    }
+
+    .answer-source {
+      margin-bottom: 10px;
+      color: rgba(221, 235, 255, 0.62);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .answer-tag-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin: 0 0 12px;
+    }
+
+    .answer-tag {
+      min-width: 0;
+      padding: 9px 10px;
+      border-radius: var(--radius);
+      background: rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .answer-tag.good {
+      border-color: rgba(34, 197, 94, 0.34);
+      background: rgba(34, 197, 94, 0.1);
+    }
+
+    .answer-tag.weak {
+      border-color: rgba(124, 155, 189, 0.34);
+      background: rgba(124, 155, 189, 0.12);
+    }
+
+    .answer-tag.risk {
+      border-color: rgba(239, 68, 68, 0.36);
+      background: rgba(239, 68, 68, 0.11);
+    }
+
+    .answer-tag.security {
+      border-color: rgba(249, 115, 22, 0.36);
+      background: rgba(249, 115, 22, 0.11);
+    }
+
+    .answer-tag strong,
+    .answer-tag span {
+      display: block;
+    }
+
+    .answer-tag strong {
+      color: #fff;
+      font-size: 12px;
+      line-height: 1.25;
+    }
+
+    .answer-tag span {
+      margin-top: 5px;
+      color: #bdd0e8;
+      font-size: 11px;
+      line-height: 1.42;
     }
 
     .lower-grid {
@@ -839,6 +945,11 @@
       62%, 100% { opacity: 1; filter: drop-shadow(0 0 9px rgba(245, 197, 66, .62)); }
     }
 
+    @keyframes cueDrop {
+      0%, 100% { transform: rotate(45deg) translateY(-1px); opacity: .58; }
+      50% { transform: rotate(45deg) translate(3px, 3px); opacity: 1; }
+    }
+
     .mission-mode .stage {
       height: min(820px, calc(100vh - 136px));
       min-height: 620px;
@@ -847,6 +958,8 @@
     }
 
     .mission-mode .tag-rail,
+    .mission-mode .scroll-cue,
+    .mission-mode .answer-zone,
     .mission-mode .lower-grid,
     .mission-mode .footer-line {
       display: none;
@@ -1167,6 +1280,8 @@
     }
 
     .paper-mode .tag-rail,
+    .paper-mode .scroll-cue,
+    .paper-mode .answer-zone,
     .paper-mode .lower-grid,
     .paper-mode .footer-line {
       display: none;
@@ -1546,6 +1661,7 @@
       .main { padding: 18px; }
       .page-title { font-size: 24px; }
       .lower-grid { grid-template-columns: 1fr; }
+      .answer-tag-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .mission-shell { grid-template-columns: 1fr; }
       .mission-mode .stage { height: auto; min-height: 0; }
       .mission-challenges { grid-template-columns: 1fr; }
@@ -1565,6 +1681,9 @@
       .app { grid-template-columns: 1fr; }
       .sidebar { height: auto; max-height: 42vh; }
       .topbar { grid-template-columns: 1fr; }
+      .stage { height: clamp(340px, 48vh, 480px); }
+      .answer-zone { margin-top: 128px; }
+      .answer-tag-grid { grid-template-columns: 1fr; }
       .mission-tabs,
       .option-grid,
       .mission-result { grid-template-columns: 1fr; }
@@ -1585,7 +1704,7 @@
         <div class="brand-mark">政企</div>
         <div>
           <div class="brand-title">专网产品动态演示 V3</div>
-          <div class="brand-subtitle">19 个板块串讲产品、硬件、行业组网与闯关考核</div>
+          <div class="brand-subtitle">19 个板块 · V3.2 2026-07-23 · 提问式首屏</div>
         </div>
       </div>
       <nav class="nav-list" id="navList"></nav>
@@ -1630,16 +1749,19 @@
       <section class="content-shell" id="contentShell">
         <div class="stage" id="svgStage" aria-label="网络拓扑动态演示"></div>
         <div class="tag-rail" id="tagRail"></div>
-        <div class="lower-grid">
-          <section class="compare-card" id="compareCard"></section>
-          <aside class="side-stack">
-            <section class="side-card" id="scenarioCard"></section>
-            <section class="side-card" id="boundaryCard"></section>
-          </aside>
-        </div>
-        <div class="footer-line">
-          <div class="conclusion" id="coreConclusion"></div>
-          <div class="speaker-card" id="speakerCard"></div>
+        <div class="scroll-cue" id="scrollCue">先提问，不露答案；向下滚动查看讲解区</div>
+        <div class="answer-zone" id="answerZone" aria-label="讲解区">
+          <div class="lower-grid">
+            <section class="compare-card" id="compareCard"></section>
+            <aside class="side-stack">
+              <section class="side-card" id="scenarioCard"></section>
+              <section class="side-card" id="boundaryCard"></section>
+            </aside>
+          </div>
+          <div class="footer-line">
+            <div class="conclusion" id="coreConclusion"></div>
+            <div class="speaker-card" id="speakerCard"></div>
+          </div>
         </div>
       </section>
     </main>
@@ -2186,6 +2308,307 @@
       }
     ];
 
+    const pageEnhancements = {
+      pppoe: {
+        questionPrompts: [
+          "先问：家宽 1000M 为什么不等于企业业务 1000M？",
+          "追问：动态 IP、会话数、上行能力会卡住哪些业务？",
+          "判断：哪些场景只能当临时上网，不能当关键链路？"
+        ]
+      },
+      dia: {
+        questionPrompts: [
+          "先问：客户要固定公网 IP，到底是机会还是风险？",
+          "追问：客户是否有官网、VPN、远程访问、SaaS、视频会议？",
+          "判断：只卖 DIA 够不够，是否要叠加安全专线？"
+        ],
+        tags: [
+          ["独享/保障带宽", "专用链路接入互联网，出口质量比共享宽带更可控。", "good"],
+          ["固定公网 IP", "适合官网、VPN、业务发布，也意味着暴露面更稳定。", "security"],
+          ["上下行更匹配", "更适合上传、视频会议、云访问和对外服务。", "good"],
+          ["SLA 和运维", "企业级故障响应、路由和地址管理更清晰。", "good"],
+          ["可叠加安全", "可继续叠加安全监测、DDoS、WAF、漏洞扫描等能力。", "security"]
+        ],
+        leftItems: ["普通宽带共享链路，忙时拥堵明显", "动态或不稳定公网地址，不适合稳定发布业务", "会话数、上行、SLA、故障响应难满足关键办公", "客户常把门店收银、VPN、视频会议临时压在普通宽带上", "客户只问价格时，先问业务是否可中断、是否对外开放端口"],
+        rightItems: ["DIA 适合稳定公网出口、固定公网 IP、官网/API/VPN/远程办公", "若客户有固定公网 IP 暴露，优先追问是否需要互联网安全专线", "若总部与分支互联，DIA 只是出口，还要看 VPN、SD-WAN、云联网或 MPLS VPN", "若客户有主备要求，可做双链路、双路由、双设备方案", "合格商机要拿到接入点、带宽、IP、开放端口、SLA 和决策人"],
+        boundaryItems: ["DIA 是公网出口，不是内网专线", "固定公网 IP 便于业务发布，也便于攻击者持续扫描", "客户有官网、API、VPN、远程桌面时，不要只报裸 DIA", "价格以本地正式报价为准，课堂只讲判断口径"],
+        conclusion: "DIA 先解决企业稳定上公网，再通过安全、主备和组网能力变成高价值方案。"
+      },
+      security: {
+        questionPrompts: [
+          "先问：固定公网 IP 长期暴露，会先被谁发现？",
+          "追问：客户有没有官网、API、VPN、互联网医院、政务门户？",
+          "判断：客户是缺线路，还是缺持续安全监测和防护？"
+        ],
+        tags: [
+          ["固定公网 IP 暴露", "DIA/专线让业务稳定发布，也让攻击面持续可被扫描。", "security"],
+          ["攻击监测", "识别 DDoS、漏洞利用、爬虫、异常访问和端口扫描。", "security"],
+          ["DDoS 清洗", "攻击流量进入清洗能力，正常流量回注客户业务。", "security"],
+          ["网站/API 防护", "可叠加 WAF、域名监测、网站监测、漏洞扫描等能力。", "security"],
+          ["安全报告", "满足等保、网安检查、内部审计和领导汇报需要。", "good"]
+        ],
+        compareTitle: "问公网出口时，真正要问安全暴露面",
+        leftTitle: "客户现网常见问题",
+        leftItems: ["官网、门户、VPN、远程桌面、API 绑定固定公网 IP，开放端口长期暴露", "客户只有防火墙，没有持续攻击监测、域名监测、网站监测和漏洞扫描", "被攻击后才找安全厂商，平时缺少报告、告警和运营闭环", "金融、政府、医疗、教育、国资企业有等保和网安检查压力", "中小企业想要安全，但不愿一次性采购复杂硬件和安全团队"],
+        rightTitle: "对应方案与商机信号",
+        rightItems: ["互联网安全专线：在互联网专线基础上叠加安全监测和防护能力", "DDoS 清洗：客户有网站、API、公众服务、活动报名、线上交易等入口", "WAF/漏洞扫描/网站监测：客户对外发布 Web 系统或移动端接口", "安全报告和托管运营：客户要给网信、审计、上级主管部门交材料", "攻坚对象：信息中心、网安办、安全负责人、业务系统负责人、分管领导"],
+        scenarios: ["政务门户", "互联网医院", "教育平台", "金融 API", "企业官网/VPN"],
+        boundaryTitle: "怎么判断 / 找谁谈",
+        boundaryItems: ["先问公网 IP 数量、开放端口、域名、网站、API、VPN 和远程运维入口", "再问是否被扫过、打过、挂马过、勒索过，是否有等保整改或安全检查", "找信息中心确认暴露面，找网安/安全负责人确认风险，找业务部门确认停机影响", "裸 DIA 客户、有固定 IP 客户、官网客户，是安全专线最容易延展的入口"],
+        conclusion: "互联网安全专线不是把专线讲得更贵，而是把公网出口的暴露风险讲清楚。"
+      },
+      sdh: {
+        questionPrompts: [
+          "先问：客户用了很多年的 E1/MSTP，为什么现在开始不够用了？",
+          "追问：是稳定性问题，还是带宽颗粒、扩容周期、可视化问题？",
+          "判断：迁 OTN、云联网，还是保留存量电路？"
+        ],
+        tags: [
+          ["存量稳定", "传统电路路径确定，适合老系统、语音、柜面等存量业务。", "good"],
+          ["颗粒固定", "2M/E1 等小颗粒难以匹配视频、云、数据同步等新业务。", "weak"],
+          ["扩容慢", "新增带宽和业务调整周期长，现场协调成本高。", "risk"],
+          ["可视化弱", "客户难以实时看到 SLA、路径、告警和故障边界。", "weak"],
+          ["迁转触发", "上云、系统 IP 化、灾备建设、大带宽改造时应评估迁转。", "good"]
+        ],
+        compareTitle: "SDH/MSTP 迁转不是否定老线，而是匹配新业务",
+        leftTitle: "存量电路卡点",
+        leftItems: ["老柜面、语音、专用终端仍依赖 E1/MSTP，稳定但弹性差", "新业务要求大带宽、云访问、视频回传、数据同步，固定小颗粒不经济", "客户扩容一次要协调线路、设备、割接窗口和多方运维", "故障时难以给客户快速呈现路径、告警、SLA 和责任边界", "设备生命周期、备件、厂家支持和维护经验逐步成为风险"],
+        rightTitle: "对应方案与商机信号",
+        rightItems: ["OTN/政企精品网：核心点到点、机房互联、灾备同步、金融/政务/医疗核心链路", "智能 OTN：客户需要带宽随选、业务可视、故障监测和 SLA 自助查询", "云联网/MPLS VPN：大量分支、多点上云、点到网访问，不适合继续一条条拉线", "PON 组网：基层网点、小分支、园区楼宇要低成本快速接入", "攻坚对象：信息中心、运维负责人、老系统负责人、采购/财务和分管领导"],
+        scenarios: ["老 E1 迁改", "MSTP 扩容", "柜面终端升级", "灾备建设", "系统上云"],
+        boundaryTitle: "迁转判断",
+        boundaryItems: ["只承载老系统且稳定运行，可先保留并纳入台账", "一旦出现扩容、上云、系统 IP 化、灾备或可视化 SLA 诉求，就进入迁转评估", "不要简单用 DIA 替代核心内网电路，先判断公网/内网/云网/硬管道属性", "迁转方案需明确割接窗口、回退方案和客户侧设备适配"],
+        conclusion: "SDH/MSTP 的机会不在“旧”，而在客户新业务已经超过旧电路的承载方式。"
+      },
+      otn: {
+        questionPrompts: [
+          "先问：哪些业务不能走公网 VPN，必须要硬隔离？",
+          "追问：客户是否有双中心、灾备、核心交易、PACS 或生产数据同步？",
+          "判断：OTN 是主链路、灾备链路，还是核心节点互联？"
+        ],
+        tags: [
+          ["硬隔离", "基于光传送网的物理/硬管道承载，与公众互联网隔绝。", "security"],
+          ["低时延", "路径更确定，适合核心业务同步和交易类链路。", "good"],
+          ["大带宽", "GE/10GE 等大颗粒适合数据中心互联和灾备复制。", "good"],
+          ["高可靠", "可结合双路由、保护机制和高等级 SLA 设计。", "good"],
+          ["核心点到点", "适合少量关键地点之间的高等级直连，不适合普通小分支泛接入。", "risk"]
+        ],
+        compareTitle: "OTN 要讲成核心业务硬管道",
+        leftTitle: "不适合用公网/VPN硬扛的业务",
+        leftItems: ["同城双活、异地灾备、数据库复制、核心交易同步对时延和抖动敏感", "政务、金融、医疗、能源等客户强调专网专用和物理隔离", "PACS 影像、视频汇聚、工业数据、备份流量带宽大且持续", "公网 VPN 路径不可控，安全和质量需要多层叠加补救", "客户一旦问“能不能保证时延/丢包/可用率”，就不只是普通出口问题"],
+        rightTitle: "对应方案与商机信号",
+        rightItems: ["精品 OTN/政企精品网：数据中心、灾备中心、核心机房之间的高等级直连", "智能 OTN：对带宽调速、业务可视、故障监测、SLA 展示有要求的高价值客户", "DIA/安全专线：只用于公网入口和公众服务，不替代核心内网硬管道", "云联网：大量分支和云资源互联，与 OTN 形成核心+分支组合", "攻坚对象：科技部/信息中心、核心系统负责人、灾备负责人、分管科技领导"],
+        scenarios: ["金融双中心", "政务灾备", "医院影像复制", "工业数据同步", "核心机房互联"],
+        boundaryTitle: "OTN 边界",
+        boundaryItems: ["成本高于普通线路，必须绑定核心业务价值", "节点数量多且分散时，不宜全部用 OTN，一般与云联网/MPLS VPN 组合", "需要提前确认端口、带宽颗粒、客户侧设备和双路由条件", "正式报价、保护等级和开通周期以本地资源和审批为准"],
+        conclusion: "OTN 卖点不是“更快的网”，而是关键地点之间确定、隔离、低时延的大带宽硬管道。"
+      },
+      smart: {
+        questionPrompts: [
+          "先问：客户除了要一条 OTN，还想不想自己看到链路状态？",
+          "追问：带宽是否有周期性峰谷、临时扩容和重保需求？",
+          "判断：是否从传统 OTN 升级为智能 OTN？"
+        ],
+        tags: [
+          ["业务可视", "可查看业务概览、路由拓扑、性能和告警。", "good"],
+          ["带宽随选", "支持周期调速、临时调速、弹性带宽等高阶能力。", "good"],
+          ["故障监测", "7x24 监测，故障定位和短信提醒提升客户感知。", "good"],
+          ["多域协同", "跨集团、省内、多厂家场景下提升开通和管理效率。", "good"],
+          ["高价值客户", "适合党政军、金融、医疗、科教和大型企业核心组网。", "security"]
+        ],
+        compareTitle: "智能 OTN 把一条光路变成可运营服务",
+        leftTitle: "传统 OTN 的客户感知不足",
+        leftItems: ["客户知道有一条高质量光路，但看不到全业务概览和路径状态", "带宽调整、业务开通、故障定位更多依赖人工流程", "重保、演练、促销、结算窗口期有临时带宽需求，但调整不够灵活", "多域、多厂家、多省业务协同时，客户希望一体化管理", "故障发生后，客户最想知道影响范围、恢复进度和责任边界"],
+        rightTitle: "智能 OTN 可匹配的价值",
+        rightItems: ["可视：业务概览、单业务详情、路由拓扑、历史性能", "可管：实时监测、故障定位、短信提醒、SLA 运营", "可调：周期调速、临时调速、弹性带宽，支撑峰谷和重保", "可扩：跨省、省内、核心城市和国际重点区域高等级连接", "攻坚对象：运维负责人、网络平台主管、灾备负责人、分管领导"],
+        scenarios: ["核心链路重保", "带宽周期峰谷", "双中心演练", "高价值客户续约", "SLA 可视化"],
+        boundaryTitle: "智能 OTN 的边界",
+        boundaryItems: ["客户只有普通办公上网时，不宜强推智能 OTN", "要先确认客户是否愿意为可视、可管、可调度付费", "与云联网组合时，OTN 做核心硬管道，云联网做多点互联", "正式能力覆盖、端口和价格以本地资源确认"],
+        conclusion: "智能 OTN 的升级点是客户能看见、能管理、能调度自己的核心链路。"
+      },
+      cloud: {
+        questionPrompts: [
+          "先问：客户有几个分支、几个云、几个数据中心？",
+          "追问：现在是不是用公网 VPN、点到点线路临时拼？",
+          "判断：这是拉线问题，还是一张多点云网的问题？"
+        ],
+        tags: [
+          ["MPLS VPN/专网", "基于专网能力提供安全可控连接，适合多点互联。", "security"],
+          ["全网状互联", "分支、总部、云资源可一跳直达，减少总部中转。", "good"],
+          ["一点入云", "客户通过统一接入连接公有云、私有云、混合云。", "good"],
+          ["统一运维", "路由、质量、安全策略和链路状态统一可视。", "good"],
+          ["替代临时 VPN", "解决公网 VPN 稳定性、安全性、扩展性和维护复杂问题。", "good"]
+        ],
+        compareTitle: "云联网不是一条云专线，而是一张多点云网",
+        leftTitle: "客户自建或公网 VPN 的卡点",
+        leftItems: ["总部、分支、数据中心、云资源之间一条条拉线，关系越来越复杂", "公网 VPN 受公网质量、地址变化、安全策略和设备能力影响", "新增分支、新增云资源时，路由规划和割接成本高", "星型架构让分支访问云必须绕总部，效率低、总部设备压力大", "多云、混合云、跨市州/跨省访问缺少统一管理和监控"],
+        rightTitle: "云联网匹配的方案动作",
+        rightItems: ["总部、分支、数据中心、云资源池统一接入云联网平台", "支持点到网、多点互联、全网状访问和一点入多云", "先梳理网段、VPC/VNet、路由、访问控制和业务优先级", "关键节点可叠加 OTN，普通分支用云联网/MPLS VPN/PON 组网", "攻坚对象：信息中心、云平台负责人、网络运维、应用系统负责人"],
+        scenarios: ["多分支上云", "政务云接入", "集团企业组网", "混合云互联", "统一互联网出口"],
+        boundaryTitle: "判断商机是否成熟",
+        boundaryItems: ["至少有总部、分支、数据中心、云资源中的两个以上互联对象", "客户现网存在公网 VPN、点到点线路过多、路由混乱或新增慢", "能拿到网段、云资源、接入点、带宽、业务系统和安全策略信息", "客户正在上云、迁云、建分支、并购整合或做数据集中"],
+        conclusion: "云联网的价值在于把多点、多云、多区域连接收拢成一张可运营的专属网络。"
+      },
+      advantage: {
+        questionPrompts: [
+          "先问：客户现在跨区域、跨云、跨分支是谁在运维？",
+          "追问：新增一个网点或云资源，客户要协调几家供应商？",
+          "判断：联通优势该讲覆盖、接入、调度，还是运维？"
+        ],
+        tags: [
+          ["一点接入", "减少客户自建多条复杂连接，接入后统一编排。", "good"],
+          ["多云通达", "适合公有云、私有云、混合云和行业云资源访问。", "good"],
+          ["弹性带宽", "按需部署、扩容和调整，匹配业务变化。", "good"],
+          ["云网一体", "网络、云资源、路由和运维一起规划。", "good"],
+          ["集中监控", "客户更容易看到链路、质量、告警和运维责任。", "security"]
+        ],
+        compareTitle: "云联网优势要讲客户少操心什么",
+        leftTitle: "客户自己做多点互联",
+        leftItems: ["每个分支、每朵云、每个数据中心都要单独协调线路和设备", "网络关系从星型变网状后，运维人员很难讲清路由", "不同运营商、云商、集成商之间故障边界容易扯皮", "带宽扩容、业务上线、分支搬迁都牵一发动全身", "客户常常只看到线路成本，看不到运维成本和故障成本"],
+        rightTitle: "联通云联网可讲的优势",
+        rightItems: ["一点接入、多点通达，减少客户多头建设和多头运维", "统一路由与安全策略，支撑总部、分支、云和数据中心互访", "可结合 DIA、安全专线、PON 组网、OTN 做分层组合", "云网协同运维，形成链路质量、告警、SLA 和故障定位依据", "攻坚对象：CIO/信息中心、云平台负责人、运维主管、业务系统负责人"],
+        scenarios: ["多云互联", "跨区域分支", "政务云网", "集团统一出口", "云资源统一访问"],
+        boundaryTitle: "规划前必须问清",
+        boundaryItems: ["现有分支数量、云资源位置、网段规划和路由策略", "哪些业务必须一跳直达，哪些业务允许总部中转", "互联网出口、安全边界、日志审计和权限控制由谁负责", "是否有跨省、跨境、双活、灾备或重保场景"],
+        conclusion: "联通云联网优势不是口号，而是让客户少拉线、少协调、少绕路、少扯皮。"
+      },
+      hospital: {
+        questionPrompts: [
+          "先问：三甲医院里，到底有哪些部门和业务系统在走网？",
+          "追问：DIA、OTN、云联网分别落在医院网络哪个位置？",
+          "判断：公网、医保、分院、影像、灾备是不是同一类链路？"
+        ],
+        tags: [
+          ["科室接入", "门急诊、住院、医技、药房、收费、安防物联分别接入。", "good"],
+          ["业务系统区", "HIS、EMR、LIS、PACS、数据库和存储位于核心业务区。", "good"],
+          ["互联网医院", "公众访问入口必须经过安全边界和 WAF/抗 DDoS。", "security"],
+          ["医保/政务云", "外部专网接入核心业务前要有边界控制和审计。", "security"],
+          ["分院/灾备", "分院互联、影像同步和灾备适合云联网或 OTN 组合。", "good"]
+        ],
+        compareTitle: "医院组网要从部门和业务流量讲清楚",
+        leftTitle: "部门与终端接入",
+        leftItems: ["门急诊：医生站、收费窗口、自助机，走门诊接入交换机和楼宇汇聚", "住院病区：护士站、移动护理、床旁终端、Wi-Fi AP，走病区接入和汇聚", "医技科室：检验 LIS、影像 PACS、检查工作站，流量大且对稳定性敏感", "药房/收费/医保窗口：涉及医保结算、处方、支付和打印终端", "安防物联/访客：摄像头、门禁、访客 Wi-Fi 必须与核心业务隔离"],
+        rightTitle: "专线与安全如何落地",
+        rightItems: ["DIA/互联网安全专线：互联网医院、官网、预约挂号、公众访问入口", "OTN/智能 OTN：核心院区与灾备中心、影像中心、核心机房大带宽互联", "云联网/MPLS VPN：分院、社区卫生服务中心、医保/政务云和云资源池接入", "PON 组网：大量基层站点、门诊楼宇、便民终端低成本快速接入", "攻坚对象：信息中心、医务/门诊、医保办、保卫/安防、分管信息化院领导"],
+        scenarios: ["三甲医院", "医共体", "互联网医院", "影像云", "医保云接入"],
+        boundaryItems: ["公网入口不能直达 HIS/EMR/PACS 核心业务区", "PACS 影像和灾备复制不能简单走普通互联网 VPN", "医保、政务云、分院、公众互联网要分清网络边界和责任边界", "医院现场勘查必须问清科室、系统、链路、设备、安全域和主备"],
+        conclusion: "医院页要让学员看懂：专线最终服务的是科室业务流、系统访问和安全边界。"
+      },
+      gov: {
+        questionPrompts: [
+          "先问：政务客户是省、市、县、乡镇哪个层级在牵头？",
+          "追问：政务外网、政务云、互联网办事入口是否分清？",
+          "判断：哪条链路用云联网，哪条链路用 OTN，哪条出口要安全专线？"
+        ],
+        tags: [
+          ["省市县乡四级", "省级平台、市州节点、区县中心、乡镇窗口分层接入。", "good"],
+          ["政务云/大数据", "政务云、数据共享交换、电子证照和统一身份是核心。", "good"],
+          ["互联网办事入口", "一网通办、移动端、门户网站必须先过安全边界。", "security"],
+          ["灾备与核心链路", "省级核心、市级灾备和重要平台适合 OTN/智能 OTN。", "good"],
+          ["基层覆盖", "区县乡镇接入要兼顾成本、覆盖、运维和开通速度。", "weak"]
+        ],
+        compareTitle: "四川政务组网：行政层级 + 云网 + 安全边界",
+        leftTitle: "典型痛点",
+        leftItems: ["省级、市州、区县、乡镇接入方式不统一，新增窗口和部门接入慢", "政务外网、互联网区、业务专网、云资源之间边界不清", "公众服务入口使用固定公网 IP，容易成为扫描和攻击目标", "数据共享交换涉及多部门权限、接口、目录和审计，不能只讲带宽", "灾备中心和省级核心平台需要低时延、高可靠和可视化保障"],
+        rightTitle: "推荐业务组合",
+        rightItems: ["云联网/MPLS VPN：市州、区县、厅局、云资源统一接入", "OTN/智能 OTN：省级大数据中心、市级核心和灾备中心之间的硬管道", "DIA + 互联网安全专线：门户、一网通办、移动端和统一互联网出口", "PON 组网：乡镇便民中心、基层窗口、小型接入点快速覆盖", "攻坚对象：大数据局/政务服务中心、信息中心、网信办、业务处室、分管领导"],
+        scenarios: ["省级政务云", "市州大数据中心", "区县政务中心", "乡镇便民窗口", "一网通办"],
+        boundaryItems: ["不能把政务外网、互联网出口和内部业务系统画成一条平面网络", "跨部门共享必须说明权限、接口、目录和审计", "基层接入不宜全部按核心链路建设，要分级匹配成本和 SLA", "正式方案需结合四川本地政务网络规范和客户现网边界确认"],
+        conclusion: "政务组网的讲法是：层级在哪里、云在哪里、公众入口在哪里、安全边界在哪里。"
+      },
+      justice: {
+        questionPrompts: [
+          "先问：政法网络为什么不能所有单位简单互通？",
+          "追问：业务网、视频网、互联网区和跨域交换区怎么隔离？",
+          "判断：视频大流量和办案协同分别该走什么网络能力？"
+        ],
+        tags: [
+          ["分域隔离", "政法业务网、视频专网、互联网区、跨域交换区分开设计。", "security"],
+          ["视频大流量", "雪亮/天网/执法办案/指挥调度视频要独立核算带宽。", "good"],
+          ["跨域交换", "跨单位共享必须经过网闸、防火墙、审计和权限控制。", "security"],
+          ["基层站点", "派出所、司法所、法庭、综治网格站链路质量差异大。", "weak"],
+          ["指挥中心保障", "省市指挥中心和视频汇聚核心适合高等级专线。", "good"]
+        ],
+        compareTitle: "四川政法组网：安全域不是装饰，是业务规则",
+        leftTitle: "典型痛点",
+        leftItems: ["公安、法院、检察、司法、综治中心业务协同多，但权限和边界严格", "视频专网流量大，和普通办案系统混跑会影响体验和排障", "移动警务、互联网入口和外部协同入口带来安全暴露", "基层派出所、司法所、法庭、网格站接入质量参差不齐", "跨域共享缺少统一审计时，风险不在链路，而在责任边界"],
+        rightTitle: "推荐业务组合",
+        rightItems: ["OTN/智能 OTN：省市政法指挥中心、视频汇聚平台、灾备核心链路", "云联网/MPLS VPN：政法委、公安、法院、检察、司法和基层站点多点互联", "DIA + 互联网安全专线：移动警务、门户、公众服务和互联网入口防护", "PON 组网：基层站点、综治网格、法庭等低成本接入", "攻坚对象：政法委信息化、公安科信、法院/检察技术处、网安、安全运维、分管领导"],
+        scenarios: ["政法委", "公安科信", "法院检察", "司法监狱", "综治中心"],
+        boundaryItems: ["业务网和视频网不要画成同一条线", "跨域交换必须标出安全设备和审计路径", "视频带宽、存储、回看和指挥调度要单独问需求", "政法客户方案必须先讲边界，再讲产品"],
+        conclusion: "政法组网的关键是按域隔离、按权协同、视频有保障、责任可审计。"
+      },
+      finance: {
+        questionPrompts: [
+          "先问：省行、市行、县支行、网点分别连向哪里？",
+          "追问：双中心低时延、网点主备、监管外联是否分区？",
+          "判断：核心交易、办公上网、互联网金融能不能用同一种链路？"
+        ],
+        tags: [
+          ["双中心", "成都同城双活或主备中心需要低时延高可靠硬管道。", "good"],
+          ["网点主备", "市行、县支行、营业网点、自助设备需要主备接入和切换。", "good"],
+          ["监管外联", "人行、清算、征信、银保监等外联专区要独立边界。", "security"],
+          ["互联网金融入口", "手机银行、网银、开放 API 要做 DDoS、WAF、API 防护。", "security"],
+          ["SLA 可视", "交易链路要能拿出性能、告警、故障和恢复证据。", "good"]
+        ],
+        compareTitle: "四川金融组网：双中心、分支层级和外联安全要分开画",
+        leftTitle: "典型痛点",
+        leftItems: ["省行/总部核心交易不能和普通办公互联网出口混在一起", "同城双活、异地灾备、核心交易对时延、抖动和恢复时间敏感", "营业网点、ATM、自助银行断网会直接影响客户服务和舆情", "监管报送、清算、征信、第三方支付需要独立安全域和审计", "互联网金融入口固定暴露公网，DDoS、WAF、API 安全压力大"],
+        rightTitle: "推荐业务组合",
+        rightItems: ["OTN/智能 OTN：同城双活、核心交易中心、灾备复制和关键数据同步", "MPLS VPN/云联网：省行、市行、县支行、网点、云资源多点互联", "DIA + 互联网安全专线：手机银行、网上银行、开放 API、官网入口", "双路由/双运营商/SD-WAN 备份：网点、ATM、自助设备业务连续性", "攻坚对象：科技部、网络运维、安全合规、电子银行/渠道部、网点运营、分管科技领导"],
+        scenarios: ["省级银行", "农商行", "城商行", "证券保险", "支付机构"],
+        boundaryItems: ["核心交易、监管外联、办公上网、互联网金融入口必须分区", "网点主备要问切换时间、路由策略、设备能力和演练机制", "互联网金融入口不能只有 DIA，要问抗 DDoS、WAF、API 和日志审计", "商机合格必须能说清业务影响、停机损失、监管要求和预算路径"],
+        conclusion: "金融组网先画双中心，再画分支网点，最后画监管和互联网金融安全边界。"
+      },
+      manufacturing: {
+        questionPrompts: [
+          "先问：四川总部和全国 5 家分厂之间，哪些是生产流量？",
+          "追问：IT 网、OT 网、供应商远程运维有没有隔离和审计？",
+          "判断：总部统一管控、分厂主备、工业云平台分别匹配什么固网业务？"
+        ],
+        tags: [
+          ["总部+五厂", "四川总部统一管控全国 5 家大型生产基地。", "good"],
+          ["IT/OT 隔离", "办公 IT、生产 OT、视频安防、仓储物流分区设计。", "security"],
+          ["云边协同", "ERP/MES/PLM、工业数据湖、供应链平台接入云资源。", "good"],
+          ["远程运维审计", "供应商、工程师远程接入必须走 VPN/零信任/堡垒机。", "security"],
+          ["生产连续性", "分厂主备链路、低时延同步和故障切换直接影响产线。", "good"]
+        ],
+        compareTitle: "大型制造组网：不要只画总部和分厂，要画出 IT/OT 边界",
+        leftTitle: "典型痛点",
+        leftItems: ["总部 ERP、财务、供应链、研发平台统一，但各分厂接入方式不一致", "MES、SCADA、PLC、质检、仓储物流等生产 OT 流量不能和办公网混跑", "供应商远程运维、设备厂家调试常临时开 VPN 或远程桌面，缺少审计", "工厂视频、工业数据、备份、云平台同步占用大带宽", "分厂断网会影响排产、质检、仓储出入库和总部经营分析"],
+        rightTitle: "推荐业务组合",
+        rightItems: ["云联网/MPLS VPN：总部、5 家分厂、数据中心、云资源池多点互联", "OTN/智能 OTN：总部到核心工厂、灾备中心、工业数据同步的大带宽硬管道", "DIA + 互联网安全专线：各厂区互联网出口、远程运维入口和门户/API 防护", "PON 组网/政企网关：厂区办公楼、宿舍、仓库、门岗、园区小节点快速接入", "攻坚对象：CIO/信息中心、生产制造部、设备部、安环/安全、供应链、厂长/分管副总"],
+        scenarios: ["装备制造", "新能源材料", "食品医药", "汽车零部件", "全国多基地集团"],
+        boundaryItems: ["OT 网不能直接暴露到互联网和办公网", "远程运维必须问账号、权限、审计、供应商和操作窗口", "核心分厂和普通分厂链路等级不同，别把五个厂全部画成同一规格", "商机合格要能说清停线损失、系统上线计划、分厂数量和预算决策链"],
+        conclusion: "制造组网要让客户看到：这不是网络优化，而是在保护产线连续性和集团管控。"
+      },
+      map: {
+        questionPrompts: [
+          "先问：客户说“要专线”，到底要上公网、连内网、上云还是保核心？",
+          "追问：痛点是慢、不稳、不安全、扩不了，还是看不见？",
+          "判断：产品路径能否一口气说清？"
+        ]
+      },
+      diagnostic: {
+        questionPrompts: [
+          "先问：客户的问题能不能被量化成带宽、时延、攻击、扩容或故障？",
+          "追问：有没有触发事件、预算路径和关键人？",
+          "判断：这是咨询线索，还是合格商机？"
+        ]
+      },
+      hardware: {
+        questionPrompts: [
+          "先问：专线落到客户现场的第一台设备是什么？",
+          "追问：防火墙吞吐、核心交换、主备切换会不会卡住专线价值？",
+          "判断：硬件问题能不能带出线路、安全和运维组合销售？"
+        ]
+      }
+    };
+
+    pages.forEach(page => {
+      if (pageEnhancements[page.key]) Object.assign(page, pageEnhancements[page.key]);
+    });
+
     const navList = document.getElementById("navList");
     const pageTitle = document.getElementById("pageTitle");
     const pageSummary = document.getElementById("pageSummary");
@@ -2193,6 +2616,7 @@
     const pageCount = document.getElementById("pageCount");
     const svgStage = document.getElementById("svgStage");
     const tagRail = document.getElementById("tagRail");
+    const scrollCue = document.getElementById("scrollCue");
     const compareCard = document.getElementById("compareCard");
     const scenarioCard = document.getElementById("scenarioCard");
     const boundaryCard = document.getElementById("boundaryCard");
@@ -2738,6 +3162,27 @@
       return `<ul>${items.map(item => `<li>${item}</li>`).join("")}</ul>`;
     }
 
+    function promptMarkup(page) {
+      const prompts = page.questionPrompts || (page.tags || []).map(([text]) => `先问学员：${text}会带来什么业务影响？`);
+      return prompts.map(prompt => `<span class="tag question">${escapeHTML(prompt)}</span>`).join("");
+    }
+
+    function answerTagMarkup(page) {
+      const tags = page.tags || [];
+      if (!tags.length) return "";
+      return `
+        <div class="answer-source">讲解区：以下内容依据 7 月 20 日前后 KDocs 固网专线资料与原页面内容提炼；资费、折扣和正式报价以本地政策审批为准。</div>
+        <div class="answer-tag-grid">
+          ${tags.map(([text, tip, type]) => `
+            <div class="answer-tag ${type}">
+              <strong>${escapeHTML(text)}</strong>
+              <span>${escapeHTML(tip)}</span>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
     function renderNav() {
       navList.innerHTML = pages.map((page, index) => {
         const [accent, accent2] = colorFor(page);
@@ -2794,13 +3239,13 @@
 
       contentShell.classList.remove("mission-mode", "paper-mode");
       svgStage.innerHTML = page.svg();
+      scrollCue.textContent = page.scrollCue || "先提问，不露答案；向下滚动查看讲解区";
 
-      tagRail.innerHTML = page.tags.map(([text, tip, type]) =>
-        `<span class="tag ${type}" data-tip="${tip}">${text}</span>`
-      ).join("");
+      tagRail.innerHTML = promptMarkup(page);
 
       compareCard.innerHTML = `
         <h2 class="compare-title">${page.compareTitle}</h2>
+        ${answerTagMarkup(page)}
         <div class="compare-columns">
           <div class="mini-panel">
             <div class="mini-title">${page.leftTitle}</div>
@@ -3965,83 +4410,231 @@
     }
 
     function svgSichuanGov() {
-      return svgIndustryNetwork({
-        title: "四川政务行业组网：省、市、县、乡镇统一接入政务云网",
-        subtitle: "省级政务云/大数据中心是核心，市州区县通过政务外网和云联网接入，互联网办事入口先过安全边界。",
-        main: "#22d3ee",
-        hubTitle: "省大数据中心",
-        hubNote: "省级政务云 / 共享交换",
-        coreNote: "统一身份 / 目录 / 接口 / 审计",
-        systemTitle: "政务应用与数据平台",
-        systemBadge: "数据共享交换",
-        centerBadge: "省级核心平台",
-        remoteBadge: "市县多点接入",
-        branchTitle: "市州 / 区县 / 厅局 / 乡镇接入",
-        footer: "推荐路径：市县通过云联网/政务外网汇聚，省级核心和灾备用 OTN，互联网服务用安全专线。",
-        external: [["政务外网", "#22d3ee"], ["云联网", "#8b5cf6"], ["OTN灾备", "#e60012"], ["互联网办事", "#26d4ff"], ["医保/人社", "#8b5cf6"], ["公众访问", "#26d4ff"], ["攻击流量", "#ef4444"]],
-        systems: ["一网通办", "电子证照", "数据共享", "统一身份", "信用平台", "态势感知"],
-        branches: [["21个市州", "市级政务节点", "#22d3ee"], ["区县政务中心", "窗口/审批", "#22c55e"], ["乡镇便民中心", "基层服务", "#22c55e"], ["省级厅局", "部门业务网", "#8b5cf6"], ["政务大厅", "办事终端", "#22d3ee"]]
-      });
+      const node = (x, y, w, title, note, color = "#22d3ee") => `
+        <g class="device">
+          <rect x="${x}" y="${y}" width="${w}" height="50" rx="9" fill="rgba(255,255,255,.08)" stroke="${color}" stroke-width="1.7"/>
+          <text class="node-label" x="${x + w / 2}" y="${y + 20}" text-anchor="middle">${title}</text>
+          <text class="node-note" x="${x + w / 2}" y="${y + 38}" text-anchor="middle">${note}</text>
+        </g>`;
+      return `
+        <svg viewBox="0 0 1000 430" role="img" aria-label="四川政务行政层级云网拓扑">
+          ${svgDefs()}
+          <g class="gov-layer-topology">
+            <text class="svg-title" x="32" y="36">四川政务：省、市、县、乡镇四级接入政务云网</text>
+            <text class="svg-subtitle" x="32" y="58">行政层级是主线：省级平台在上，市县乡逐级汇聚；互联网办事入口单独进入安全边界。</text>
+
+            <rect class="glass-node" x="42" y="78" width="608" height="300" rx="12"/>
+            <text class="node-label" x="64" y="104">政务外网 / 云联网行政层级</text>
+            ${node(390, 88, 178, "省大数据中心", "政务云 / 共享交换", "#22d3ee")}
+            ${node(90, 158, 134, "成都节点", "市级政务云", "#22d3ee")}
+            ${node(288, 158, 134, "川东北市州", "审批/监管", "#22d3ee")}
+            ${node(486, 158, 134, "川南市州", "部门协同", "#22d3ee")}
+            ${node(104, 238, 120, "区县中心", "窗口/委办局", "#22c55e")}
+            ${node(278, 238, 120, "区县中心", "基层汇聚", "#22c55e")}
+            ${node(452, 238, 120, "区县中心", "政务服务", "#22c55e")}
+            ${node(94, 318, 100, "乡镇窗口", "便民终端", "#14b8a6")}
+            ${node(224, 318, 100, "社区网格", "基层办事", "#14b8a6")}
+            ${node(354, 318, 100, "乡镇窗口", "医保/人社", "#14b8a6")}
+            ${node(484, 318, 100, "政务大厅", "自助终端", "#14b8a6")}
+
+            <path class="link-back" style="--flow:#22d3ee;--flow-width:7px" d="M479 138C430 148 386 154 355 158M479 138C364 166 254 178 157 238M479 138C520 152 540 160 553 158"/>
+            <path class="link-flow" style="--flow:#22d3ee;--flow-width:7px" d="M479 138C430 148 386 154 355 158M479 138C364 166 254 178 157 238M479 138C520 152 540 160 553 158"/>
+            <path class="link-flow" style="--flow:#22c55e;--flow-width:4px" d="M157 208V238M355 208V238M553 208V238M164 288V318M338 288V318M512 288V318M338 288C292 300 264 308 274 318"/>
+
+            <rect class="glass-node" x="682" y="82" width="276" height="128" rx="12"/>
+            <text class="node-label" x="704" y="108">互联网办事安全边界</text>
+            ${cloud(742, 102, "公众互联网", "一网通办 / 移动端", "#26d4ff")}
+            ${miniDevice(704, 156, 84, 38, "DIA", "#22b7ff")}
+            ${miniDevice(802, 156, 118, 38, "安全专线/WAF", "#f97316")}
+            <path class="attack-flow" d="M914 116 C860 122 826 138 804 156"/>
+            <path class="link-flow" style="--flow:#26d4ff;--flow-width:5px" d="M788 176C720 182 642 166 568 118"/>
+
+            <rect class="glass-node" x="682" y="236" width="276" height="112" rx="12"/>
+            <text class="node-label" x="704" y="262">核心链路 / 灾备</text>
+            ${server(718, 276, 90, 48, "市级灾备")}
+            ${server(838, 276, 90, 48, "省级备份")}
+            <path class="link-back" style="--flow:#e60012;--flow-width:9px" d="M568 116 C680 142 758 210 763 276"/>
+            <path class="link-flow" style="--flow:#e60012;--flow-width:9px" d="M568 116 C680 142 758 210 763 276"/>
+            <path class="link-flow" style="--flow:#e60012;--flow-width:6px" d="M808 300H838"/>
+
+            ${badge(66, 384, 104, "区县接入杂", "badge-warn")}
+            ${badge(190, 384, 108, "跨部门共享慢", "badge-warn")}
+            ${badge(318, 384, 104, "公网入口风险", "badge-risk")}
+            ${badge(442, 384, 104, "灾备带宽不足", "badge-risk")}
+            ${badge(706, 360, 206, "组合：云联网 + OTN + 安全专线", "badge-good")}
+          </g>
+        </svg>`;
     }
 
     function svgSichuanJustice() {
-      return svgIndustryNetwork({
-        title: "四川政法行业组网：政法专网、视频专网、跨域安全协同",
-        subtitle: "政法委统筹，公安、法院、检察、司法、监狱戒毒和综治中心按域隔离、按权协同。",
-        main: "#8b5cf6",
-        hubTitle: "省级政法指挥中心",
-        hubNote: "综治 / 指挥调度 / 跨域交换",
-        coreNote: "政法业务网 + 视频专网分域",
-        systemTitle: "政法业务与视频平台",
-        systemBadge: "视频与办案协同",
-        centerBadge: "指挥中心",
-        remoteBadge: "跨单位协同",
-        branchTitle: "政法单位 / 基层站点接入",
-        footer: "推荐路径：核心指挥和视频汇聚用高等级专线，多单位协同用云联网/MPLS VPN，跨域交换必须过安全边界。",
-        external: [["政法专网", "#8b5cf6"], ["视频专网", "#22d3ee"], ["OTN指挥", "#e60012"], ["移动警务", "#26d4ff"], ["互联网安全", "#f97316"], ["跨域交换", "#8b5cf6"], ["攻击流量", "#ef4444"]],
-        systems: ["综治平台", "警务协同", "法院办案", "检察业务", "视频汇聚", "跨域交换"],
-        branches: [["公安厅/市局", "警务/视频", "#7c3aed"], ["法院系统", "庭审/卷宗", "#8b5cf6"], ["检察系统", "办案/监督", "#8b5cf6"], ["司法监狱", "监管/会见", "#ef4444"], ["综治中心", "网格/指挥", "#22d3ee"]]
-      });
+      const zone = (x, y, w, h, title, note, color) => `
+        <g class="device">
+          <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="rgba(255,255,255,.07)" stroke="${color}" stroke-width="2"/>
+          <text class="node-label" x="${x + 18}" y="${y + 26}">${title}</text>
+          <text class="node-note" x="${x + 18}" y="${y + 46}">${note}</text>
+        </g>`;
+      const chip = (x, y, text, color = "#8b5cf6") => `
+        <rect x="${x}" y="${y}" width="96" height="26" rx="7" fill="rgba(255,255,255,.08)" stroke="${color}"/>
+        <text class="node-note" x="${x + 48}" y="${y + 17}" text-anchor="middle">${text}</text>`;
+      return `
+        <svg viewBox="0 0 1000 430" role="img" aria-label="四川政法安全域隔离拓扑">
+          ${svgDefs()}
+          <g class="justice-domain-topology">
+            <text class="svg-title" x="32" y="36">四川政法：政法业务网、视频专网、互联网区分域协同</text>
+            <text class="svg-subtitle" x="32" y="58">先画安全域，再画跨域交换；政法客户看重权限、审计和指挥调度连续性。</text>
+
+            ${zone(42, 84, 240, 130, "政法业务网", "办案 / 指挥 / 协同", "#8b5cf6")}
+            ${chip(62, 138, "法院办案")} ${chip(170, 138, "检察业务")}
+            ${chip(62, 174, "司法监管")} ${chip(170, 174, "综治网格")}
+
+            ${zone(42, 246, 240, 120, "视频专网", "雪亮 / 天网 / 执法视频", "#22d3ee")}
+            ${chip(62, 302, "视频汇聚", "#22d3ee")} ${chip(170, 302, "指挥调度", "#22d3ee")}
+
+            <rect x="370" y="116" width="220" height="148" rx="16" fill="rgba(139,92,246,.14)" stroke="#8b5cf6" stroke-width="3" filter="url(#glow)"/>
+            <text class="node-label" x="480" y="150" text-anchor="middle">省/市政法指挥中心</text>
+            <text class="node-note" x="480" y="174" text-anchor="middle">态势感知 / 事件协同 / 调度会商</text>
+            ${badge(412, 198, 72, "OTN", "badge-risk")}
+            ${badge(494, 198, 86, "智能 OTN", "badge-purple")}
+            <path class="link-back" style="--flow:#8b5cf6;--flow-width:8px" d="M282 150H370M282 312C324 284 344 236 370 210"/>
+            <path class="link-flow" style="--flow:#8b5cf6;--flow-width:8px" d="M282 150H370M282 312C324 284 344 236 370 210"/>
+
+            ${zone(676, 82, 276, 112, "互联网与移动警务区", "门户 / APP / 外部协同", "#f97316")}
+            ${miniDevice(700, 138, 90, 38, "安全专线", "#f97316")}
+            ${miniDevice(810, 138, 92, 38, "WAF/DDoS", "#f97316")}
+            <path class="attack-flow" d="M934 116 C876 122 824 130 790 138"/>
+
+            ${zone(676, 232, 276, 118, "跨域交换区", "网闸 / 防火墙 / 审计 / 堡垒机", "#ef4444")}
+            ${miniDevice(704, 286, 78, 38, "网闸", "#ef4444")}
+            ${miniDevice(796, 286, 78, 38, "审计", "#ef4444")}
+            ${miniDevice(888, 286, 48, 38, "堡垒", "#ef4444")}
+            <path class="link-flow" style="--flow:#ef4444;--flow-width:6px" d="M590 188C636 198 668 232 704 286"/>
+            <path class="link-flow" style="--flow:#f97316;--flow-width:5px" d="M790 138C700 160 628 172 590 176"/>
+
+            <rect class="glass-node" x="322" y="300" width="300" height="66" rx="10"/>
+            <text class="node-label" x="340" y="324">基层接入</text>
+            <text class="node-note" x="340" y="348">派出所 / 法庭 / 司法所 / 综治站：云联网、PON 组网、DIA 备份</text>
+            <path class="link-flow" style="--flow:#22c55e;--flow-width:5px" d="M472 300V264"/>
+
+            ${badge(54, 382, 92, "视频大流量", "badge-blue")}
+            ${badge(160, 382, 92, "跨域审计", "badge-risk")}
+            ${badge(266, 382, 92, "基层链路弱", "badge-warn")}
+            ${badge(372, 382, 120, "移动警务入口风险", "badge-risk")}
+            ${badge(690, 364, 214, "组合：OTN + 云联网 + 安全专线", "badge-good")}
+          </g>
+        </svg>`;
     }
 
     function svgSichuanFinance() {
-      return svgIndustryNetwork({
-        title: "四川银行金融行业组网：双中心、灾备、网点与监管安全",
-        subtitle: "成都总部/省分行连接同城双活、异地灾备、营业网点、ATM 和互联网金融入口，强调低时延和高可靠。",
-        main: "#0f766e",
-        hubTitle: "成都总部/省分行",
-        hubNote: "核心交易 / 风控 / 渠道",
-        coreNote: "双核心 + 双运营商 + SLA 可视",
-        systemTitle: "金融核心系统与外联专区",
-        systemBadge: "核心交易承载",
-        centerBadge: "金融双中心",
-        remoteBadge: "网点主备接入",
-        branchTitle: "数据中心 / 分行 / 网点 / 自助设备接入",
-        footer: "推荐路径：核心交易和双活灾备用 OTN/智能 OTN，网点用 MPLS VPN/云联网主备，互联网金融入口用安全专线。",
-        external: [["OTN双活", "#e60012"], ["云联网", "#8b5cf6"], ["MPLS VPN", "#0f766e"], ["DIA安全专线", "#f97316"], ["监管报送", "#f5c542"], ["第三方支付", "#22d3ee"], ["攻击流量", "#ef4444"]],
-        systems: ["核心交易", "支付清算", "风控反欺诈", "手机银行", "监管报送", "数据仓库"],
-        branches: [["同城双活", "主/备中心", "#e60012"], ["异地灾备", "复制/演练", "#e60012"], ["市州分行", "区域汇聚", "#0f766e"], ["营业网点", "柜面/自助", "#22c55e"], ["ATM/自助银行", "交易终端", "#f5c542"]]
-      });
+      const box = (x, y, w, h, title, note, color) => `
+        <g class="device">
+          <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="rgba(255,255,255,.075)" stroke="${color}" stroke-width="2"/>
+          <text class="node-label" x="${x + w / 2}" y="${y + 24}" text-anchor="middle">${title}</text>
+          <text class="node-note" x="${x + w / 2}" y="${y + 45}" text-anchor="middle">${note}</text>
+        </g>`;
+      return `
+        <svg viewBox="0 0 1000 430" role="img" aria-label="四川金融双中心环网拓扑">
+          ${svgDefs()}
+          <g class="finance-ring-topology">
+            <text class="svg-title" x="32" y="36">四川金融：省行双中心、分支网点、监管外联分区承载</text>
+            <text class="svg-subtitle" x="32" y="58">核心交易走双中心硬管道，网点走主备专网，互联网金融入口单独做安全防护。</text>
+
+            ${box(332, 84, 146, 78, "成都主中心", "核心交易 / 渠道", "#0f766e")}
+            ${box(528, 84, 146, 78, "成都备中心", "同城双活 / 备份", "#0f766e")}
+            ${box(430, 218, 146, 72, "异地灾备", "复制 / 演练", "#e60012")}
+            <path class="link-back" style="--flow:#e60012;--flow-width:9px" d="M478 122H528M396 162C398 214 430 250 430 254M632 162C624 214 576 250 576 254M430 254H576"/>
+            <path class="link-flow" style="--flow:#e60012;--flow-width:9px" d="M478 122H528M396 162C398 214 430 250 430 254M632 162C624 214 576 250 576 254M430 254H576"/>
+            ${badge(456, 178, 96, "OTN/智能OTN", "badge-risk")}
+
+            <rect class="glass-node" x="52" y="92" width="210" height="210" rx="12"/>
+            <text class="node-label" x="74" y="120">分支网点主备接入</text>
+            ${miniDevice(78, 152, 112, 38, "市州分行", "#0f766e")}
+            ${miniDevice(78, 206, 112, 38, "县域支行", "#22c55e")}
+            ${miniDevice(78, 260, 112, 38, "营业网点/ATM", "#f5c542")}
+            <path class="link-flow" style="--flow:#0f766e;--flow-width:6px" d="M190 172C244 154 286 134 332 122M190 226C250 210 310 176 380 162M190 280C260 284 354 284 430 254"/>
+            ${badge(72, 316, 72, "主链路", "badge-good")}
+            ${badge(152, 316, 72, "备链路", "badge-purple")}
+
+            <rect class="glass-node" x="736" y="86" width="216" height="112" rx="12"/>
+            <text class="node-label" x="758" y="114">监管/清算外联专区</text>
+            ${miniDevice(760, 148, 66, 34, "人行", "#f5c542")}
+            ${miniDevice(836, 148, 76, 34, "清算/征信", "#f5c542")}
+            <path class="link-flow" style="--flow:#f5c542;--flow-width:5px" d="M674 122H736"/>
+
+            <rect class="glass-node" x="724" y="238" width="228" height="96" rx="12"/>
+            <text class="node-label" x="746" y="264">互联网金融 DMZ</text>
+            ${miniDevice(748, 288, 70, 34, "手机银行", "#f97316")}
+            ${miniDevice(830, 288, 78, 34, "WAF/API", "#f97316")}
+            <path class="attack-flow" d="M938 252C886 262 852 274 826 288"/>
+            <path class="link-flow" style="--flow:#f97316;--flow-width:5px" d="M724 286C646 260 594 208 576 162"/>
+
+            <rect class="glass-node" x="304" y="330" width="386" height="44" rx="10"/>
+            <text class="node-label" x="324" y="358">SLA 可视：交易链路、网点链路、互联网入口分级监控</text>
+
+            ${badge(50, 382, 94, "双中心低时延", "badge-good")}
+            ${badge(158, 382, 86, "网点主备", "badge-purple")}
+            ${badge(258, 382, 82, "监管隔离", "badge-warn")}
+            ${badge(354, 382, 86, "API/DDoS", "badge-risk")}
+            ${badge(716, 358, 210, "组合：OTN + 云联网/MPLS + 安全专线", "badge-good")}
+          </g>
+        </svg>`;
     }
 
     function svgManufacturingGroup() {
-      return svgIndustryNetwork({
-        title: "大型制造企业组网：四川总部 + 全国 5 家大型分厂",
-        subtitle: "总部统一管控，五大分厂接入集团专网；办公 IT、生产 OT、仓储物流、云上协同分区承载。",
-        main: "#f97316",
-        hubTitle: "四川总部",
-        hubNote: "集团数据中心 / 安全运营",
-        coreNote: "ERP / MES / PLM / 供应链",
-        systemTitle: "集团应用与工业数据平台",
-        systemBadge: "云边协同",
-        centerBadge: "总部统一管控",
-        remoteBadge: "五大分厂互联",
-        branchTitle: "全国 5 家大型分厂接入",
-        footer: "推荐路径：总部和核心分厂用云联网/OTN，普通工厂主备链路用云联网 + DIA VPN/5G，IT/OT 边界用工业防火墙隔离。",
-        external: [["云联网", "#8b5cf6"], ["OTN核心厂", "#e60012"], ["DIA安全专线", "#f97316"], ["5G备份", "#22d3ee"], ["供应商VPN", "#26d4ff"], ["公有云", "#8b5cf6"], ["攻击流量", "#ef4444"]],
-        systems: ["ERP", "MES", "PLM", "SCM", "工业数据湖", "安全运营"],
-        branches: [["华东分厂", "生产/仓储", "#f97316"], ["华南分厂", "生产/物流", "#f97316"], ["华中分厂", "制造基地", "#f97316"], ["华北分厂", "供应链", "#f97316"], ["西北分厂", "远程运维", "#f97316"]]
-      });
+      const factory = (x, y, name, note, color = "#f97316") => `
+        <g class="device">
+          <rect x="${x}" y="${y}" width="136" height="78" rx="10" fill="rgba(255,255,255,.075)" stroke="${color}" stroke-width="1.8"/>
+          <text class="node-label" x="${x + 68}" y="${y + 20}" text-anchor="middle">${name}</text>
+          <rect x="${x + 12}" y="${y + 32}" width="48" height="24" rx="5" fill="rgba(34,183,255,.12)" stroke="#22b7ff"/>
+          <text class="node-note" x="${x + 36}" y="${y + 48}" text-anchor="middle">IT</text>
+          <rect x="${x + 76}" y="${y + 32}" width="48" height="24" rx="5" fill="rgba(249,115,22,.14)" stroke="#f97316"/>
+          <text class="node-note" x="${x + 100}" y="${y + 48}" text-anchor="middle">OT</text>
+          <text class="node-note" x="${x + 68}" y="${y + 70}" text-anchor="middle">${note}</text>
+        </g>`;
+      return `
+        <svg viewBox="0 0 1000 430" role="img" aria-label="大型制造总部与全国五厂拓扑">
+          ${svgDefs()}
+          <g class="manufacturing-factory-topology">
+            <text class="svg-title" x="32" y="36">大型制造：四川总部统一管控全国 5 家分厂</text>
+            <text class="svg-subtitle" x="32" y="58">制造客户要画出 IT/OT 边界、供应商远程运维、工业云平台和分厂主备链路。</text>
+
+            <rect x="54" y="128" width="182" height="128" rx="14" fill="rgba(249,115,22,.12)" stroke="#f97316" stroke-width="3" filter="url(#glow)"/>
+            <text class="node-label" x="145" y="160" text-anchor="middle">四川总部</text>
+            <text class="node-note" x="145" y="184" text-anchor="middle">数据中心 / 安全运营 / ERP</text>
+            ${badge(84, 208, 118, "集团统一管控", "badge-warn")}
+
+            ${cloud(400, 70, "工业云 / 数据湖", "PLM / SCM / BI", "#8b5cf6")}
+            ${server(430, 204, 112, 66, "云联网平台", "总部-分厂-云")}
+            <path class="link-back" style="--flow:#8b5cf6;--flow-width:8px" d="M236 192C306 174 374 148 440 130M236 192C310 220 370 236 430 236"/>
+            <path class="link-flow" style="--flow:#8b5cf6;--flow-width:8px" d="M236 192C306 174 374 148 440 130M236 192C310 220 370 236 430 236"/>
+
+            ${factory(682, 74, "华北分厂", "主备链路")}
+            ${factory(804, 178, "华东分厂", "核心工厂")}
+            ${factory(650, 292, "华南分厂", "仓储物流")}
+            ${factory(496, 304, "华中分厂", "生产基地")}
+            ${factory(692, 198, "西北分厂", "远程运维")}
+            <path class="link-flow" style="--flow:#8b5cf6;--flow-width:6px" d="M542 236C604 180 640 128 682 112M542 236C640 232 736 226 804 216M542 236C604 274 624 304 650 328M496 338C498 306 514 276 542 236M542 236C590 218 642 212 692 236"/>
+            <path class="link-flow flow-reverse" style="--flow:#e60012;--flow-width:5px" d="M236 192C330 268 442 328 496 338"/>
+            <text class="node-note" x="330" y="306" fill="#ff9a9a">核心工厂/灾备用 OTN 或智能 OTN</text>
+
+            <rect class="glass-node" x="54" y="292" width="238" height="74" rx="10"/>
+            <text class="node-label" x="76" y="318">供应商远程运维区</text>
+            <text class="node-note" x="76" y="342">VPN/零信任 -> 堡垒机 -> 工业防火墙 -> OT</text>
+            <path class="attack-flow" d="M292 332C382 326 444 292 496 246"/>
+            <path class="link-flow" style="--flow:#f97316;--flow-width:5px" d="M292 332C386 326 448 286 496 246"/>
+
+            <rect class="glass-node" x="300" y="86" width="88" height="96" rx="10"/>
+            <text class="node-label" x="344" y="118" text-anchor="middle">DIA</text>
+            <text class="node-note" x="344" y="142" text-anchor="middle">公网出口</text>
+            <text class="node-note" x="344" y="162" text-anchor="middle">安全专线</text>
+            <path class="link-flow" style="--flow:#f97316;--flow-width:5px" d="M236 160H300"/>
+
+            ${badge(60, 382, 88, "IT/OT隔离", "badge-risk")}
+            ${badge(162, 382, 88, "分厂主备", "badge-purple")}
+            ${badge(264, 382, 108, "远程运维审计", "badge-risk")}
+            ${badge(386, 382, 88, "云边协同", "badge-good")}
+            ${badge(642, 382, 226, "组合：云联网 + OTN + DIA安全专线", "badge-good")}
+          </g>
+        </svg>`;
     }
 
     function svgProblemDiagnostic() {

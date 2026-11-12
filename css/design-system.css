@@ -1,0 +1,78 @@
+/* 设计令牌：品牌色 + 网络语义色（颜色即含义），浅色商务画布，适合会议室投影 */
+:root {
+  /* 品牌 */
+  --brand: #e60012;
+  --brand-ink: #b8000e;
+  --brand-50: #fff1f1;
+  --brand-100: #ffe0e0;
+
+  /* 中性色 */
+  --ink-950: #0b1220;
+  --ink-900: #101828;
+  --ink-800: #1d2939;
+  --ink-700: #344054;
+  --ink-600: #475467;
+  --ink-500: #667085;
+  --ink-400: #98a2b3;
+  --ink-300: #d0d5dd;
+  --ink-200: #e4e7ec;
+  --ink-100: #f2f4f7;
+  --ink-50: #f9fafb;
+  --canvas: #f3f5f8;
+  --surface: #ffffff;
+  --surface-2: #fbfcfd;
+
+  /* 网络语义色 */
+  --flow: #1f6feb;          /* 业务数据流 */
+  --flow-50: #eaf2ff;
+  --tunnel: #0e8fae;        /* 云 / 隧道 */
+  --tunnel-50: #e5f6fa;
+  --security: #e8780c;      /* 安全能力 */
+  --security-50: #fff3e3;
+  --ok: #11994b;            /* 正常 / 保护 */
+  --ok-50: #e7f7ee;
+  --fault: #d92d20;         /* 故障 / 攻击 */
+  --fault-50: #fdecea;
+  --link: #9aa4b5;          /* 普通连接 */
+  --hardpipe: #1e3a8a;      /* OTN 硬管道 */
+  --hardpipe-50: #eef2ff;
+  --control: #7a3ce0;       /* 管控 / 编排 */
+  --control-50: #f3edff;
+  --legacy: #8a94a6;        /* 存量 / 传统 */
+
+  /* 字体 */
+  --font: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", "Segoe UI", Roboto, sans-serif;
+  --font-num: "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, var(--font);
+
+  /* 字号：随视口平滑缩放，1366 下正文 15px，1920 下 17px */
+  --fs-xs: clamp(12px, 0.68vw + 4px, 13px);
+  --fs-sm: clamp(13px, 0.62vw + 5.5px, 15px);
+  --fs-md: clamp(15px, 0.42vw + 9.5px, 17px);
+  --fs-lg: clamp(17px, 0.6vw + 9px, 20px);
+  --fs-xl: clamp(20px, 0.9vw + 8px, 26px);
+  --fs-2xl: clamp(24px, 1.5vw + 6px, 36px);
+  --fs-3xl: clamp(28px, 2.4vw + 2px, 48px);
+
+  /* 间距与圆角 */
+  --gap-1: 4px;
+  --gap-2: 8px;
+  --gap-3: 12px;
+  --gap-4: 16px;
+  --gap-5: 24px;
+  --gap-6: 32px;
+  --gap-7: 48px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 18px;
+  --r-xl: 24px;
+
+  /* 阴影 */
+  --sh-1: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.08);
+  --sh-2: 0 4px 12px rgba(16, 24, 40, 0.08), 0 2px 4px rgba(16, 24, 40, 0.04);
+  --sh-3: 0 16px 40px rgba(16, 24, 40, 0.14);
+
+  --header-h: 60px;
+  --page-pad: clamp(16px, 2vw, 40px);
+  --side-w: clamp(300px, 22vw, 400px);
+  --ease: cubic-bezier(0.22, 0.8, 0.24, 1);
+}

@@ -1,0 +1,277 @@
+{
+ "note": "网络技术术语。def 优先采用资料原文；标注“通用”的为通用技术释义，用于帮助理解，不代表产品承诺。",
+ "terms": [
+  {
+   "term": "OTN（光传送网）",
+   "def": "物理隔离的传输技术，遵 SDH 标准，时隙交叉，字节透传管道，是 SDH/MSTP 的升级版；OTN 无 IP 处理能力，不会识别、解析、提取、下插用户信息报文。",
+   "src": "S15",
+   "topic": "transport"
+  },
+  {
+   "term": "PeOTN（增强型 OTN）",
+   "def": "中国联通引入的增强型 OTN 技术，全面继承 SDH 的技术特点，对 SDH 政企专线全面升级，打造政企精品网。",
+   "src": "S13:2.1",
+   "topic": "transport"
+  },
+  {
+   "term": "SDH / MSTP",
+   "def": "SDH 专线以统一的网络接口、完善的保护机制曾是高品质政企专线首选；SDH/MSTP 为时分复用透明传输管道，全程资源独享（固定分配 2M 时隙）。",
+   "src": "S13:2.1; S19",
+   "topic": "transport"
+  },
+  {
+   "term": "1+1 保护",
+   "def": "电层业务级 1+1 保护，实现保护倒换性能小于 50ms。",
+   "src": "S13:4.1",
+   "topic": "reliability"
+  },
+  {
+   "term": "ASON",
+   "def": "光层和电层 ASON 保护通过利用已有路径实现重路由，可以抵抗链路多次断纤并快速恢复。",
+   "src": "S13:4.1",
+   "topic": "reliability"
+  },
+  {
+   "term": "SNCP",
+   "def": "通用：子网连接保护（Sub-Network Connection Protection）。资料中与 ASON 共同提供 99.99% 以上的业务可用率。",
+   "src": "S13:5.1.2",
+   "topic": "reliability"
+  },
+  {
+   "term": "ROADM",
+   "def": "动态光分插复用。中国联通 ROADM 全光大网支持波长自动光交换和光复用段保护协同，实现业务光层一跳直达。",
+   "src": "S13:4.7",
+   "topic": "transport"
+  },
+  {
+   "term": "NNI / UNI / CPE",
+   "def": "NNI：线路侧对接（Network to Network Interface）；UNI：支路侧对接（User Network Interface）；CPE：客户接入设备（Customer Premise Equipment）。",
+   "src": "S14:P6",
+   "topic": "transport"
+  },
+  {
+   "term": "EOO / EOS / 透传",
+   "def": "EOO：大颗粒业务，线路侧最小管道 1.25G；Client（透传）：大颗粒，数字电路业务使用；EOS：小颗粒业务，最小 VC 颗粒 2M，客户侧端口可限速。",
+   "src": "S14:P16",
+   "topic": "transport"
+  },
+  {
+   "term": "BOD（带宽按需）",
+   "def": "政企精品网带宽灵活调整采用端到端 BOD 技术实现，业务带宽可实时无损增大或减小。",
+   "src": "S13:4.3",
+   "topic": "transport"
+  },
+  {
+   "term": "ACTN",
+   "def": "基于流量工程网络抽象与控制的 IETF SDN 控制器架构，具备多域协调、抽象、服务转换、虚拟网络服务协调四个核心功能。",
+   "src": "S13:4.6",
+   "topic": "sdn"
+  },
+  {
+   "term": "SDN（软件定义网络）",
+   "def": "简单理解为控制器软件统一管整个网络，交换机等硬件设备仅负责高速转发。",
+   "src": "S23:P12",
+   "topic": "sdn"
+  },
+  {
+   "term": "MPLS VPN",
+   "def": "简单理解就是运营商在公共骨干网上划分出来的“虚拟专属局域网”：隔离私有、专线体验、多地内网互联。",
+   "src": "S23:P12",
+   "topic": "networking"
+  },
+  {
+   "term": "CUII（产业互联网）",
+   "def": "云联网承载网络：核心层 7 节点、汇聚层 24 省、接入层 335 个节点，完全独立于联通 169 网络。",
+   "src": "S23:P16",
+   "topic": "networking"
+  },
+  {
+   "term": "SR-TE / TI-LFA",
+   "def": "云联网运用 SR-TE（分段路由流量工程）打造低时延平面，通过可视地图选路提供最短时延服务；SR 自动低于 50 毫秒的 TI-LFA 保护。",
+   "src": "S23:P17",
+   "topic": "networking"
+  },
+  {
+   "term": "CE / PE",
+   "def": "通用：CE 为客户边缘路由设备，PE 为运营商边缘设备。资料：各节点部署客户端接入路由器 CE，一跳接入中国联通骨干网 PE。",
+   "src": "S41:2.4",
+   "topic": "networking"
+  },
+  {
+   "term": "二层组网 / 三层组网",
+   "def": "二层组网：使用刚性独立通道进行数据传输，AZ 端双向独立通道只传输该客户的数据；三层组网：基于 IP 地址实现路由转发，相当于全球一台超大路由器。",
+   "src": "S27:P5",
+   "topic": "networking"
+  },
+  {
+   "term": "VxLAN / IPSec 隧道",
+   "def": "PON 组网中，POP 点与 CPE 建立 VxLAN 通道实现二层（同网段）互通，或建立 IPSec 通道实现三层（不同网段）互通。",
+   "src": "S24:P17-P18",
+   "topic": "networking"
+  },
+  {
+   "term": "vCPE / POP",
+   "def": "vCPE 虚拟化设备部署在 POP 点（核心网机房），采用 ALL-IN-ONE 架构，连接企业站点与其他网络并实现业务互通。",
+   "src": "S24:P9, P11",
+   "topic": "networking"
+  },
+  {
+   "term": "OLT / ONU / 分光器",
+   "def": "通用：OLT 为局端光线路终端，ONU/ONT 为用户侧光网络单元（光猫），分光器把一路光信号分给多个用户。资料：宽带二级光分接入，互联网专线一级光分及以上。",
+   "src": "S01:P5-P6",
+   "topic": "access"
+  },
+  {
+   "term": "BRAS / 城域网 CR",
+   "def": "通用：BRAS 为宽带接入服务器，CR 为城域网核心路由器。资料拓扑：OLT → BRAS → IP 城域网（CR）→ Internet；GE 以上互联网专线经光纤收发器直连 BRAS。",
+   "src": "S01:P5-P6",
+   "topic": "access"
+  },
+  {
+   "term": "DDoS 近源清洗 / 原路回注",
+   "def": "通过中国联通全网清洗能力，对异常流量从攻击源头进行引流近源清洗并原路径回注，在骨干网层面领先一步缓解大流量 DDoS 攻击。",
+   "src": "S05:二(二)2",
+   "topic": "security"
+  },
+  {
+   "term": "WAF / CC 防护",
+   "def": "网站版提供基于 AI + 大数据的下一代智能云 WAF：Web 攻击防护、防爬虫/扫描器、CC 攻击防护、网站缓存加速。",
+   "src": "S05:二(二)8",
+   "topic": "security"
+  },
+  {
+   "term": "EDR",
+   "def": "终端检测与响应。终端版 PC-EDR 包含防病毒、资产管理、漏洞管理、EDR。",
+   "src": "S05:四(一)",
+   "topic": "security"
+  },
+  {
+   "term": "SDP / 零信任",
+   "def": "办公版采用 SDP2.0 理念（资料原文），基于联通自研零信任架构：多因素认证、终端基线检查、行为监控与最小权限。",
+   "src": "S01:P18; S09:一5",
+   "topic": "security"
+  },
+  {
+   "term": "等级保护 2.0",
+   "def": "2019 年 12 月等级保护 2.0 实行；网络架构要求保证网络设备业务处理能力与各部分带宽满足业务高峰期需要，保证系统可用性。",
+   "src": "S06:P3",
+   "topic": "security"
+  }
+ ],
+ "topics": [
+  {
+   "id": "enterprise",
+   "title": "企业网络架构与分界点",
+   "summary": "企业内网、出口设备、运营商接入设备与三类连接：点到网、点到点、上云。",
+   "demo": "tech-enterprise",
+   "scene": "basic",
+   "terms": [
+    "access"
+   ],
+   "src": "S01:P2; S03:2.4, 3.2"
+  },
+  {
+   "id": "access",
+   "title": "互联网接入原理",
+   "summary": "宽带二级光分与专线一级光分/光纤直连 BRAS 的区别，固定公网 IP 的意义。",
+   "demo": "dia",
+   "scene": "path",
+   "terms": [
+    "access"
+   ],
+   "src": "S01:P5-P6, P30"
+  },
+  {
+   "id": "security",
+   "title": "安全防护体系：云网边端",
+   "summary": "抗D版近源清洗、原路回注；防火墙版、网站版、终端版、办公版分别覆盖边界、应用、终端、接入。",
+   "demo": "security-line",
+   "scene": "ddos",
+   "terms": [
+    "security"
+   ],
+   "src": "S05; S09"
+  },
+  {
+   "id": "transport",
+   "title": "专线传输演进：SDH / MSTP → OTN",
+   "summary": "SDH 设备进入生命周期末期，OTN 是等效替代；总部 CPE 桥接法平滑迁转。",
+   "demo": "sdh-migration",
+   "scene": "bridge",
+   "terms": [
+    "transport"
+   ],
+   "src": "S13:2.1; S17; S19"
+  },
+  {
+   "id": "otn",
+   "title": "OTN 网络结构与保护机制",
+   "summary": "国干 / 省干 / 本地三级 OTN，硬管道隔离，1+1 保护 <50ms，ASON 重路由。",
+   "demo": "premium-network",
+   "scene": "protect",
+   "terms": [
+    "transport",
+    "reliability"
+   ],
+   "src": "S13:3-4; S14:P6"
+  },
+  {
+   "id": "otn-family",
+   "title": "政企精品网产品集合与 SDN 管控",
+   "summary": "金融精品网、智能 OTN、普通 OTN 的网络域、调度方式与指标差异。",
+   "demo": "premium-network",
+   "scene": "family",
+   "terms": [
+    "sdn",
+    "transport"
+   ],
+   "src": "S14:P4-P26"
+  },
+  {
+   "id": "multi-branch",
+   "title": "多分支组网：网状、星型与云联网",
+   "summary": "N(N−1)/2 条长途线路 → N 条本地线路；二层刚性管道与三层柔性管道。",
+   "demo": "cloud-connect",
+   "scene": "compare",
+   "terms": [
+    "networking"
+   ],
+   "src": "S23:P13; S27:P5"
+  },
+  {
+   "id": "cloud",
+   "title": "云网互联与弹性带宽",
+   "summary": "一点接入多云、统一互联网出口、弹性阶梯带宽、SR-TE 低时延与 TI-LFA 保护。",
+   "demo": "cloud-connect",
+   "scene": "multicloud",
+   "terms": [
+    "networking",
+    "sdn"
+   ],
+   "src": "S23:P15-P19"
+  },
+  {
+   "id": "pon",
+   "title": "PON 虚拟专网：VxLAN 与 IPSec",
+   "summary": "政企网关经 PON 接入，POP（vCPE）建立二层 VxLAN 或三层 IPSec 隧道。",
+   "demo": "pon-network",
+   "scene": "vpn",
+   "terms": [
+    "networking",
+    "access"
+   ],
+   "src": "S23:P27; S24"
+  },
+  {
+   "id": "protection",
+   "title": "可靠性：主备与保护",
+   "summary": "OTN 1+1 保护与 ASON、云联网 TI-LFA、双路由接入；对应不同可用率指标。",
+   "demo": "premium-network",
+   "scene": "protect",
+   "terms": [
+    "reliability"
+   ],
+   "src": "S13:4.1; S23:P17; S22:P7"
+  }
+ ]
+}

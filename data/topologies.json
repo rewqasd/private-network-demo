@@ -1,0 +1,862 @@
+{
+  "note": "产品与技术动态演示。画布 1280×720。节点 tone：customer/access/unicom/transport/security/cloud/internet/attacker/platform/legacy/ok；链路 kind：lan/fiber/link/dedicated/hardpipe/tunnel/cloud/control/legacy/threat/service；流量 kind：data/attack/clean/backup/tunnel/cloud/control/video。每步 src 指向资料出处。",
+  "demos": [
+    {
+      "id": "dia",
+      "title": "互联网专线：企业级独享互联网出口",
+      "kind": "product",
+      "products": ["dia", "broadband"],
+      "summary": "对比家庭宽带与互联网专线的接入路径：二级光分共享链路 vs 一级光分/光纤直连 BRAS 的独享链路，固定公网 IP 对外发布业务。",
+      "scenes": [
+        {
+          "id": "path",
+          "title": "接入路径与宽带对比",
+          "zones": [
+            { "id": "z-cust", "x": 30, "y": 96, "w": 330, "h": 588, "label": "客户侧", "tone": "customer" },
+            { "id": "z-acc", "x": 372, "y": 96, "w": 340, "h": 588, "label": "接入网（ODN / OLT）", "tone": "access" },
+            { "id": "z-metro", "x": 724, "y": 96, "w": 286, "h": 588, "label": "联通 IP 城域网", "tone": "unicom" },
+            { "id": "z-inet", "x": 1022, "y": 96, "w": 236, "h": 588, "label": "骨干网 / 互联网", "tone": "internet" }
+          ],
+          "nodes": [
+            { "id": "bb-user", "x": 80, "y": 210, "icon": "pc", "label": "家庭 / 小微终端", "sub": "共享上网", "tone": "customer", "info": { "t": "公众宽带用户，链路共享、私网 IP（进程数 2048）、上下行不对等。", "src": "S01:P30" } },
+            { "id": "bb-onu", "x": 220, "y": 210, "icon": "onu", "label": "光猫 ONU", "tone": "customer" },
+            { "id": "bb-sp2", "x": 440, "y": 210, "icon": "splitter", "label": "二级分光器", "tone": "access", "badge": "多户共享", "info": { "t": "家庭用户/沿街铺面：2 级光分 → ONU/ONT → 1 级光分 → OLT。分光器 1:64 平均损耗 19.7dB、1:32 为 16.5dB。", "src": "S01:P5" } },
+            { "id": "bb-sp1", "x": 570, "y": 210, "icon": "splitter", "label": "一级分光器", "tone": "access" },
+            { "id": "olt", "x": 650, "y": 385, "icon": "olt", "label": "OLT", "sub": "光线路终端", "tone": "access", "info": { "t": "局端光线路终端，汇聚 PON 用户后上联 BRAS。", "src": "S01:P5" } },
+            { "id": "bras", "x": 810, "y": 385, "icon": "bras", "label": "BRAS", "sub": "汇聚交换机", "tone": "unicom", "info": { "t": "GE 以上互联网专线采用光纤收发器直连 BRAS（汇聚交换机）开通。", "src": "S01:P6" } },
+            { "id": "cr", "x": 935, "y": 385, "icon": "core", "label": "城域网 CR", "sub": "核心路由器", "tone": "unicom" },
+            { "id": "bbn", "x": 1085, "y": 385, "icon": "core", "label": "骨干网", "tone": "unicom" },
+            { "id": "inet", "x": 1200, "y": 385, "icon": "internet", "label": "互联网", "tone": "internet", "round": true },
+            { "id": "web", "x": 1200, "y": 575, "icon": "user", "label": "互联网访问者", "tone": "internet", "size": "sm" },
+            { "id": "d-lan", "x": 80, "y": 575, "icon": "building", "label": "企业内网", "sub": "服务器 / 终端", "tone": "customer" },
+            { "id": "d-rt", "x": 190, "y": 575, "icon": "router", "label": "出口路由器", "sub": "客户自备", "tone": "customer", "info": { "t": "光电收发器以下（不含）至用户端的网络设备由客户自备（合同模板条款，以签约为准）。", "src": "S03:2.4" } },
+            { "id": "d-mc", "x": 305, "y": 575, "icon": "cpe", "label": "光电收发器", "sub": "联通提供", "tone": "unicom", "info": { "t": "乙方（联通）为客户提供用户端光电收发器，光电收发器以上的网络设备所有权归联通。", "src": "S03:3.2" } },
+            { "id": "d-sp1", "x": 545, "y": 575, "icon": "splitter", "label": "一级分光器", "sub": "GE 以下", "tone": "access" }
+          ],
+          "links": [
+            { "id": "l-bu", "a": "bb-user", "b": "bb-onu", "kind": "lan" },
+            { "id": "l-bo", "a": "bb-onu", "b": "bb-sp2", "kind": "fiber" },
+            { "id": "l-s2", "a": "bb-sp2", "b": "bb-sp1", "kind": "fiber", "label": "共享 PON" },
+            { "id": "l-s1", "a": "bb-sp1", "b": "olt", "kind": "fiber", "route": "hv" },
+            { "id": "l-ob", "a": "olt", "b": "bras", "kind": "fiber", "label": "上联" },
+            { "id": "l-bc", "a": "bras", "b": "cr", "kind": "link" },
+            { "id": "l-cb", "a": "cr", "b": "bbn", "kind": "link" },
+            { "id": "l-bi", "a": "bbn", "b": "inet", "kind": "link" },
+            { "id": "l-wi", "a": "web", "b": "inet", "kind": "link" },
+            { "id": "l-dl", "a": "d-lan", "b": "d-rt", "kind": "lan" },
+            { "id": "l-dm", "a": "d-rt", "b": "d-mc", "kind": "lan" },
+            { "id": "l-ds", "a": "d-mc", "b": "d-sp1", "kind": "fiber" },
+            { "id": "l-so", "a": "d-sp1", "b": "olt", "kind": "fiber", "route": "hv" },
+            { "id": "l-direct", "a": "d-mc", "b": "bras", "kind": "dedicated", "via": [[305, 665], [810, 665]], "label": "GE 以上：光纤直连 BRAS", "lab": 0.6 }
+          ],
+          "flows": [
+            { "id": "f-bb", "path": ["bb-user", "bb-onu", "bb-sp2", "bb-sp1", "olt", "bras", "cr", "bbn", "inet"], "kind": "data", "n": 4, "speed": 130, "label": "宽带上网：二级光分共享链路" },
+            { "id": "f-ge", "path": ["d-lan", "d-rt", "d-mc", "d-sp1", "olt", "bras", "cr", "bbn", "inet"], "kind": "data", "n": 4, "label": "专线（GE 以下）：一级光分" },
+            { "id": "f-dia", "path": ["d-lan", "d-rt", "d-mc", "bras", "cr", "bbn", "inet"], "kind": "data", "n": 6, "speed": 190, "label": "专线（GE 以上）：光纤直连 BRAS" },
+            { "id": "f-in", "path": ["web", "inet", "bbn", "cr", "bras", "d-mc", "d-rt", "d-lan"], "kind": "data", "n": 4, "speed": 170, "label": "互联网访问者 → 企业网站（固定公网 IP）" }
+          ],
+          "callouts": [
+            { "id": "c-core", "at": "cr", "x": 870, "y": 220, "w": 300, "text": "运营商侧：OLT → BRAS → IP 城域网（CR）→ 骨干网 → 互联网", "tone": "info" },
+            { "id": "c-share", "at": "bb-sp2", "x": 400, "y": 340, "w": 330, "text": "二级光分：多户共享一条 PON 链路；私网 IP、上下行不对等，时延“适中”", "tone": "fault" },
+            { "id": "c-boundary", "at": "d-mc", "x": 210, "y": 445, "w": 300, "text": "产权分界：光电收发器由联通提供，其以上设备归联通；以下至用户端设备由客户自备（以合同为准）", "tone": "info" },
+            { "id": "c-ge", "at": "d-sp1", "x": 490, "y": 492, "w": 240, "text": "GE 以下：GPON 承载，1 级光分 + ONU/ONT 方式接入", "tone": "flow" },
+            { "id": "c-direct", "at": "bras", "x": 480, "y": 498, "w": 250, "text": "GE 以上：光纤收发器直连 BRAS（汇聚交换机）开通；独享 100M–10G", "tone": "flow" },
+            { "id": "c-ip", "at": "inet", "x": 1120, "y": 235, "w": 250, "text": "固定公网 IP（IPv4 / IPv6）：可架设服务器、企业网站，对外发布业务", "tone": "ok" },
+            { "id": "c-sum", "x": 400, "y": 322, "w": 420, "lead": false, "text": "独享 vs 共享 · 一级光分及以上 vs 二级光分 · 固定 IP vs 私网 IP · 上下行对等 vs 不对等 · 时延低 vs 适中", "tone": "brand" }
+          ],
+          "kpis": [
+            { "id": "k-bw", "label": "独享带宽", "value": "100M – 10G", "src": "S01:P6", "note": "湖南 2026-07 口径" },
+            { "id": "k-lat", "label": "时延", "value": "毫秒级", "src": "S01:P6" },
+            { "id": "k-ip", "label": "固定公网 IP", "value": "IPv4 / IPv6", "src": "S01:P6" },
+            { "id": "k-sym", "label": "上下行", "value": "对等", "src": "S01:P30" },
+            { "id": "k-sec", "label": "安全监测", "value": "新开/续签默认叠加", "src": "S01:P7; S05:五(一)" }
+          ],
+          "steps": [
+            { "t": "运营商侧网络", "say": "互联网接入的运营商侧路径：OLT → BRAS → IP 城域网（CR）→ 骨干网 → 互联网。", "add": ["z-cust", "z-acc", "z-metro", "z-inet", "olt", "bras", "cr", "bbn", "inet", "l-ob", "l-bc", "l-cb", "l-bi"], "callouts": ["c-core"], "src": "S01:P5", "teacher": "先让学员说出：上网的流量最终从哪里出去？" },
+            { "t": "家庭宽带：二级光分、共享链路", "say": "家庭用户经二级光分接入，多户共享同一条 PON 链路，高峰期互相抢带宽。", "add": ["bb-user", "bb-onu", "bb-sp2", "bb-sp1", "l-bu", "l-bo", "l-s2", "l-s1"], "flows": ["f-bb"], "callouts": ["c-share"], "focus": ["bb-user", "bb-onu", "bb-sp2", "bb-sp1", "olt", "l-bu", "l-bo", "l-s2", "l-s1"], "src": "S01:P5; S01:P30", "teacher": "比喻：宽带像小区公共道路，早晚高峰会堵（V3 教学比喻）。" },
+            { "t": "互联网专线：客户侧与产权分界", "say": "企业内网经出口路由器接到联通提供的光电收发器，分界点以上归联通维护。", "add": ["d-lan", "d-rt", "d-mc", "l-dl", "l-dm"], "flows": ["f-bb"], "callouts": ["c-boundary"], "src": "S03:2.4, 3.2" },
+            { "t": "GE 以下：一级光分 + ONU/ONT", "say": "GE 以下带宽由 GPON 承载，只经过一级光分，接入层级比宽带更高。", "add": ["d-sp1", "l-ds", "l-so"], "flows": ["f-bb", "f-ge"], "callouts": ["c-ge"], "kpis": ["k-bw"], "src": "S01:P6" },
+            { "t": "GE 以上：光纤收发器直连 BRAS", "say": "GE 以上带宽采用光纤收发器直连 BRAS（汇聚交换机），独享 100M–10G、毫秒级时延。", "add": ["l-direct"], "flows": ["f-bb", "f-dia"], "states": { "l-direct": "active" }, "callouts": ["c-direct"], "kpis": ["k-bw", "k-lat"], "src": "S01:P6", "teacher": "突出：专线不是“更快的宽带”，而是“独享、可承诺”的企业出口。" },
+            { "t": "固定公网 IP：对外发布业务", "say": "固定公网 IP 支持 IPv4 或 IPv6，互联网用户可以直接访问企业网站与服务器；上下行对等。", "add": ["web", "l-wi"], "flows": ["f-dia", "f-in"], "callouts": ["c-ip"], "kpis": ["k-bw", "k-lat", "k-ip", "k-sym"], "src": "S01:P6; S01:P30" },
+            { "t": "小结：专线与宽带的五个差异", "say": "独享 vs 共享、一级光分及以上 vs 二级光分、固定 IP vs 私网 IP、上下行对等 vs 不对等、时延低 vs 适中；新开/续签专线默认叠加安全监测。", "flows": ["f-bb", "f-dia", "f-in"], "states": { "l-direct": "normal" }, "callouts": ["c-sum"], "kpis": ["k-bw", "k-lat", "k-ip", "k-sym", "k-sec"], "src": "S01:P30; S05:五(一)", "teacher": "引出下一个产品：出口暴露在公网，被攻击怎么办？→ 互联网安全专线。" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "security-line",
+      "title": "互联网安全专线：专线 + 云网边端安全",
+      "kind": "product",
+      "products": ["security-line"],
+      "summary": "抗D版近源清洗、原路回注的全过程，以及焕新后五类安全服务在网络、边界、应用、终端、接入五个层面的位置。",
+      "scenes": [
+        {
+          "id": "ddos",
+          "title": "抗D版：监测 → 告警 → 近源清洗 → 原路回注",
+          "zones": [
+            { "id": "z-cust", "x": 30, "y": 96, "w": 300, "h": 588, "label": "客户网络", "tone": "customer" },
+            { "id": "z-uni", "x": 342, "y": 96, "w": 560, "h": 588, "label": "中国联通网络（城域网 + 骨干网）", "tone": "unicom" },
+            { "id": "z-inet", "x": 914, "y": 96, "w": 344, "h": 588, "label": "互联网", "tone": "internet" }
+          ],
+          "nodes": [
+            { "id": "m-bw", "kind": "meter", "x": 180, "y": 175, "w": 210, "label": "专线带宽占用", "value": 32, "valueText": "32%", "tone": "flow" },
+            { "id": "lan", "x": 90, "y": 380, "icon": "server", "label": "业务服务器", "sub": "被攻击的 IP", "tone": "customer" },
+            { "id": "rt", "x": 230, "y": 380, "icon": "router", "label": "出口路由器", "tone": "customer" },
+            { "id": "metro", "x": 450, "y": 380, "icon": "core", "label": "城域网", "tone": "unicom" },
+            { "id": "bbn", "x": 760, "y": 380, "icon": "core", "label": "骨干网", "tone": "unicom" },
+            { "id": "sm", "x": 450, "y": 165, "icon": "scrubber", "label": "城域网清洗", "tone": "security", "info": { "t": "城域网清洗与骨干网清洗配合：异常流量被引流清洗，正常流量畅通无阻。", "src": "S01:P9" } },
+            { "id": "sb", "x": 760, "y": 165, "icon": "scrubber", "label": "骨干网清洗", "sub": "近源清洗", "tone": "security", "info": { "t": "骨干网近源清洗，从攻击源头流量过滤；以攻击流量峰值分档，基于客户互联网专线 IP 地址防护。", "src": "S01:P9" } },
+            { "id": "ops", "x": 600, "y": 600, "icon": "platform", "label": "安全运营平台", "sub": "7×24 云端研判", "tone": "platform", "info": { "t": "数科安全事业部二线运营 7×24：受理开通、威胁预警、防护报告、专家支持。", "src": "S09:三" } },
+            { "id": "phone", "x": 200, "y": 600, "icon": "phone", "label": "客户运维", "sub": "短信 / 微信 / 自服务", "tone": "customer", "info": { "t": "客户可通过自服务平台、微信服务号“联通安全”等渠道查看告警、防护信息、安全月报。", "src": "S01:P22" } },
+            { "id": "inet", "x": 1010, "y": 380, "icon": "internet", "label": "互联网", "tone": "internet", "round": true },
+            { "id": "users", "x": 1180, "y": 215, "icon": "user", "label": "正常访问用户", "tone": "internet" },
+            { "id": "bots", "x": 1180, "y": 470, "icon": "bot", "label": "僵尸主机", "tone": "attacker" },
+            { "id": "hacker", "x": 1180, "y": 625, "icon": "hacker", "label": "攻击者", "tone": "attacker", "size": "sm", "lp": "l" }
+          ],
+          "links": [
+            { "id": "l-lr", "a": "lan", "b": "rt", "kind": "lan" },
+            { "id": "l-rm", "a": "rt", "b": "metro", "kind": "dedicated", "label": "互联网专线" },
+            { "id": "l-mb", "a": "metro", "b": "bbn", "kind": "link" },
+            { "id": "l-bi", "a": "bbn", "b": "inet", "kind": "link" },
+            { "id": "l-iu", "a": "inet", "b": "users", "kind": "link" },
+            { "id": "l-ib", "a": "inet", "b": "bots", "kind": "link" },
+            { "id": "l-hb", "a": "hacker", "b": "bots", "kind": "threat" },
+            { "id": "l-ms", "a": "metro", "b": "sm", "kind": "link" },
+            { "id": "l-bs", "a": "bbn", "b": "sb", "kind": "link" },
+            { "id": "l-om", "a": "ops", "b": "metro", "kind": "control", "route": "hv" },
+            { "id": "l-ob", "a": "ops", "b": "bbn", "kind": "control", "route": "hv" },
+            { "id": "l-op", "a": "ops", "b": "phone", "kind": "control" }
+          ],
+          "flows": [
+            { "id": "f-norm", "path": ["users", "inet", "bbn", "metro", "rt", "lan"], "kind": "data", "n": 4 },
+            { "id": "f-atk", "path": ["bots", "inet", "bbn", "metro", "rt", "lan"], "kind": "attack", "n": 9, "speed": 210 },
+            { "id": "f-div-b", "path": ["bots", "inet", "bbn", "sb"], "kind": "attack", "n": 6, "speed": 200 },
+            { "id": "f-div-m", "path": ["bbn", "metro", "sm"], "kind": "attack", "n": 3, "speed": 180 },
+            { "id": "f-cln-b", "path": ["sb", "bbn", "metro", "rt", "lan"], "kind": "clean", "n": 4 },
+            { "id": "f-cln-m", "path": ["sm", "metro", "rt", "lan"], "kind": "clean", "n": 3 },
+            { "id": "f-mon", "path": ["metro", "ops"], "kind": "control", "n": 2, "speed": 110 },
+            { "id": "f-alarm", "path": ["ops", "phone"], "kind": "control", "n": 3, "speed": 160 }
+          ],
+          "callouts": [
+            { "id": "c-base", "at": "rt", "x": 180, "y": 508, "w": 280, "text": "新开/续签互联网专线默认叠加“抗D版-基础版”：专线 + 安全一体化", "tone": "security" },
+            { "id": "c-mon", "at": "ops", "x": 600, "y": 492, "w": 310, "text": "全场景安全监测：基于客户互联网 IP 实时监测端口开放、DDoS、病毒失陷；不限 IP，秒级发现", "tone": "security" },
+            { "id": "c-atk", "at": "rt", "x": 605, "y": 284, "w": 300, "text": "DDoS：异常流量占满互联网专线带宽，正常流量无法通行", "tone": "fault" },
+            { "id": "c-alarm", "at": "phone", "x": 180, "y": 508, "w": 280, "text": "攻击告警：告警短信、微信服务号“联通安全”、自服务平台；10019 响应支撑", "tone": "control" },
+            { "id": "c-scrub", "at": "sb", "x": 605, "y": 284, "w": 300, "text": "引流近源清洗：骨干网 + 城域网两级清洗，从攻击源头过滤", "tone": "security" },
+            { "id": "c-back", "at": "lan", "x": 180, "y": 508, "w": 280, "text": "清洗后的干净流量原路径回注：无需客户配置、不影响现网业务", "tone": "ok" }
+          ],
+          "kpis": [
+            { "id": "k-free", "label": "全场景安全监测", "value": "基础版默认必选", "src": "S09:一" },
+            { "id": "k-unl", "label": "监测 / 清洗", "value": "不限 IP 数量", "src": "S05:二(三)1" },
+            { "id": "k-spec", "label": "抗D版规格", "value": "1G / 2G / 5G / 5G 不限次", "src": "S05:四(一)" },
+            { "id": "k-cfg", "label": "部署", "value": "无需客户配置", "src": "S06:P8" },
+            { "id": "k-ops", "label": "运营", "value": "7×24 小时", "src": "S09:三" }
+          ],
+          "steps": [
+            { "t": "正常业务", "say": "互联网用户经骨干网、城域网和互联网专线访问客户业务服务器，带宽占用正常。", "add": ["z-cust", "z-uni", "z-inet", "lan", "rt", "metro", "bbn", "inet", "users", "l-lr", "l-rm", "l-mb", "l-bi", "l-iu", "m-bw"], "flows": ["f-norm"], "meters": { "m-bw": { "value": 32, "text": "32%", "tone": "flow" } }, "src": "S05:二(一)" },
+            { "t": "基础版：全场景安全监测", "say": "安全专线把安全监测作为互联网专线的基础服务：不限 IP、不限流量，秒级发现攻击。", "add": ["ops", "phone", "l-om", "l-ob", "l-op"], "flows": ["f-norm", "f-mon"], "callouts": ["c-base", "c-mon"], "kpis": ["k-free", "k-unl"], "src": "S05:二(二)1; S09:一" },
+            { "t": "DDoS 攻击来袭", "say": "攻击者操控僵尸主机发起大流量 DDoS，异常流量占满专线带宽，正常业务受阻。", "add": ["bots", "hacker", "l-ib", "l-hb"], "flows": ["f-norm", "f-atk"], "meters": { "m-bw": { "value": 100, "text": "100%", "tone": "fault" } }, "states": { "rt": "alert", "lan": "alert", "l-rm": "alert" }, "callouts": ["c-atk"], "src": "S01:P9", "dur": 7000 },
+            { "t": "秒级告警", "say": "运营平台监测到攻击，通过短信、微信服务号与自服务平台通知客户，10019 提供响应支撑。", "flows": ["f-norm", "f-atk", "f-mon", "f-alarm"], "states": { "ops": "active", "phone": "active" }, "callouts": ["c-alarm"], "src": "S01:P22" },
+            { "t": "引流近源清洗", "say": "攻击流量被引流到骨干网、城域网清洗设备，在骨干网层面领先一步缓解大流量攻击。", "add": ["sm", "sb", "l-ms", "l-bs"], "flows": ["f-norm", "f-div-b", "f-div-m"], "meters": { "m-bw": { "value": 58, "text": "58%", "tone": "security" } }, "states": { "sb": "protect", "sm": "protect", "rt": "normal", "lan": "normal", "l-rm": "normal", "ops": "normal", "phone": "normal" }, "callouts": ["c-scrub"], "kpis": ["k-free", "k-unl", "k-spec"], "src": "S01:P9; S05:二(二)2", "dur": 7000 },
+            { "t": "原路回注", "say": "清洗后的干净流量原路径回注客户，带宽恢复正常；客户无需任何配置。", "flows": ["f-norm", "f-div-b", "f-cln-b", "f-cln-m"], "meters": { "m-bw": { "value": 36, "text": "36%", "tone": "ok" } }, "states": { "sb": "ok", "sm": "ok", "lan": "ok" }, "callouts": ["c-back"], "kpis": ["k-free", "k-unl", "k-spec", "k-cfg"], "src": "S05:二(二)2; S06:P8" },
+            { "t": "抗D版能力小结", "say": "基础版默认必选；按攻击流量峰值分档订购 1G、2G、5G 清洗或 5G 不限次清洗，7×24 运营团队托管。", "flows": ["f-norm", "f-div-b", "f-cln-b"], "states": { "sb": "normal", "sm": "normal", "lan": "normal" }, "kpis": ["k-free", "k-unl", "k-spec", "k-cfg", "k-ops"], "src": "S05:四(一); S09:三", "teacher": "资料比喻：云网防护像“道路交警”。追问：客户除了 DDoS，还担心什么？→ 进入“云网边端”场景。" }
+          ]
+        },
+        {
+          "id": "layers",
+          "title": "五类安全服务：网络、边界、应用、终端、接入",
+          "zones": [
+            { "id": "z-in", "x": 30, "y": 96, "w": 520, "h": 588, "label": "客户内网", "tone": "customer" },
+            { "id": "z-uni", "x": 562, "y": 96, "w": 300, "h": 588, "label": "中国联通网络", "tone": "unicom" },
+            { "id": "z-ext", "x": 874, "y": 96, "w": 384, "h": 588, "label": "互联网 / 云端", "tone": "internet" }
+          ],
+          "nodes": [
+            { "id": "srv", "x": 120, "y": 210, "icon": "server", "label": "网站 / 业务服务器", "tone": "customer" },
+            { "id": "pcs", "x": 120, "y": 470, "icon": "pc", "label": "办公终端 / 服务器", "tone": "customer", "badge": "终端版", "info": { "t": "终端版：PC-防病毒（防病毒、资产管理、漏洞管理，10 点起订）；PC-EDR（另含 EDR，5 点起订）。", "src": "S05:四(一)" } },
+            { "id": "sw", "x": 280, "y": 340, "icon": "switch", "label": "核心交换机", "tone": "customer" },
+            { "id": "gw", "x": 440, "y": 340, "icon": "firewall", "label": "本地安全网关", "tone": "security", "badge": "防火墙版", "info": { "t": "防火墙版：防火墙、入侵防御、防病毒；本地硬件网关部署 + 云端研判；限 300M 及以下带宽。", "src": "S05:四(一); S06:P6" } },
+            { "id": "net", "x": 710, "y": 340, "icon": "core", "label": "联通网络", "tone": "unicom", "badge": "抗D版", "info": { "t": "抗D版：网络侧防护，DDoS 防护、域名安全等，保障链路带宽通畅。", "src": "S09:一1" } },
+            { "id": "waf", "x": 1000, "y": 180, "icon": "shield", "label": "云端网站防护平台", "tone": "security", "badge": "网站版", "info": { "t": "网站版：Web 攻击防护、扫描防护、爬虫防护、网站缓存加速；DDoS 基础带宽防护（云资源）、CC 防护；SSL 证书 DV/OV/EV；CNAME 与 NS 两种接入方式。", "src": "S05:四(一); S07:5" } },
+            { "id": "visitor", "x": 1180, "y": 180, "icon": "user", "label": "网站访问者", "tone": "internet" },
+            { "id": "bad", "x": 1180, "y": 330, "icon": "hacker", "label": "爬虫 / 扫描 / CC", "tone": "attacker", "size": "sm" },
+            { "id": "inet", "x": 1060, "y": 400, "icon": "internet", "label": "互联网", "tone": "internet", "round": true },
+            { "id": "remote", "x": 1180, "y": 540, "icon": "phone", "label": "远程办公人员", "tone": "internet", "badge": "办公版", "info": { "t": "办公版：零信任远程办公，满足 100 人以内远程/移动办公，支持 Windows、Mac、iOS、Android。", "src": "S05:四(一)" } },
+            { "id": "ops", "x": 710, "y": 600, "icon": "platform", "label": "云端运营平台", "sub": "7×24 研判 · 告警 · 月报", "tone": "platform" }
+          ],
+          "links": [
+            { "id": "l-ss", "a": "srv", "b": "sw", "kind": "lan", "route": "hv" },
+            { "id": "l-ps", "a": "pcs", "b": "sw", "kind": "lan", "route": "hv" },
+            { "id": "l-sn", "a": "sw", "b": "net", "kind": "dedicated", "label": "互联网专线" },
+            { "id": "l-sg", "a": "sw", "b": "gw", "kind": "lan" },
+            { "id": "l-gn", "a": "gw", "b": "net", "kind": "dedicated", "label": "互联网专线" },
+            { "id": "l-ni", "a": "net", "b": "inet", "kind": "link" },
+            { "id": "l-vw", "a": "visitor", "b": "waf", "kind": "link" },
+            { "id": "l-bw", "a": "bad", "b": "waf", "kind": "threat" },
+            { "id": "l-wi", "a": "waf", "b": "inet", "kind": "link" },
+            { "id": "l-ri", "a": "remote", "b": "inet", "kind": "link" },
+            { "id": "l-og", "a": "ops", "b": "gw", "kind": "control", "route": "hv" },
+            { "id": "l-on", "a": "ops", "b": "net", "kind": "control" },
+            { "id": "l-ow", "a": "ops", "b": "waf", "kind": "control", "via": [[930, 600], [930, 180]] },
+            { "id": "l-op", "a": "ops", "b": "pcs", "kind": "control", "route": "hv" }
+          ],
+          "flows": [
+            { "id": "f-base", "path": ["inet", "net", "sw", "srv"], "kind": "data", "n": 4 },
+            { "id": "f-base2", "path": ["inet", "net", "gw", "sw", "srv"], "kind": "data", "n": 4 },
+            { "id": "f-web", "path": ["visitor", "waf", "inet", "net", "gw", "sw", "srv"], "kind": "data", "n": 5 },
+            { "id": "f-bad", "path": ["bad", "waf"], "kind": "attack", "n": 4, "speed": 160 },
+            { "id": "f-vpn", "path": ["remote", "inet", "net", "gw", "sw", "srv"], "kind": "tunnel", "n": 3 },
+            { "id": "f-c1", "path": ["ops", "gw"], "kind": "control", "n": 2, "speed": 120 },
+            { "id": "f-c2", "path": ["ops", "net"], "kind": "control", "n": 2, "speed": 120 },
+            { "id": "f-c3", "path": ["ops", "waf"], "kind": "control", "n": 2, "speed": 120 },
+            { "id": "f-c4", "path": ["ops", "pcs"], "kind": "control", "n": 2, "speed": 120 }
+          ],
+          "callouts": [
+            { "id": "c-net", "at": "net", "x": 710, "y": 200, "w": 250, "text": "抗D版 · 网络侧：DDoS 防护、域名安全，保障链路带宽通畅", "tone": "security" },
+            { "id": "c-gw", "at": "gw", "x": 420, "y": 480, "w": 250, "text": "防火墙版 · 边界侧：防火墙、入侵防御、防病毒；本地网关 + 云端研判（≤300M）", "tone": "security" },
+            { "id": "c-waf", "at": "waf", "x": 1000, "y": 290, "w": 230, "text": "网站版 · 应用侧：云 WAF 防 Web 攻击、CC、爬虫；SSL 证书 DV/OV/EV", "tone": "security" },
+            { "id": "c-pcs", "at": "pcs", "x": 290, "y": 600, "w": 250, "text": "终端版 · 终端侧：PC-防病毒 / PC-EDR，SaaS + 云端托管 + 本地客户端", "tone": "security" },
+            { "id": "c-remote", "at": "remote", "x": 1100, "y": 656, "w": 270, "text": "办公版 · 接入侧：零信任，多因素认证、终端基线检查、最小权限（100 人以内）", "tone": "tunnel" },
+            { "id": "c-ops", "at": "ops", "x": 420, "y": 480, "w": 260, "text": "云端运营 7×24：告警短信、月度报告解读、策略调优、漏洞风险评估", "tone": "control" }
+          ],
+          "kpis": [
+            { "id": "k-5", "label": "五类安全服务", "value": "抗D · 防火墙 · 网站 · 终端 · 办公", "src": "S09:一" },
+            { "id": "k-tier", "label": "防护层面", "value": "网络 · 边界 · 应用 · 终端 · 接入", "src": "S09:一" },
+            { "id": "k-buy", "label": "订购规则", "value": "五类可同时订购", "src": "S05:四(一)注" }
+          ],
+          "steps": [
+            { "t": "客户网络与互联网专线", "say": "客户内网通过互联网专线接入联通网络。下面逐层叠加五类安全服务。", "add": ["z-in", "z-uni", "z-ext", "srv", "pcs", "sw", "net", "inet", "l-ss", "l-ps", "l-sn", "l-ni"], "flows": ["f-base"], "src": "S09:一" },
+            { "t": "网络侧：抗D版", "say": "在联通网络侧提供 DDoS 防护与域名安全，攻击在到达客户出口前被处置。", "states": { "net": "protect" }, "flows": ["f-base"], "callouts": ["c-net"], "src": "S09:一1" },
+            { "t": "边界侧：防火墙版", "say": "在客户出口部署本地安全网关，防火墙、入侵防御、防病毒，云端研判、一键封堵。", "add": ["gw", "l-sg", "l-gn"], "remove": ["l-sn"], "flows": ["f-base2"], "states": { "gw": "protect", "net": "normal" }, "callouts": ["c-gw"], "src": "S09:一2; S06:P6; S01:P11" },
+            { "t": "应用侧：网站版", "say": "访问者先经过云端网站防护平台：Web 攻击、CC、爬虫被过滤，正常请求回源到客户网站。", "add": ["waf", "visitor", "bad", "l-vw", "l-bw", "l-wi"], "flows": ["f-web", "f-bad"], "states": { "waf": "protect", "gw": "normal" }, "callouts": ["c-waf"], "src": "S09:一3; S05:四(一)" },
+            { "t": "终端侧：终端版", "say": "办公终端与服务器安装客户端，防病毒、资产与漏洞管理、EDR，云端托管分析。", "flows": ["f-web"], "states": { "pcs": "protect", "waf": "normal" }, "callouts": ["c-pcs"], "src": "S09:一4; S06:P6" },
+            { "t": "接入侧：办公版", "say": "远程办公人员通过零信任安全接入企业内网：先认证、后连接，权限最小化。", "add": ["remote", "l-ri"], "flows": ["f-web", "f-vpn"], "states": { "remote": "active", "pcs": "normal" }, "callouts": ["c-remote"], "src": "S09:一5; S01:P18" },
+            { "t": "云端运营：7×24 托管", "say": "云端运营平台统一研判各层告警，月度报告与策略调优，客户无需专职安全运维。", "add": ["ops", "l-og", "l-on", "l-ow", "l-op"], "flows": ["f-web", "f-vpn", "f-c1", "f-c2", "f-c3", "f-c4"], "states": { "remote": "normal" }, "callouts": ["c-ops"], "kpis": ["k-5", "k-tier", "k-buy"], "src": "S01:P22; S09:三", "teacher": "资料比喻：网络防护“道路交警”、Web 防护“巡逻保镖”、边界“门口安检”、终端“室内摄像头”、远程接入“动态门禁”。" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "smart-dia",
+      "title": "智能互联网专线：流量可视、预警与智能升速",
+      "kind": "product",
+      "products": ["smart-dia", "dia"],
+      "summary": "以学校考点为例：利用率超阈值预警 → 自助下单升速 → SDN 自动调速下发 → 到期自动恢复、按天计费。",
+      "scenes": [
+        {
+          "id": "speedup",
+          "title": "高峰预警与按天升速",
+          "zones": [
+            { "id": "z-cust", "x": 30, "y": 96, "w": 330, "h": 588, "label": "客户侧", "tone": "customer" },
+            { "id": "z-uni", "x": 372, "y": 96, "w": 520, "h": 588, "label": "联通城域网（SDN）", "tone": "unicom" },
+            { "id": "z-inet", "x": 904, "y": 96, "w": 354, "h": 588, "label": "互联网", "tone": "internet" }
+          ],
+          "nodes": [
+            { "id": "m-util", "kind": "meter", "x": 630, "y": 175, "w": 240, "label": "线路利用率（下行）", "value": 45, "valueText": "45%", "mark": 80, "tone": "flow" },
+            { "id": "m-bw", "kind": "meter", "x": 1080, "y": 175, "w": 220, "label": "专线速率", "value": 50, "valueText": "100M", "tone": "flow" },
+            { "id": "cust", "x": 110, "y": 360, "icon": "school", "label": "客户网络", "sub": "以学校考点为例", "tone": "customer" },
+            { "id": "rt", "x": 260, "y": 360, "icon": "router", "label": "出口路由器", "tone": "customer" },
+            { "id": "bras", "x": 520, "y": 360, "icon": "bras", "label": "BRAS / 城域网设备", "tone": "unicom" },
+            { "id": "cr", "x": 760, "y": 360, "icon": "core", "label": "城域网核心", "tone": "unicom" },
+            { "id": "inet", "x": 1080, "y": 360, "icon": "internet", "label": "互联网", "tone": "internet", "round": true },
+            { "id": "app", "x": 110, "y": 600, "icon": "phone", "label": "智网达小程序", "sub": "客户 / 客户经理", "tone": "customer", "info": { "t": "业务入口：微信小程序“智网达”、政企运营平台、智慧云网门户；客户自助下单或客户经理代客下单。", "src": "S02:P3-P4, P10" } },
+            { "id": "portal", "x": 520, "y": 600, "icon": "platform", "label": "智慧云网门户", "sub": "政企运营平台", "tone": "platform" },
+            { "id": "console", "x": 760, "y": 600, "icon": "platform", "label": "业务控制台", "sub": "自动调速下发", "tone": "platform", "info": { "t": "业务控制台收单 → 自动调速配置下发 → 订单报竣归档；接入资源不支持时触发接入段扩容工单。", "src": "S02:P10" } }
+          ],
+          "links": [
+            { "id": "l-cr", "a": "cust", "b": "rt", "kind": "lan" },
+            { "id": "l-rb", "a": "rt", "b": "bras", "kind": "dedicated", "label": "互联网专线（静态接入）" },
+            { "id": "l-bc", "a": "bras", "b": "cr", "kind": "link" },
+            { "id": "l-ci", "a": "cr", "b": "inet", "kind": "link" },
+            { "id": "l-ap", "a": "app", "b": "portal", "kind": "control" },
+            { "id": "l-pc", "a": "portal", "b": "console", "kind": "control" },
+            { "id": "l-cb", "a": "console", "b": "bras", "kind": "control", "via": [[760, 480], [520, 480]] }
+          ],
+          "flows": [
+            { "id": "f-traffic", "path": ["inet", "cr", "bras", "rt", "cust"], "kind": "data", "n": 6, "speed": 170 },
+            { "id": "f-alert", "path": ["portal", "app"], "kind": "control", "n": 3, "speed": 150 },
+            { "id": "f-order", "path": ["app", "portal", "console"], "kind": "control", "n": 3, "speed": 150 },
+            { "id": "f-cfg", "path": ["console", "bras"], "kind": "control", "n": 3, "speed": 150 }
+          ],
+          "callouts": [
+            { "id": "c-vis", "at": "app", "x": 230, "y": 500, "w": 270, "text": "流量可视：1 天 / 3 天 / 1 周 / 1 月流量图；上下行流量值与带宽利用率", "tone": "flow" },
+            { "id": "c-alert", "at": "m-util", "x": 640, "y": 262, "w": 330, "text": "利用率超 80% 持续 1 小时（7:00–20:00，每 15 分钟采集）→ 预警短信；次日 7 点邮件", "tone": "fault" },
+            { "id": "c-order", "at": "app", "x": 230, "y": 500, "w": 270, "text": "自助选择升速时段：如 6 月 5 日升速、6 月 9 日自动恢复（资料案例：某中学高考考点）", "tone": "control" },
+            { "id": "c-cfg", "at": "bras", "x": 1080, "y": 500, "w": 280, "text": "业务控制台收单 → 自动调速配置下发 → 订单报竣归档", "tone": "ok" },
+            { "id": "c-bill", "at": "m-bw", "x": 1080, "y": 265, "w": 300, "text": "按天计费：（目标速率标准月租 − 基准速率标准月租）÷ 30 × 升速天数 × 折扣", "tone": "info" },
+            { "id": "c-rule", "at": "console", "x": 1080, "y": 500, "w": 300, "text": "升速范围：100M 以下可升至 50M/100M；100M 以上每 100M、最高 1G；1G 以上每 500M、最高 10G", "tone": "info" },
+            { "id": "c-auto", "at": "app", "x": 230, "y": 500, "w": 270, "text": "随需升速：带宽达到阈值后系统自动生成订单升速（试点：海口、青岛、宁夏）", "tone": "control" }
+          ],
+          "kpis": [
+            { "id": "k-warn", "label": "预警规则", "value": "80% 持续 1 小时", "src": "S02:P6" },
+            { "id": "k-gran", "label": "升速颗粒度", "value": "100M 以上每 100M；1G 以上每 500M", "src": "S02:P13" },
+            { "id": "k-max", "label": "最高升速", "value": "10G", "src": "S02:P13" },
+            { "id": "k-bill", "label": "计费", "value": "按升速天数", "src": "S02:P14" },
+            { "id": "k-scope", "label": "销售范围", "value": "全国 31 省", "src": "S02:P13" }
+          ],
+          "steps": [
+            { "t": "静态接入的互联网专线", "say": "客户以 100M 静态接入互联网专线，日常利用率正常。", "add": ["z-cust", "z-uni", "z-inet", "cust", "rt", "bras", "cr", "inet", "l-cr", "l-rb", "l-bc", "l-ci", "m-util", "m-bw"], "flows": ["f-traffic"], "meters": { "m-util": { "value": 45, "text": "45%", "tone": "flow" }, "m-bw": { "value": 50, "text": "100M", "tone": "flow" } }, "src": "S02:P3, P13" },
+            { "t": "流量可视", "say": "客户和客户经理在智网达、智慧云网门户随时查看线路流量和利用率。", "add": ["app", "portal", "l-ap"], "callouts": ["c-vis"], "src": "S02:P5" },
+            { "t": "高峰预警", "say": "考试临近，下行利用率超 80% 持续 1 小时，系统推送预警短信。", "flows": ["f-traffic", "f-alert"], "meters": { "m-util": { "value": 88, "text": "88%", "tone": "fault" } }, "states": { "rt": "alert" }, "callouts": ["c-alert"], "kpis": ["k-warn"], "src": "S02:P6" },
+            { "t": "自助下单升速", "say": "客户在智网达选择升速时间段和目标速率，提交订单。", "add": ["console", "l-pc"], "flows": ["f-traffic", "f-order"], "callouts": ["c-order"], "kpis": ["k-warn", "k-gran"], "src": "S02:P9-P10; S02:P15" },
+            { "t": "自动调速下发", "say": "业务控制台收单后自动下发调速配置，专线从 100M 升至 200M，利用率回落。", "add": ["l-cb"], "flows": ["f-traffic", "f-cfg"], "meters": { "m-bw": { "value": 100, "text": "200M（升速中）", "tone": "ok" }, "m-util": { "value": 46, "text": "46%", "tone": "ok" } }, "states": { "rt": "ok", "bras": "active" }, "callouts": ["c-cfg"], "src": "S02:P10" },
+            { "t": "到期自动恢复、按天计费", "say": "升速结束自动恢复 100M，只按升速天数收费，不满一天按一天计。", "flows": ["f-traffic"], "meters": { "m-bw": { "value": 50, "text": "100M（已恢复）", "tone": "flow" }, "m-util": { "value": 40, "text": "40%", "tone": "flow" } }, "states": { "rt": "normal", "bras": "normal" }, "callouts": ["c-bill"], "kpis": ["k-warn", "k-gran", "k-bill"], "src": "S02:P14" },
+            { "t": "升速规则与随需升速", "say": "按带宽区间确定升速颗粒度与上限；随需升速在阈值触发时自动下单（试点地区）。", "callouts": ["c-rule", "c-auto"], "kpis": ["k-gran", "k-max", "k-warn", "k-bill", "k-scope"], "src": "S02:P12-P13", "teacher": "限制别漏讲：只支持静态接入的普通互联网专线，不支持 BGP 动态接入和国际精品互联网专线；升速不得跨月。" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "premium-network",
+      "title": "政企精品网：OTN 硬管道、保护倒换与智能管控",
+      "kind": "product",
+      "products": ["premium-network", "finance-premium", "smart-otn", "common-otn"],
+      "summary": "三级 OTN 网络的端到端硬管道，1+1 保护 <50ms 倒换与 ASON 重路由，以及金融精品网 / 智能 OTN / 普通 OTN 的架构差异。",
+      "scenes": [
+        {
+          "id": "protect",
+          "title": "硬管道 · 1+1 保护 · ASON 重路由",
+          "zones": [
+            { "id": "z-a", "x": 30, "y": 96, "w": 250, "h": 588, "label": "A 端客户", "tone": "customer" },
+            { "id": "z-pa", "x": 292, "y": 96, "w": 240, "h": 588, "label": "本地 / 省干 OTN", "tone": "transport" },
+            { "id": "z-bb", "x": 544, "y": 96, "w": 192, "h": 588, "label": "国干 OTN", "tone": "transport" },
+            { "id": "z-pz", "x": 748, "y": 96, "w": 240, "h": 588, "label": "省干 / 本地 OTN", "tone": "transport" },
+            { "id": "z-z", "x": 1000, "y": 96, "w": 258, "h": 588, "label": "Z 端客户", "tone": "customer" }
+          ],
+          "nodes": [
+            { "id": "ca", "x": 90, "y": 360, "icon": "building", "label": "A 端客户机房", "sub": "如：生产中心", "tone": "customer" },
+            { "id": "cpea", "x": 210, "y": 360, "icon": "cpe", "label": "OTN CPE", "sub": "GE / 10GE", "tone": "transport", "info": { "t": "客户侧部署专用 OTN CPE，通过 ETH 接口与客户路由器对接；第三方接入型 OTN 设备经 CPE 管控系统统一纳管。", "src": "S13:3.2.7, 5.2.1; S14:P17" } },
+            { "id": "loca", "x": 350, "y": 360, "icon": "otn", "label": "本地 OTN", "tone": "transport" },
+            { "id": "prova", "x": 470, "y": 360, "icon": "otn", "label": "省干 OTN", "tone": "transport" },
+            { "id": "bb1", "x": 640, "y": 215, "icon": "otn", "label": "国干 OTN", "sub": "工作路由", "tone": "transport" },
+            { "id": "bb2", "x": 640, "y": 505, "icon": "otn", "label": "国干 OTN", "sub": "保护路由", "tone": "transport" },
+            { "id": "provz", "x": 810, "y": 360, "icon": "otn", "label": "省干 OTN", "tone": "transport" },
+            { "id": "locz", "x": 930, "y": 360, "icon": "otn", "label": "本地 OTN", "tone": "transport" },
+            { "id": "cpez", "x": 1070, "y": 360, "icon": "cpe", "label": "OTN CPE", "tone": "transport" },
+            { "id": "cz", "x": 1190, "y": 360, "icon": "datacenter", "label": "Z 端客户机房", "sub": "如：灾备中心", "tone": "customer" },
+            { "id": "ctrl", "x": 640, "y": 625, "icon": "platform", "label": "SDN 协同器", "tone": "platform", "size": "sm", "lp": "r", "info": { "t": "政企中台 → OSS2.0 → 集团一级协同器 / 省二级协同器 → 华为、中兴、烽火控制器 → OTN 网络，跨域跨厂家端到端自动开通。", "src": "S14:P8, P18" } },
+            { "id": "app", "x": 1190, "y": 590, "icon": "phone", "label": "客户自服务", "sub": "调速 · 可视 · 告警", "tone": "customer", "info": { "t": "周期调速、临时调速；全业务概览、单业务路由拓扑与历史性能；7×24 实时监测与故障短信。", "src": "S14:P20" } }
+          ],
+          "links": [
+            { "id": "l-a", "a": "ca", "b": "cpea", "kind": "lan" },
+            { "id": "l-b", "a": "cpea", "b": "loca", "kind": "hardpipe" },
+            { "id": "l-c", "a": "loca", "b": "prova", "kind": "hardpipe" },
+            { "id": "l-w1", "a": "prova", "b": "bb1", "kind": "hardpipe", "label": "工作", "lab": 0.56, "cut": 0.3 },
+            { "id": "l-w2", "a": "bb1", "b": "provz", "kind": "hardpipe" },
+            { "id": "l-p1", "a": "prova", "b": "bb2", "kind": "hardpipe", "label": "保护", "lab": 0.64 },
+            { "id": "l-p2", "a": "bb2", "b": "provz", "kind": "hardpipe" },
+            { "id": "l-mesh", "a": "bb1", "b": "bb2", "kind": "hardpipe" },
+            { "id": "l-d", "a": "provz", "b": "locz", "kind": "hardpipe" },
+            { "id": "l-e", "a": "locz", "b": "cpez", "kind": "hardpipe" },
+            { "id": "l-f", "a": "cpez", "b": "cz", "kind": "lan" },
+            { "id": "l-c1", "a": "ctrl", "b": "prova", "kind": "control", "route": "hv" },
+            { "id": "l-c2", "a": "ctrl", "b": "provz", "kind": "control", "route": "hv" },
+            { "id": "l-c3", "a": "ctrl", "b": "bb2", "kind": "control" },
+            { "id": "l-app", "a": "app", "b": "cpez", "kind": "control" }
+          ],
+          "flows": [
+            { "id": "f-w", "path": ["ca", "cpea", "loca", "prova", "bb1", "provz", "locz", "cpez", "cz"], "kind": "data", "n": 6 },
+            { "id": "f-p", "path": ["ca", "cpea", "loca", "prova", "bb2", "provz", "locz", "cpez", "cz"], "kind": "backup", "n": 5 },
+            { "id": "f-ason", "path": ["ca", "cpea", "loca", "prova", "bb2", "bb1", "provz", "locz", "cpez", "cz"], "kind": "backup", "n": 6 },
+            { "id": "f-ctl", "path": ["ctrl", "prova"], "kind": "control", "n": 2, "speed": 120 },
+            { "id": "f-ctl2", "path": ["ctrl", "provz"], "kind": "control", "n": 2, "speed": 120 },
+            { "id": "f-app", "path": ["app", "cpez"], "kind": "control", "n": 2, "speed": 110 }
+          ],
+          "callouts": [
+            { "id": "c-net", "x": 640, "y": 360, "w": 248, "lead": false, "text": "国干 + 省干/本地汇聚 + 本地接入三级 OTN；客户侧部署 OTN CPE", "tone": "info" },
+            { "id": "c-pipe", "x": 640, "y": 360, "w": 248, "lead": false, "text": "小颗粒全程 PeOTN 硬管道、大颗粒波长硬隔离；与互联网及其他专线物理隔离", "tone": "hardpipe" },
+            { "id": "c-11", "x": 640, "y": 360, "w": 248, "lead": false, "text": "电层业务级 1+1 保护：工作路由与保护路由同时在线", "tone": "ok" },
+            { "id": "c-cut", "x": 640, "y": 360, "w": 248, "lead": false, "text": "工作路由光缆中断：小于 50ms 倒换到保护路由，业务不中断", "tone": "fault" },
+            { "id": "c-ason", "x": 640, "y": 360, "w": 248, "lead": false, "text": "再次断纤：ASON 利用已有路径重路由，抵抗多次断纤", "tone": "ok" },
+            { "id": "c-ctrl", "at": "ctrl", "x": 900, "y": 515, "w": 280, "text": "SDN 协同器跨域跨厂家端到端自动开通；客户自服务查看路由、性能，周期/临时调速", "tone": "control" }
+          ],
+          "kpis": [
+            { "id": "k-bw", "label": "带宽", "value": "2M ~ 100G", "src": "S15; S17:1.2" },
+            { "id": "k-sw", "label": "保护倒换", "value": "< 50ms", "src": "S13:4.1" },
+            { "id": "k-av", "label": "可用率", "value": "最高 99.999%", "src": "S13:2.2.1; S14:P3" },
+            { "id": "k-lat", "label": "骨干时延", "value": "≤ 5.5ms / 1000km（单向）", "src": "S13:2.2.1" },
+            { "id": "k-circle", "label": "时延圈", "value": "1ms / 2ms / 3ms", "src": "S13:2.1" },
+            { "id": "k-open", "label": "开通", "value": "≤ 5 个工作日（资源具备）", "src": "S13:2.2.2" }
+          ],
+          "steps": [
+            { "t": "三级 OTN 网络", "say": "政企精品网由国干 OTN、省干/本地 OTN 汇聚和本地 OTN 接入组成，客户两端部署 OTN CPE。", "add": ["z-a", "z-pa", "z-bb", "z-pz", "z-z", "ca", "cpea", "loca", "prova", "bb1", "bb2", "provz", "locz", "cpez", "cz", "l-a", "l-b", "l-c", "l-w1", "l-w2", "l-p1", "l-p2", "l-mesh", "l-d", "l-e", "l-f"], "callouts": ["c-net"], "src": "S13:3.2.7; S14:P6" },
+            { "t": "端到端硬管道", "say": "业务在专属硬管道中一跳直达，与互联网和其他客户物理隔离。", "flows": ["f-w"], "states": { "l-w1": "active", "l-w2": "active" }, "callouts": ["c-pipe"], "kpis": ["k-bw"], "src": "S13:4.2; S17:1.2", "teacher": "先问：客户的哪些业务绝对不能和互联网流量混跑？" },
+            { "t": "1+1 保护", "say": "工作路由与保护路由同时在线，为倒换做好准备。", "flows": ["f-w", "f-p"], "states": { "l-p1": "standby", "l-p2": "standby" }, "callouts": ["c-11"], "src": "S13:4.1" },
+            { "t": "工作路由断纤 → 50ms 倒换", "say": "工作路由光缆中断，电层 1+1 保护在 50ms 内倒换到保护路由。", "flows": ["f-p"], "states": { "l-w1": "down", "l-w2": "normal", "l-p1": "active", "l-p2": "active", "prova": "protect" }, "callouts": ["c-cut"], "kpis": ["k-bw", "k-sw"], "src": "S13:4.1", "dur": 7500, "teacher": "这一步最值得停下来讲：50ms 对客户意味着什么？" },
+            { "t": "再次断纤 → ASON 重路由", "say": "保护路由再断，ASON 利用 Mesh 网络中的已有路径重新算路，业务恢复。", "flows": ["f-ason"], "states": { "l-p2": "down", "l-mesh": "active", "l-w2": "active", "prova": "normal", "bb2": "protect" }, "callouts": ["c-ason"], "src": "S13:4.1; S13:4.7", "dur": 7500 },
+            { "t": "智能管控与客户自服务", "say": "SDN 协同器跨域跨厂家自动开通与调整；客户在自服务端查看路由、性能并调速。", "add": ["ctrl", "app", "l-c1", "l-c2", "l-c3", "l-app"], "flows": ["f-ason", "f-ctl", "f-ctl2", "f-app"], "states": { "bb2": "normal" }, "callouts": ["c-ctrl"], "src": "S14:P8, P20" },
+            { "t": "关键指标", "say": "2M~100G 硬管道、<50ms 保护倒换、最高 99.999% 可用率、骨干每 1000km 单向时延 ≤5.5ms。", "flows": ["f-ason"], "kpis": ["k-bw", "k-sw", "k-av", "k-lat", "k-circle", "k-open"], "src": "S13:2.1-2.2; S15", "teacher": "引出：客户还有 SDH/MSTP 老电路？→ SDH 迁转演示。" }
+          ]
+        },
+        {
+          "id": "family",
+          "title": "产品集合：金融精品网 · 智能 OTN · 普通 OTN",
+          "zones": [
+            { "id": "z1", "x": 30, "y": 100, "w": 1228, "h": 176, "label": "金融精品网：骨干 OTN 华为单域，NCE-S 自动下发", "tone": "transport" },
+            { "id": "z2", "x": 30, "y": 300, "w": 1228, "h": 176, "label": "智能 OTN：骨干 + 省内 OTN 域间 NNI 互联，协同器自动下发", "tone": "transport" },
+            { "id": "z3", "x": 30, "y": 500, "w": 1228, "h": 176, "label": "普通 OTN：省内 / 本地传输经 UNI 接入骨干 OTN，分级手工配置", "tone": "legacy" }
+          ],
+          "nodes": [
+            { "id": "fa", "x": 110, "y": 180, "icon": "bank", "label": "客户 A", "tone": "customer" },
+            { "id": "fc1", "x": 270, "y": 180, "icon": "cpe", "label": "CPE", "tone": "transport" },
+            { "id": "fbb", "x": 640, "y": 180, "icon": "otn", "label": "骨干 OTN", "sub": "华为单域", "tone": "transport" },
+            { "id": "fc2", "x": 1010, "y": 180, "icon": "cpe", "label": "CPE", "tone": "transport" },
+            { "id": "fz", "x": 1170, "y": 180, "icon": "bank", "label": "客户 Z", "tone": "customer" },
+            { "id": "sa", "x": 110, "y": 380, "icon": "building", "label": "客户 A", "tone": "customer" },
+            { "id": "sc1", "x": 240, "y": 380, "icon": "cpe", "label": "CPE", "tone": "transport" },
+            { "id": "sp1", "x": 420, "y": 380, "icon": "otn", "label": "省内 OTN", "tone": "transport" },
+            { "id": "sbb", "x": 640, "y": 380, "icon": "otn", "label": "骨干 OTN", "tone": "transport" },
+            { "id": "sp2", "x": 860, "y": 380, "icon": "otn", "label": "省内 OTN", "tone": "transport" },
+            { "id": "sc2", "x": 1040, "y": 380, "icon": "cpe", "label": "CPE", "tone": "transport" },
+            { "id": "sz", "x": 1170, "y": 380, "icon": "building", "label": "客户 Z", "tone": "customer" },
+            { "id": "ca", "x": 110, "y": 580, "icon": "building", "label": "客户 A", "tone": "customer" },
+            { "id": "cm1", "x": 260, "y": 580, "icon": "otn", "label": "省内 / 本地传输", "tone": "legacy" },
+            { "id": "cg1", "x": 440, "y": 580, "icon": "otn", "label": "OTN 汇聚", "tone": "transport" },
+            { "id": "cbb", "x": 640, "y": 580, "icon": "otn", "label": "骨干 OTN", "tone": "transport" },
+            { "id": "cg2", "x": 840, "y": 580, "icon": "otn", "label": "OTN 汇聚", "tone": "transport" },
+            { "id": "cm2", "x": 1020, "y": 580, "icon": "otn", "label": "省内 / 本地传输", "tone": "legacy" },
+            { "id": "cz", "x": 1170, "y": 580, "icon": "building", "label": "客户 Z", "tone": "customer" }
+          ],
+          "links": [
+            { "id": "f1", "a": "fa", "b": "fc1", "kind": "lan" },
+            { "id": "f2", "a": "fc1", "b": "fbb", "kind": "hardpipe", "label": "直连骨干汇聚/核心点 · 双路由" },
+            { "id": "f3", "a": "fbb", "b": "fc2", "kind": "hardpipe" },
+            { "id": "f4", "a": "fc2", "b": "fz", "kind": "lan" },
+            { "id": "s1", "a": "sa", "b": "sc1", "kind": "lan" },
+            { "id": "s2", "a": "sc1", "b": "sp1", "kind": "hardpipe" },
+            { "id": "s3", "a": "sp1", "b": "sbb", "kind": "hardpipe", "label": "NNI" },
+            { "id": "s4", "a": "sbb", "b": "sp2", "kind": "hardpipe", "label": "NNI" },
+            { "id": "s5", "a": "sp2", "b": "sc2", "kind": "hardpipe" },
+            { "id": "s6", "a": "sc2", "b": "sz", "kind": "lan" },
+            { "id": "c1", "a": "ca", "b": "cm1", "kind": "lan" },
+            { "id": "c2", "a": "cm1", "b": "cg1", "kind": "legacy" },
+            { "id": "c3", "a": "cg1", "b": "cbb", "kind": "hardpipe", "label": "UNI" },
+            { "id": "c4", "a": "cbb", "b": "cg2", "kind": "hardpipe", "label": "UNI" },
+            { "id": "c5", "a": "cg2", "b": "cm2", "kind": "legacy" },
+            { "id": "c6", "a": "cm2", "b": "cz", "kind": "lan" }
+          ],
+          "flows": [
+            { "id": "ff", "path": ["fa", "fc1", "fbb", "fc2", "fz"], "kind": "data", "n": 5 },
+            { "id": "fs", "path": ["sa", "sc1", "sp1", "sbb", "sp2", "sc2", "sz"], "kind": "data", "n": 5 },
+            { "id": "fc", "path": ["ca", "cm1", "cg1", "cbb", "cg2", "cm2", "cz"], "kind": "data", "n": 4, "speed": 120 }
+          ],
+          "kpis": [
+            { "id": "k-f1", "label": "金融精品网", "value": "≥100M · 99.999%", "src": "S14:P26" },
+            { "id": "k-f2", "label": "开通 / 恢复", "value": "5 天 / 1 小时", "src": "S14:P26" },
+            { "id": "k-s1", "label": "智能 OTN", "value": "≥2M · 99.99%", "src": "S14:P26" },
+            { "id": "k-s2", "label": "开通 / 恢复", "value": "6 天 / 3 小时", "src": "S14:P26" },
+            { "id": "k-c1", "label": "普通 OTN", "value": "≥10M · 99.90%", "src": "S14:P26" },
+            { "id": "k-c2", "label": "开通 / 恢复", "value": "7 天 / 5 小时", "src": "S14:P26" }
+          ],
+          "steps": [
+            { "t": "金融精品网", "say": "集团单域单厂家，客户端 CPE 直联骨干汇聚或核心点，接入工程保证双路由；指标最高。", "add": ["z1", "fa", "fc1", "fbb", "fc2", "fz", "f1", "f2", "f3", "f4"], "flows": ["ff"], "kpis": ["k-f1", "k-f2"], "src": "S14:P4, P26" },
+            { "t": "智能 OTN", "say": "协同器实现集团 + 各省、多厂家 NNI 互联的自动开通，支持跨省和省内、大颗粒和 2M 小颗粒业务。", "add": ["z2", "sa", "sc1", "sp1", "sbb", "sp2", "sc2", "sz", "s1", "s2", "s3", "s4", "s5", "s6"], "flows": ["ff", "fs"], "kpis": ["k-s1", "k-s2"], "src": "S14:P4, P26" },
+            { "t": "普通 OTN", "say": "以 OTN 刚性管道替代传统 SDH/ASON 承载跨省电路，一干与省干经 OTN 汇聚做 UNI 互联，分级手工配置。", "add": ["z3", "ca", "cm1", "cg1", "cbb", "cg2", "cm2", "cz", "c1", "c2", "c3", "c4", "c5", "c6"], "flows": ["ff", "fs", "fc"], "kpis": ["k-c1", "k-c2"], "src": "S14:P4, P26" },
+            { "t": "对比小结", "say": "电路速率下限、开通时限、恢复时限、可用率逐级不同；普通 OTN 不能纳管切换为智能 OTN，需一拆一装。", "flows": ["ff", "fs", "fc"], "kpis": ["k-f1", "k-s1", "k-c1"], "src": "S14:P26, P28", "teacher": "让学员按客户类型选：银行总行生产网选哪类？区县政务外网选哪类？" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sdh-migration",
+      "title": "SDH / MSTP → 政企精品网：平滑迁转",
+      "kind": "product",
+      "products": ["sdh-mstp", "premium-network"],
+      "summary": "“总部 CPE 桥接法”：不动客户配置、无需额外硬件，逐条割接、单点中断 3 分钟以内，新旧并行可回滚。",
+      "scenes": [
+        {
+          "id": "bridge",
+          "title": "总部 CPE 桥接法",
+          "zones": [
+            { "id": "z-hq", "x": 30, "y": 96, "w": 330, "h": 588, "label": "总部机房", "tone": "customer" },
+            { "id": "z-net", "x": 372, "y": 96, "w": 560, "h": 588, "label": "运营商传输网", "tone": "unicom" },
+            { "id": "z-br", "x": 944, "y": 96, "w": 314, "h": 588, "label": "分支机构", "tone": "customer" }
+          ],
+          "nodes": [
+            { "id": "hq", "x": 80, "y": 330, "icon": "building", "label": "总部内网", "tone": "customer" },
+            { "id": "hqr", "x": 195, "y": 330, "icon": "router", "label": "客户路由器", "sub": "配置不动", "tone": "customer", "info": { "t": "用户路由器无需空闲端口、配置不动，每次割接一条专线。", "src": "S19:客户疑虑三" } },
+            { "id": "mh", "x": 300, "y": 210, "icon": "otn", "label": "MSTP 设备", "sub": "总部侧", "tone": "legacy" },
+            { "id": "oh", "x": 300, "y": 470, "icon": "cpe", "label": "OTN CPE", "sub": "新部署", "tone": "transport" },
+            { "id": "mnet", "x": 650, "y": 215, "icon": "otn", "label": "SDH / MSTP 网络", "tone": "legacy", "size": "lg" },
+            { "id": "onet", "x": 650, "y": 505, "icon": "otn", "label": "政企精品网（OTN）", "tone": "transport", "size": "lg" },
+            { "id": "b1", "x": 1110, "y": 170, "icon": "branch", "label": "分支 1", "tone": "customer" },
+            { "id": "b2", "x": 1110, "y": 360, "icon": "branch", "label": "分支 2", "tone": "customer" },
+            { "id": "b3", "x": 1110, "y": 550, "icon": "branch", "label": "分支 3", "tone": "customer" }
+          ],
+          "links": [
+            { "id": "l-hr", "a": "hq", "b": "hqr", "kind": "lan" },
+            { "id": "l-rm", "a": "hqr", "b": "mh", "kind": "lan", "route": "vh" },
+            { "id": "l-mo", "a": "mh", "b": "oh", "kind": "lan", "label": "以太口桥接" },
+            { "id": "l-mn", "a": "mh", "b": "mnet", "kind": "legacy" },
+            { "id": "l-on", "a": "oh", "b": "onet", "kind": "hardpipe" },
+            { "id": "l-o1", "a": "mnet", "b": "b1", "kind": "legacy" },
+            { "id": "l-o2", "a": "mnet", "b": "b2", "kind": "legacy" },
+            { "id": "l-o3", "a": "mnet", "b": "b3", "kind": "legacy" },
+            { "id": "l-n1", "a": "onet", "b": "b1", "kind": "hardpipe" },
+            { "id": "l-n2", "a": "onet", "b": "b2", "kind": "hardpipe" },
+            { "id": "l-n3", "a": "onet", "b": "b3", "kind": "hardpipe" }
+          ],
+          "flows": [
+            { "id": "f-o1", "path": ["b1", "mnet", "mh", "hqr", "hq"], "kind": "data", "n": 3, "speed": 120 },
+            { "id": "f-o2", "path": ["b2", "mnet", "mh", "hqr", "hq"], "kind": "data", "n": 3, "speed": 120 },
+            { "id": "f-o3", "path": ["b3", "mnet", "mh", "hqr", "hq"], "kind": "data", "n": 3, "speed": 120 },
+            { "id": "f-n1", "path": ["b1", "onet", "oh", "mh", "hqr", "hq"], "kind": "data", "n": 4 },
+            { "id": "f-n2", "path": ["b2", "onet", "oh", "mh", "hqr", "hq"], "kind": "data", "n": 4 },
+            { "id": "f-n3", "path": ["b3", "onet", "oh", "mh", "hqr", "hq"], "kind": "data", "n": 4 }
+          ],
+          "callouts": [
+            { "id": "c-now", "x": 650, "y": 360, "w": 320, "lead": false, "text": "SDH/MSTP 设备在网超过 10 年：厂商停止服务、备件匮乏，硬件故障时专线中断难以恢复", "tone": "fault" },
+            { "id": "c-bridge", "at": "oh", "x": 175, "y": 600, "w": 270, "text": "总部 CPE 桥接：OTN 以太口对接 MSTP 以太口；客户路由器无需空闲端口、配置不动", "tone": "hardpipe" },
+            { "id": "c-pre", "x": 650, "y": 360, "w": 320, "lead": false, "text": "配置提前下发：先确认业务配置妥当，再逐条割接", "tone": "info" },
+            { "id": "c-cut", "x": 650, "y": 360, "w": 320, "lead": false, "text": "单点逐条割接：每次一条专线，中断时间 3 分钟以内；新旧并行，回滚方便", "tone": "ok" },
+            { "id": "c-done", "x": 650, "y": 360, "w": 330, "lead": false, "text": "资料案例：某能源客户 8 个工作日完成 82 个点位 MSTP→OTN，同步 10M 提至 20M，单点中断 ≤5 分钟", "tone": "brand" }
+          ],
+          "kpis": [
+            { "id": "k-cut", "label": "单点割接中断", "value": "≤ 3 分钟", "src": "S19:客户疑虑三" },
+            { "id": "k-cfg", "label": "客户配置", "value": "不改动", "src": "S19:客户疑虑三" },
+            { "id": "k-hw", "label": "额外硬件", "value": "无需客户提供", "src": "S19:客户疑虑三" },
+            { "id": "k-bw", "label": "OTN 带宽", "value": "2M ~ 100G", "src": "S15" }
+          ],
+          "steps": [
+            { "t": "现状：SDH/MSTP 专线", "say": "总部与三个分支通过 MSTP 专线互联，设备已进入生命周期末期。", "add": ["z-hq", "z-net", "z-br", "hq", "hqr", "mh", "mnet", "b1", "b2", "b3", "l-hr", "l-rm", "l-mn", "l-o1", "l-o2", "l-o3"], "flows": ["f-o1", "f-o2", "f-o3"], "states": { "mh": "alert", "mnet": "alert" }, "callouts": ["c-now"], "src": "S13:2.1; S17:3" },
+            { "t": "部署总部 OTN CPE（桥接）", "say": "在总部部署 OTN CPE，以太口对接 MSTP 以太口，客户路由器配置不动。", "add": ["oh", "l-mo"], "flows": ["f-o1", "f-o2", "f-o3"], "states": { "oh": "active" }, "callouts": ["c-bridge"], "kpis": ["k-cfg", "k-hw"], "src": "S19:客户疑虑三" },
+            { "t": "OTN 资源就绪、配置提前下发", "say": "OTN 链路提前开通并下发配置，确认无误后再割接。", "add": ["onet", "l-on", "l-n1", "l-n2", "l-n3"], "states": { "l-n1": "standby", "l-n2": "standby", "l-n3": "standby", "oh": "normal" }, "callouts": ["c-pre"], "src": "S19:客户疑虑三" },
+            { "t": "分支 1 割接", "say": "单点逐条割接：分支 1 切到 OTN，中断 3 分钟以内，其余分支不受影响。", "remove": ["l-o1"], "flows": ["f-n1", "f-o2", "f-o3"], "states": { "l-n1": "active" }, "callouts": ["c-cut"], "kpis": ["k-cut", "k-cfg", "k-hw"], "src": "S19:客户疑虑三", "dur": 7000 },
+            { "t": "分支 2、3 依次割接", "say": "其余分支依次割接；新旧并行期间可随时回滚。", "remove": ["l-o2", "l-o3"], "flows": ["f-n1", "f-n2", "f-n3"], "states": { "l-n2": "active", "l-n3": "active" }, "src": "S19:客户疑虑三" },
+            { "t": "迁转完成", "say": "全部分支迁至政企精品网：物理隔离硬管道，带宽 2M~100G，可再按需提速。", "remove": ["l-mn", "mnet"], "flows": ["f-n1", "f-n2", "f-n3"], "states": { "mh": "normal", "mnet": "normal", "l-n1": "normal", "l-n2": "normal", "l-n3": "normal" }, "callouts": ["c-done"], "kpis": ["k-cut", "k-cfg", "k-hw", "k-bw"], "src": "S19; S15", "teacher": "回应客户疑虑：OTN 就是 SDH 的接班人，接替前后技术实质相同。" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cloud-connect",
+      "title": "云联网：一点接入、全连通、多云互联",
+      "kind": "product",
+      "products": ["cloud-connect"],
+      "summary": "传统网状/星型专线与云联网的连接数对比；一点接入后分支互通、多云接入、统一出口与弹性带宽。",
+      "scenes": [
+        {
+          "id": "compare",
+          "title": "组网方式对比：N(N−1)/2 → N",
+          "zones": [
+            { "id": "z-mesh", "x": 30, "y": 96, "w": 396, "h": 588, "label": "传统网状：N(N−1)/2 条长途线路", "tone": "neutral" },
+            { "id": "z-star", "x": 442, "y": 96, "w": 396, "h": 588, "label": "传统星型：N−1 条，经总部中转", "tone": "neutral" },
+            { "id": "z-cc", "x": 854, "y": 96, "w": 404, "h": 588, "label": "云联网：N 条本地线路，一跳直达", "tone": "cloud" }
+          ],
+          "nodes": [
+            { "id": "m-hq", "x": 228, "y": 230, "icon": "building", "label": "总部", "tone": "customer", "size": "sm" },
+            { "id": "m-b1", "x": 371, "y": 340, "icon": "branch", "label": "分支 1", "tone": "customer", "size": "sm" },
+            { "id": "m-b2", "x": 316, "y": 515, "icon": "branch", "label": "分支 2", "tone": "customer", "size": "sm" },
+            { "id": "m-b3", "x": 140, "y": 515, "icon": "branch", "label": "分支 3", "tone": "customer", "size": "sm" },
+            { "id": "m-cl", "x": 85, "y": 340, "icon": "cloud", "label": "公有云", "tone": "cloud", "size": "sm" },
+            { "id": "s-hq", "x": 640, "y": 230, "icon": "building", "label": "总部", "tone": "customer", "size": "sm" },
+            { "id": "s-b1", "x": 783, "y": 340, "icon": "branch", "label": "分支 1", "tone": "customer", "size": "sm" },
+            { "id": "s-b2", "x": 728, "y": 515, "icon": "branch", "label": "分支 2", "tone": "customer", "size": "sm" },
+            { "id": "s-b3", "x": 552, "y": 515, "icon": "branch", "label": "分支 3", "tone": "customer", "size": "sm" },
+            { "id": "s-cl", "x": 497, "y": 340, "icon": "cloud", "label": "公有云", "tone": "cloud", "size": "sm" },
+            { "id": "c-hub", "x": 1056, "y": 395, "icon": "cloud", "label": "云联网", "tone": "cloud", "shape": "cloud" },
+            { "id": "c-hq", "x": 1056, "y": 200, "icon": "building", "label": "总部", "tone": "customer", "size": "sm" },
+            { "id": "c-b1", "x": 1205, "y": 330, "icon": "branch", "label": "分支 1", "tone": "customer", "size": "sm" },
+            { "id": "c-b2", "x": 1150, "y": 560, "icon": "branch", "label": "分支 2", "tone": "customer", "size": "sm" },
+            { "id": "c-b3", "x": 962, "y": 560, "icon": "branch", "label": "分支 3", "tone": "customer", "size": "sm" },
+            { "id": "c-cl", "x": 907, "y": 330, "icon": "cloud", "label": "公有云", "tone": "cloud", "size": "sm" }
+          ],
+          "links": [
+            { "id": "m1", "a": "m-hq", "b": "m-b1", "kind": "legacy" }, { "id": "m2", "a": "m-hq", "b": "m-b2", "kind": "legacy" },
+            { "id": "m3", "a": "m-hq", "b": "m-b3", "kind": "legacy" }, { "id": "m4", "a": "m-hq", "b": "m-cl", "kind": "legacy" },
+            { "id": "m5", "a": "m-b1", "b": "m-b2", "kind": "legacy" }, { "id": "m6", "a": "m-b1", "b": "m-b3", "kind": "legacy" },
+            { "id": "m7", "a": "m-b1", "b": "m-cl", "kind": "legacy" }, { "id": "m8", "a": "m-b2", "b": "m-b3", "kind": "legacy" },
+            { "id": "m9", "a": "m-b2", "b": "m-cl", "kind": "legacy" }, { "id": "m10", "a": "m-b3", "b": "m-cl", "kind": "legacy" },
+            { "id": "s1", "a": "s-hq", "b": "s-b1", "kind": "legacy" }, { "id": "s2", "a": "s-hq", "b": "s-b2", "kind": "legacy" },
+            { "id": "s3", "a": "s-hq", "b": "s-b3", "kind": "legacy" }, { "id": "s4", "a": "s-hq", "b": "s-cl", "kind": "legacy" },
+            { "id": "c1", "a": "c-hq", "b": "c-hub", "kind": "tunnel" }, { "id": "c2", "a": "c-b1", "b": "c-hub", "kind": "tunnel" },
+            { "id": "c3", "a": "c-b2", "b": "c-hub", "kind": "tunnel" }, { "id": "c4", "a": "c-b3", "b": "c-hub", "kind": "tunnel" },
+            { "id": "c5", "a": "c-cl", "b": "c-hub", "kind": "cloud" }
+          ],
+          "flows": [
+            { "id": "fm", "path": ["m-b2", "m-b3"], "kind": "data", "n": 2, "speed": 90, "label": "网状：分支 2 → 分支 3 直连" },
+            { "id": "fs1", "path": ["s-b2", "s-hq", "s-b3"], "kind": "data", "n": 3, "speed": 120, "label": "星型：分支 2 → 总部 → 分支 3" },
+            { "id": "fs2", "path": ["s-b1", "s-hq", "s-cl"], "kind": "data", "n": 3, "speed": 120, "label": "星型：分支 1 → 总部 → 公有云" },
+            { "id": "fc1", "path": ["c-b2", "c-hub", "c-b3"], "kind": "tunnel", "n": 3, "speed": 120, "label": "云联网：分支 2 → 分支 3 一跳直达" },
+            { "id": "fc2", "path": ["c-b1", "c-hub", "c-cl"], "kind": "cloud", "n": 3, "speed": 120, "label": "云联网：分支 1 → 公有云" }
+          ],
+          "kpis": [
+            { "id": "k-mesh", "label": "网状（5 节点）", "value": "10 条长途线路", "src": "S23:P13" },
+            { "id": "k-star", "label": "星型（5 节点）", "value": "4 条，经总部中转", "src": "S23:P13" },
+            { "id": "k-cc", "label": "云联网（5 节点）", "value": "5 条本地线路", "src": "S23:P13" },
+            { "id": "k-10", "label": "10 个节点时", "value": "45 条长途 → 10 条本地", "src": "S23:P13" }
+          ],
+          "steps": [
+            { "t": "传统网状专线", "say": "节点两两直连，各节点可直接访问，但需要 N(N−1)/2 条长途线路，投资和维护成本过大。", "add": ["z-mesh", "m-hq", "m-b1", "m-b2", "m-b3", "m-cl", "m1", "m2", "m3", "m4", "m5", "m6", "m7", "m8", "m9", "m10"], "flows": ["fm"], "kpis": ["k-mesh"], "src": "S23:P13" },
+            { "t": "传统星型专线", "say": "需要 N−1 条长途线路，但分支访问云资源都要经总部中转，效率低、总部端口数量剧增。", "add": ["z-star", "s-hq", "s-b1", "s-b2", "s-b3", "s-cl", "s1", "s2", "s3", "s4"], "flows": ["fm", "fs1", "fs2"], "kpis": ["k-mesh", "k-star"], "src": "S23:P13" },
+            { "t": "云联网：一点接入", "say": "每个节点就近接入云联网，只需 N 条本地线路，任意节点一跳直达、支持弹性带宽和 QoS。", "add": ["z-cc", "c-hub", "c-hq", "c-b1", "c-b2", "c-b3", "c-cl", "c1", "c2", "c3", "c4", "c5"], "flows": ["fm", "fs1", "fs2", "fc1", "fc2"], "kpis": ["k-mesh", "k-star", "k-cc"], "src": "S23:P13; S27:P5" },
+            { "t": "节点越多，优势越大", "say": "10 个节点时：网状需要 45 条长途线路，云联网只需 10 条本地线路。", "flows": ["fc1", "fc2", "fs1", "fs2"], "focus": ["z-cc", "c-hub", "c-hq", "c-b1", "c-b2", "c-b3", "c-cl", "c1", "c2", "c3", "c4", "c5"], "kpis": ["k-mesh", "k-star", "k-cc", "k-10"], "src": "S23:P13", "teacher": "现场算一算：客户有多少个分支？用 N(N−1)/2 算给客户看。" }
+          ]
+        },
+        {
+          "id": "multicloud",
+          "title": "一点接入：分支互通、多云、统一出口、弹性带宽",
+          "zones": [
+            { "id": "z-ent", "x": 30, "y": 96, "w": 400, "h": 588, "label": "企业站点（就近接入 PE）", "tone": "customer" },
+            { "id": "z-cuii", "x": 442, "y": 96, "w": 396, "h": 588, "label": "云联网 · 产业互联网 CUII", "tone": "cloud" },
+            { "id": "z-res", "x": 850, "y": 96, "w": 408, "h": 588, "label": "云资源 / 互联网", "tone": "internet" }
+          ],
+          "nodes": [
+            { "id": "hq", "x": 130, "y": 190, "icon": "building", "label": "企业总部", "tone": "customer" },
+            { "id": "idc", "x": 130, "y": 380, "icon": "datacenter", "label": "私有云 / IDC", "tone": "customer" },
+            { "id": "br", "x": 130, "y": 570, "icon": "branch", "label": "分支 / 门店", "tone": "customer" },
+            { "id": "m-el", "kind": "meter", "x": 640, "y": 170, "w": 240, "label": "弹性带宽（总部节点）", "value": 20, "valueText": "100M", "tone": "flow" },
+            { "id": "cuii", "x": 640, "y": 395, "icon": "cloud", "label": "云联网", "sub": "MPLS VPN · SDN", "tone": "cloud", "shape": "cloud", "size": "lg", "info": { "t": "核心层 7 节点（北京、上海、广州、武汉、西安、成都、沈阳）+ 24 省汇聚 + 335 个接入节点；完全独立于联通 169 网络。", "src": "S23:P16" } },
+            { "id": "uc", "x": 1000, "y": 180, "icon": "cloud", "label": "联通云", "tone": "cloud" },
+            { "id": "ali", "x": 1170, "y": 270, "icon": "cloud", "label": "阿里云", "tone": "cloud" },
+            { "id": "tx", "x": 1170, "y": 470, "icon": "cloud", "label": "腾讯云", "tone": "cloud" },
+            { "id": "exit", "x": 1170, "y": 615, "icon": "internet", "label": "统一互联网出口", "tone": "internet", "round": true, "lp": "l" },
+            { "id": "portal", "x": 640, "y": 610, "icon": "platform", "label": "智能云网门户", "sub": "自助 · 可视", "tone": "platform", "info": { "t": "在线自助管理、网络参数变更、流量实时监测、告警智能处置；故障受理热线 10019-6。", "src": "S23:P19" } }
+          ],
+          "links": [
+            { "id": "l-h", "a": "hq", "b": "cuii", "kind": "tunnel" },
+            { "id": "l-i", "a": "idc", "b": "cuii", "kind": "tunnel" },
+            { "id": "l-b", "a": "br", "b": "cuii", "kind": "tunnel" },
+            { "id": "l-u", "a": "cuii", "b": "uc", "kind": "cloud" },
+            { "id": "l-a", "a": "cuii", "b": "ali", "kind": "cloud" },
+            { "id": "l-t", "a": "cuii", "b": "tx", "kind": "cloud" },
+            { "id": "l-e", "a": "cuii", "b": "exit", "kind": "link" },
+            { "id": "l-p", "a": "portal", "b": "cuii", "kind": "control" }
+          ],
+          "flows": [
+            { "id": "f-bh", "path": ["br", "cuii", "hq"], "kind": "tunnel", "n": 3 },
+            { "id": "f-hi", "path": ["hq", "cuii", "idc"], "kind": "tunnel", "n": 3 },
+            { "id": "f-hu", "path": ["hq", "cuii", "uc"], "kind": "cloud", "n": 3 },
+            { "id": "f-ba", "path": ["br", "cuii", "ali"], "kind": "cloud", "n": 3 },
+            { "id": "f-it", "path": ["idc", "cuii", "tx"], "kind": "cloud", "n": 3 },
+            { "id": "f-be", "path": ["br", "cuii", "exit"], "kind": "data", "n": 3 },
+            { "id": "f-he", "path": ["hq", "cuii", "exit"], "kind": "data", "n": 3 },
+            { "id": "f-pc", "path": ["portal", "cuii"], "kind": "control", "n": 2, "speed": 110 }
+          ],
+          "callouts": [
+            { "id": "c-one", "at": "cuii", "x": 640, "y": 525, "w": 330, "text": "每个点位一个端口就近接入，即与所有已接入节点全连通；客户路由器、防火墙可利旧", "tone": "tunnel" },
+            { "id": "c-cloud", "at": "uc", "x": 975, "y": 372, "w": 230, "text": "400+ 云资源池预接入（国内 300+、境外 40+）、150+ 数据中心，无需网络施工", "tone": "tunnel" },
+            { "id": "c-exit", "at": "exit", "x": 980, "y": 544, "w": 230, "text": "统一互联网出口：出口统一、分流管控、分级保障，减少暴露面", "tone": "info" },
+            { "id": "c-el", "at": "m-el", "x": 640, "y": 272, "w": 340, "text": "弹性阶梯 2M-100M / 100M-1G / 1G-10G：在线自助，即时或预约生效，单日多次，按日计费", "tone": "ok" },
+            { "id": "c-sr", "at": "cuii", "x": 640, "y": 525, "w": 330, "text": "SR-TE 低时延平面可视选路；SR TI-LFA 保护 <50ms；三级 / 五级 QoS", "tone": "info" }
+          ],
+          "kpis": [
+            { "id": "k-cov", "label": "接入覆盖", "value": "335 地市 · 海外 50+ POP", "src": "S23:P15" },
+            { "id": "k-bw", "label": "带宽范围", "value": "2M – 40G", "src": "S27:P4" },
+            { "id": "k-pool", "label": "云资源池", "value": "400+", "src": "S23:P15" },
+            { "id": "k-idc", "label": "数据中心", "value": "150+", "src": "S23:P15" },
+            { "id": "k-el", "label": "弹性带宽", "value": "2M – 10G 三档阶梯", "src": "S23:P18" },
+            { "id": "k-prot", "label": "保护", "value": "TI-LFA < 50ms", "src": "S23:P17" }
+          ],
+          "steps": [
+            { "t": "一点接入", "say": "总部、私有云、分支各自就近接入联通 PE，一次接入即进入同一张云联网。", "add": ["z-ent", "z-cuii", "z-res", "hq", "idc", "br", "cuii", "l-h", "l-i", "l-b"], "callouts": ["c-one"], "kpis": ["k-cov"], "src": "S23:P11-P13" },
+            { "t": "分支扁平化互通", "say": "任意站点之间一跳直达，不再经总部中转。", "flows": ["f-bh", "f-hi"], "kpis": ["k-cov", "k-bw"], "src": "S23:P13" },
+            { "t": "一点入多云", "say": "云联网已预接入主流云资源池，企业接入一次即可访问联通云、阿里云、腾讯云等。", "add": ["uc", "ali", "tx", "l-u", "l-a", "l-t"], "flows": ["f-hu", "f-ba", "f-it"], "callouts": ["c-cloud"], "kpis": ["k-pool", "k-idc", "k-cov"], "src": "S23:P11, P15" },
+            { "t": "统一互联网出口", "say": "全国分支的互联网流量统一出口、分流管控、分级保障。", "add": ["exit", "l-e"], "flows": ["f-be", "f-he", "f-hu"], "callouts": ["c-exit"], "src": "S23:P23-P24" },
+            { "t": "弹性带宽、自助可视", "say": "客户在智能云网门户自助调整带宽：总部节点从 100M 即时调到 500M，按日计费。", "add": ["portal", "l-p", "m-el"], "flows": ["f-pc", "f-hu", "f-bh"], "meters": { "m-el": { "value": 100, "text": "500M（即时生效）", "tone": "ok" } }, "callouts": ["c-el"], "kpis": ["k-el", "k-bw"], "src": "S23:P18-P19" },
+            { "t": "低时延与保护", "say": "SR-TE 低时延平面可视选路，SR TI-LFA 保护低于 50ms，支持多级 QoS。", "flows": ["f-hu", "f-ba", "f-bh", "f-be"], "meters": { "m-el": { "value": 20, "text": "100M（按日计费）", "tone": "flow" } }, "callouts": ["c-sr"], "kpis": ["k-pool", "k-cov", "k-el", "k-prot"], "src": "S23:P17; S25:P16", "teacher": "资料比喻：把联通大网当作一台“超大路由器”，所有节点就近接上去。" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pon-network",
+      "title": "PON 组网专线：PON + 智能城域网的虚拟专网",
+      "kind": "product",
+      "products": ["pon-network"],
+      "summary": "湖南联通 PON 虚拟专网：政企网关经 PON 接入，平台一键开通，VxLAN 二层 / IPSec 三层隧道把分支连到总部。",
+      "scenes": [
+        {
+          "id": "vpn",
+          "title": "分支经 PON 建立隧道到总部",
+          "zones": [
+            { "id": "z-br", "x": 30, "y": 96, "w": 330, "h": 588, "label": "分支（门店 / 网点）", "tone": "customer" },
+            { "id": "z-uni", "x": 372, "y": 96, "w": 560, "h": 588, "label": "PON + 智能城域网（湖南联通）", "tone": "unicom" },
+            { "id": "z-hq", "x": 944, "y": 96, "w": 314, "h": 588, "label": "总部", "tone": "customer" }
+          ],
+          "nodes": [
+            { "id": "s1", "x": 90, "y": 200, "icon": "branch", "label": "分支 A", "tone": "customer" },
+            { "id": "g1", "x": 240, "y": 200, "icon": "sdwan", "label": "政企网关", "sub": "PON-SDWAN CPE", "tone": "cloud", "info": { "t": "政企网关：GPON/EPON/GE 接入，有线/WiFi，VLAN、IPSec VPN、ACL、防攻击、上网行为管理、QoS。", "src": "S24:P14" } },
+            { "id": "s2", "x": 90, "y": 540, "icon": "branch", "label": "分支 B", "tone": "customer" },
+            { "id": "g2", "x": 240, "y": 540, "icon": "sdwan", "label": "政企网关", "sub": "PON-SDWAN CPE", "tone": "cloud" },
+            { "id": "o1", "x": 450, "y": 200, "icon": "olt", "label": "OLT", "tone": "access" },
+            { "id": "o2", "x": 450, "y": 540, "icon": "olt", "label": "OLT", "tone": "access" },
+            { "id": "inet", "x": 600, "y": 135, "icon": "internet", "label": "互联网", "tone": "internet", "round": true, "size": "sm", "lp": "r" },
+            { "id": "metro", "x": 620, "y": 370, "icon": "core", "label": "智能城域网 / BRAS", "tone": "unicom" },
+            { "id": "pop", "x": 820, "y": 370, "icon": "pop", "label": "POP（vCPE）", "tone": "cloud", "info": { "t": "vCPE 虚拟化设备部署在 POP 点（核心网机房），ALL-IN-ONE 架构：动态路径选择、链路捆绑、实时监测、动态 VPN 隧道、防火墙策略。", "src": "S24:P9" } },
+            { "id": "hgw", "x": 1030, "y": 370, "icon": "sdwan", "label": "总部 vCPE / 网关", "tone": "cloud" },
+            { "id": "hq", "x": 1170, "y": 370, "icon": "building", "label": "总部内网", "tone": "customer" },
+            { "id": "plat", "x": 820, "y": 610, "icon": "platform", "label": "PON-SDWAN 管控平台", "tone": "platform", "info": { "t": "平台总览、终端设备管理、业务编排、告警与监控、自动开通和随选；北向开放 API。", "src": "S24:P13" } }
+          ],
+          "links": [
+            { "id": "l-s1", "a": "s1", "b": "g1", "kind": "lan" },
+            { "id": "l-g1", "a": "g1", "b": "o1", "kind": "fiber", "label": "PON" },
+            { "id": "l-o1", "a": "o1", "b": "metro", "kind": "link" },
+            { "id": "l-s2", "a": "s2", "b": "g2", "kind": "lan" },
+            { "id": "l-g2", "a": "g2", "b": "o2", "kind": "fiber", "label": "PON" },
+            { "id": "l-o2", "a": "o2", "b": "metro", "kind": "link" },
+            { "id": "l-mp", "a": "metro", "b": "pop", "kind": "link" },
+            { "id": "l-ph", "a": "pop", "b": "hgw", "kind": "tunnel" },
+            { "id": "l-hh", "a": "hgw", "b": "hq", "kind": "lan" },
+            { "id": "t1", "a": "g1", "b": "pop", "kind": "tunnel", "route": "curve", "bend": -0.12, "label": "VxLAN（二层）", "lab": 0.55 },
+            { "id": "t2", "a": "g2", "b": "pop", "kind": "tunnel", "route": "curve", "bend": 0.12, "label": "IPSec（三层）", "lab": 0.55 },
+            { "id": "c1", "a": "plat", "b": "pop", "kind": "control" },
+            { "id": "c2", "a": "plat", "b": "g2", "kind": "control", "route": "hv" },
+            { "id": "l-mi", "a": "metro", "b": "inet", "kind": "link" }
+          ],
+          "flows": [
+            { "id": "f-phy", "path": ["s1", "g1", "o1", "metro"], "kind": "data", "n": 3 },
+            { "id": "f-l2", "path": ["s1", "g1", "pop", "hgw", "hq"], "kind": "tunnel", "n": 4 },
+            { "id": "f-l3", "path": ["s2", "g2", "pop", "hgw", "hq"], "kind": "tunnel", "n": 4 },
+            { "id": "f-net", "path": ["s1", "g1", "o1", "metro", "inet"], "kind": "data", "n": 3 },
+            { "id": "f-net2", "path": ["s2", "g2", "o2", "metro", "inet"], "kind": "data", "n": 3 },
+            { "id": "f-ctl", "path": ["plat", "pop"], "kind": "control", "n": 2, "speed": 110 },
+            { "id": "f-ctl2", "path": ["plat", "g2"], "kind": "control", "n": 2, "speed": 140 }
+          ],
+          "callouts": [
+            { "id": "c-phy", "at": "o1", "x": 423, "y": 372, "w": 220, "text": "政企网关经 PON（OLT）接入智能城域网；专线带宽上下行对等 10M 起步、5G 封顶", "tone": "flow" },
+            { "id": "c-plat", "at": "plat", "x": 560, "y": 640, "w": 290, "text": "政企运营平台受理 → 平台一键注册认证、业务自动下发；接入点分钟级部署", "tone": "control" },
+            { "id": "c-l2", "at": "pop", "x": 820, "y": 232, "w": 270, "text": "二层组网：VxLAN 通道，总部与分支同网段、内网结构不变（网络 ID 0）", "tone": "tunnel" },
+            { "id": "c-l3", "at": "pop", "x": 820, "y": 505, "w": 270, "text": "三层组网：VxLAN / IPSec 通道，不同网段；互联网与业务网隔离", "tone": "tunnel" },
+            { "id": "c-multi", "at": "g1", "x": 195, "y": 370, "w": 260, "text": "一纤多业务：上网 + 专网 + 语音 + 入云；4G/5G 应急备线", "tone": "ok" }
+          ],
+          "kpis": [
+            { "id": "k-bw", "label": "专线带宽", "value": "10M 起步 · 5G 封顶（上下行对等）", "src": "S23:P27" },
+            { "id": "k-dep", "label": "部署", "value": "分钟级接入 · 小时级开通", "src": "S23:P27; S24:P15" },
+            { "id": "k-l2", "label": "二层组网", "value": "VxLAN（网络 ID 0）", "src": "S23:P27" },
+            { "id": "k-l3", "label": "三层组网", "value": "VxLAN / IPSec", "src": "S23:P27" }
+          ],
+          "steps": [
+            { "t": "物理接入：PON + 智能城域网", "say": "分支政企网关经 PON 接入 OLT，再进入智能城域网。", "add": ["z-br", "z-uni", "z-hq", "s1", "g1", "o1", "s2", "g2", "o2", "metro", "l-s1", "l-g1", "l-o1", "l-s2", "l-g2", "l-o2"], "flows": ["f-phy"], "callouts": ["c-phy"], "kpis": ["k-bw"], "src": "S23:P27; S24:P4" },
+            { "t": "平台一键注册、自动下发", "say": "政企运营平台受理后，PON-SDWAN 平台完成设备一键注册认证与业务自动下发。", "add": ["pop", "plat", "l-mp", "c1", "c2"], "flows": ["f-ctl", "f-ctl2"], "callouts": ["c-plat"], "kpis": ["k-bw", "k-dep"], "src": "S23:P28; S24:P10, P13" },
+            { "t": "二层组网：VxLAN", "say": "分支 A 与 POP 建立 VxLAN 通道，总部与分支同一网段，内网结构不变。", "add": ["hgw", "hq", "l-ph", "l-hh", "t1"], "flows": ["f-l2"], "callouts": ["c-l2"], "kpis": ["k-bw", "k-dep", "k-l2"], "src": "S24:P17; S23:P27" },
+            { "t": "三层组网：IPSec", "say": "分支 B 以 IPSec 通道接入，不同网段按路由互通，互联网与业务网隔离。", "add": ["t2"], "flows": ["f-l2", "f-l3"], "callouts": ["c-l3"], "kpis": ["k-bw", "k-dep", "k-l2", "k-l3"], "src": "S24:P18; S23:P27" },
+            { "t": "一纤多业务", "say": "同一台政企网关同时承载上网与专网，并支持 4G/5G 应急备线。", "add": ["inet", "l-mi"], "flows": ["f-l2", "f-l3", "f-net", "f-net2"], "callouts": ["c-multi"], "src": "S24:P15", "teacher": "边界要讲清：PON 组网是共享承载，适合中小企业与网点；关键业务物理隔离仍选政企精品网。" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "extension-services",
+      "title": "网络延伸服务：从一条线到一张网",
+      "kind": "product",
+      "products": ["extension-services"],
+      "summary": "围绕一条组网专线逐层叠加：夯实连接底座 → 深化运营内涵 → 聚焦业务护航，再加企业网络管家。",
+      "scenes": [
+        {
+          "id": "layers",
+          "title": "三层服务体系",
+          "zones": [
+            { "id": "z-base", "x": 300, "y": 96, "w": 650, "h": 186, "label": "夯实连接底座：基础网络延伸服务", "tone": "ok" },
+            { "id": "z-ops", "x": 300, "y": 498, "w": 650, "h": 186, "label": "深化运营内涵：主动运维、质量可视与自助服务", "tone": "cloud" },
+            { "id": "z-vip", "x": 962, "y": 96, "w": 296, "h": 588, "label": "聚焦业务护航", "tone": "security" }
+          ],
+          "nodes": [
+            { "id": "uni", "x": 110, "y": 390, "icon": "core", "label": "联通网络", "sub": "组网专线（二层 / 三层）", "tone": "unicom" },
+            { "id": "site", "x": 625, "y": 390, "icon": "building", "label": "客户机房 / 办公区", "tone": "customer", "size": "lg" },
+            { "id": "tune", "x": 420, "y": 185, "icon": "tool", "label": "设备调测", "sub": "基础 / 中级 / 高级", "tone": "ok", "info": { "t": "为客户自有路由器、交换机提供调试：基础（互联地址、VLAN）、中级（静态路由）、高级（动态路由）；一次性服务。", "src": "S04:一(一)1; S23:P35" } },
+            { "id": "cab", "x": 625, "y": 185, "icon": "switch", "label": "综合布线", "sub": "甲供物料", "tone": "ok", "info": { "t": "利用客户提供的物料提供综合布线方案并完成交付；商业建筑、教育、医疗、政府、数据中心、零售连锁等。", "src": "S04:一(一)2" } },
+            { "id": "wlan", "x": 830, "y": 185, "icon": "wifi", "label": "WLAN 无线覆盖", "sub": "AC + AP", "tone": "ok", "info": { "t": "基于客户物料提供 WLAN 覆盖方案及交付服务，AP 数量上限最大不宜超过 256 个。", "src": "S04:一(一)3" } },
+            { "id": "insp", "x": 420, "y": 590, "icon": "eye", "label": "机房巡检", "sub": "1/3/6/12 个月", "tone": "cloud", "info": { "t": "机房环境（温湿度、清洁度）、机房安全（漏水等）、设备（告警、风扇、温度、电源）、线缆。", "src": "S23:P38" } },
+            { "id": "rep", "x": 625, "y": 590, "icon": "report", "label": "网络运行分析报告", "sub": "月 / 季 / 半年 / 年", "tone": "cloud", "info": { "t": "客户业务清单、客户网络拓扑、故障处理情况；每期第 5 个工作日提供上一期报告。", "src": "S04:一(二)2; S23:P40" } },
+            { "id": "self", "x": 830, "y": 590, "icon": "phone", "label": "客户专线自服务", "sub": "管家式", "tone": "cloud", "info": { "t": "自助可视、自助运维、自助重保、数字孪生；工作台、电路开通/故障/割接、调速跟踪、告警与性能监控、网络健康检测、数字大屏等。", "src": "S04:一(二)3; S23:P41" } },
+            { "id": "vip", "x": 1110, "y": 300, "icon": "shield", "label": "重保服务", "sub": "A / B / C 级", "tone": "security", "info": { "t": "重要视频会议、重要数据传输、重大活动期间加强维护与监控；A 级为集团总部主责的集团级名单制客户，B 级省级主责，C 级其他政企客户。", "src": "S04:一(三); S23:P39" } },
+            { "id": "mgr", "x": 1110, "y": 520, "icon": "platform", "label": "企业网络管家", "sub": "多设备 · 多运营商专线纳管", "tone": "platform", "info": { "t": "全栈自研私有化运维平台：全设备兼容、全专线监管、体验可管可视。", "src": "S23:P42" } }
+          ],
+          "links": [
+            { "id": "l-line", "a": "uni", "b": "site", "kind": "dedicated", "label": "组网专线" },
+            { "id": "l-tune", "a": "tune", "b": "site", "kind": "service" },
+            { "id": "l-cab", "a": "cab", "b": "site", "kind": "service" },
+            { "id": "l-wlan", "a": "wlan", "b": "site", "kind": "service" },
+            { "id": "l-insp", "a": "insp", "b": "site", "kind": "service" },
+            { "id": "l-rep", "a": "rep", "b": "site", "kind": "service" },
+            { "id": "l-self", "a": "self", "b": "site", "kind": "service" },
+            { "id": "l-vip", "a": "vip", "b": "site", "kind": "service" },
+            { "id": "l-mgr", "a": "mgr", "b": "site", "kind": "service" }
+          ],
+          "flows": [
+            { "id": "f-line", "path": ["uni", "site"], "kind": "data", "n": 4 },
+            { "id": "f-vip", "path": ["vip", "site"], "kind": "security", "n": 3, "speed": 110 },
+            { "id": "f-mgr", "path": ["site", "mgr"], "kind": "control", "n": 3, "speed": 110 }
+          ],
+          "callouts": [
+            { "id": "c-base", "at": "tune", "x": 160, "y": 200, "w": 250, "text": "设备调测、综合布线、WLAN 覆盖：解决客户侧“最后一公里”的连接部署与调测", "tone": "ok" },
+            { "id": "c-ops", "at": "insp", "x": 160, "y": 590, "w": 250, "text": "机房巡检、运行报告、专线自服务：网络“黑盒”变透明，被动响应变主动预防", "tone": "tunnel" },
+            { "id": "c-vip", "at": "vip", "x": 1110, "y": 175, "w": 250, "text": "重保：解决标准 SLA 无法覆盖的临时性、极端性保障需求", "tone": "security" },
+            { "id": "c-mgr", "at": "mgr", "x": 1110, "y": 640, "w": 250, "text": "企业网络管家：全设备兼容、全专线监管、体验可管可视", "tone": "control" }
+          ],
+          "kpis": [
+            { "id": "k-scope", "label": "适用专线", "value": "二层 + 三层组网专线", "src": "S04:一" },
+            { "id": "k-ap", "label": "AP 上限", "value": "≤ 256 个", "src": "S04:一(一)3" },
+            { "id": "k-rep", "label": "运行报告", "value": "每期第 5 个工作日", "src": "S23:P40" },
+            { "id": "k-7", "label": "服务数量", "value": "7 项 + 企业网络管家", "src": "S04:一; S23:P34" }
+          ],
+          "steps": [
+            { "t": "一条组网专线", "say": "适用于二层组网专线（以太网、数字电路、精品网）和三层组网专线（MPLS VPN、云联网、SD-WAN）。", "add": ["uni", "site", "l-line"], "flows": ["f-line"], "kpis": ["k-scope"], "src": "S04:一" },
+            { "t": "夯实连接底座", "say": "设备调测、综合布线、WLAN 无线覆盖，解决客户侧“最后一公里”。", "add": ["z-base", "tune", "cab", "wlan", "l-tune", "l-cab", "l-wlan"], "states": { "tune": "ok", "cab": "ok", "wlan": "ok" }, "callouts": ["c-base"], "kpis": ["k-scope", "k-ap"], "src": "S04:一(一)" },
+            { "t": "深化运营内涵", "say": "机房巡检、网络运行分析报告、客户专线自服务，让网络状态透明可见。", "add": ["z-ops", "insp", "rep", "self", "l-insp", "l-rep", "l-self"], "states": { "insp": "ok", "rep": "ok", "self": "ok" }, "callouts": ["c-ops"], "kpis": ["k-scope", "k-ap", "k-rep"], "src": "S04:一(二)" },
+            { "t": "聚焦业务护航", "say": "重要会议、重要数据传输、重大活动期间提供 A/B/C 级重保。", "add": ["z-vip", "vip", "l-vip"], "flows": ["f-line", "f-vip"], "states": { "vip": "protect" }, "callouts": ["c-vip"], "src": "S04:一(三); S23:P39" },
+            { "t": "企业网络管家", "say": "私有化运维平台统一纳管异构网络设备与多运营商专线。", "add": ["mgr", "l-mgr"], "flows": ["f-line", "f-vip", "f-mgr"], "states": { "mgr": "active" }, "callouts": ["c-mgr"], "kpis": ["k-scope", "k-ap", "k-rep", "k-7"], "src": "S23:P42", "teacher": "收口：从“卖带宽”到“带宽 + 服务”的持续经营，存量高价值客户的标准维系动作。" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tech-enterprise",
+      "title": "企业网络基本架构与运营商分界点",
+      "kind": "tech",
+      "products": ["dia", "premium-network", "cloud-connect"],
+      "summary": "企业内网、出口设备、运营商接入设备与三类连接（点到网、点到点、上云）的关系。",
+      "scenes": [
+        {
+          "id": "basic",
+          "title": "企业网络与三类连接",
+          "zones": [
+            { "id": "z-lan", "x": 30, "y": 96, "w": 520, "h": 588, "label": "客户内网（客户自备）", "tone": "customer" },
+            { "id": "z-uni", "x": 562, "y": 96, "w": 380, "h": 588, "label": "中国联通网络", "tone": "unicom" },
+            { "id": "z-dst", "x": 954, "y": 96, "w": 304, "h": 588, "label": "连接对象", "tone": "internet" }
+          ],
+          "nodes": [
+            { "id": "pcs", "x": 110, "y": 190, "icon": "pc", "label": "办公终端", "tone": "customer" },
+            { "id": "srv", "x": 110, "y": 380, "icon": "server", "label": "业务服务器", "tone": "customer" },
+            { "id": "cam", "x": 110, "y": 570, "icon": "camera", "label": "摄像头 / 物联网终端", "tone": "customer" },
+            { "id": "sw", "x": 280, "y": 380, "icon": "switch", "label": "核心交换机", "tone": "customer" },
+            { "id": "rt", "x": 450, "y": 380, "icon": "router", "label": "出口路由器 / 防火墙", "tone": "customer" },
+            { "id": "cpe", "x": 650, "y": 380, "icon": "cpe", "label": "运营商接入设备", "sub": "收发器 / ONU / OTN CPE", "tone": "unicom" },
+            { "id": "acc", "x": 830, "y": 380, "icon": "core", "label": "接入与承载网", "tone": "unicom" },
+            { "id": "inet", "x": 1110, "y": 190, "icon": "internet", "label": "互联网", "tone": "internet", "round": true },
+            { "id": "branch", "x": 1110, "y": 380, "icon": "building", "label": "分支 / 数据中心", "tone": "customer" },
+            { "id": "cloud", "x": 1110, "y": 570, "icon": "cloud", "label": "云资源池", "tone": "cloud" }
+          ],
+          "links": [
+            { "id": "l1", "a": "pcs", "b": "sw", "kind": "lan", "route": "hv" },
+            { "id": "l2", "a": "srv", "b": "sw", "kind": "lan" },
+            { "id": "l3", "a": "cam", "b": "sw", "kind": "lan", "route": "hv" },
+            { "id": "l4", "a": "sw", "b": "rt", "kind": "lan" },
+            { "id": "l5", "a": "rt", "b": "cpe", "kind": "lan", "label": "分界点" },
+            { "id": "l6", "a": "cpe", "b": "acc", "kind": "fiber" },
+            { "id": "l7", "a": "acc", "b": "inet", "kind": "dedicated", "label": "互联网专线（点到网）", "route": "vh" },
+            { "id": "l8", "a": "acc", "b": "branch", "kind": "hardpipe", "label": "组网专线（点到点）" },
+            { "id": "l9", "a": "acc", "b": "cloud", "kind": "tunnel", "label": "上云 / 多点组网", "route": "vh" }
+          ],
+          "flows": [
+            { "id": "f-i", "path": ["pcs", "sw", "rt", "cpe", "acc", "inet"], "kind": "data", "n": 4 },
+            { "id": "f-b", "path": ["srv", "sw", "rt", "cpe", "acc", "branch"], "kind": "data", "n": 4 },
+            { "id": "f-c", "path": ["cam", "sw", "rt", "cpe", "acc", "cloud"], "kind": "cloud", "n": 4 }
+          ],
+          "callouts": [
+            { "id": "c-bound", "at": "cpe", "x": 560, "y": 545, "w": 300, "text": "分界点：运营商接入设备及以上由运营商维护，客户侧设备由客户自备（具体以合同约定为准）", "tone": "info" },
+            { "id": "c-3", "at": "acc", "x": 778, "y": 285, "w": 220, "text": "点到网：互联网专线；点到点：组网专线；上云：云联网等", "tone": "brand" }
+          ],
+          "kpis": [],
+          "steps": [
+            { "t": "客户内网", "say": "终端、服务器、物联网设备经核心交换机汇聚，由出口路由器/防火墙连接外部。", "add": ["z-lan", "pcs", "srv", "cam", "sw", "rt", "l1", "l2", "l3", "l4"], "src": "S03:2.4" },
+            { "t": "接入运营商网络：分界点", "say": "出口设备连接运营商接入设备（光电收发器、ONU 或 OTN CPE），这里是双方的维护分界。", "add": ["z-uni", "cpe", "acc", "l5", "l6"], "callouts": ["c-bound"], "src": "S03:2.4, 3.2, 13.2" },
+            { "t": "点到网：互联网专线", "say": "访问公共互联网、对外发布业务。", "add": ["z-dst", "inet", "l7"], "flows": ["f-i"], "src": "S01:P2" },
+            { "t": "点到点：组网专线", "say": "总部、分支、数据中心之间的内部互通。", "add": ["branch", "l8"], "flows": ["f-i", "f-b"], "src": "S01:P2; S23:P2" },
+            { "t": "上云与多点组网", "say": "多点组网、一点入云、多云连接。", "add": ["cloud", "l9"], "flows": ["f-i", "f-b", "f-c"], "callouts": ["c-3"], "src": "S23:P4" }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "private-network-demo",
+  "version": "4.0.0",
+  "private": true,
+  "description": "中国联通政企专线产品动态演示平台 V4.0（纯静态站点，GitHub Pages 托管）",
+  "scripts": {
+    "serve": "node tests/serve.mjs 8080",
+    "test:data": "node tests/validate_data.mjs",
+    "test:layout": "node tests/layout_lint.js",
+    "test": "node tests/validate_data.mjs && node tests/private_network_demo_v4_test.js",
+    "test:online": "node tests/private_network_demo_v4_test.js https://rewqasd.github.io/private-network-demo/"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}

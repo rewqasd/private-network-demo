@@ -1,0 +1,170 @@
+/* 拓扑 SVG 样式：颜色严格对应语义（见图例），故障红只用于故障/攻击，品牌红只用于界面强调 */
+.topo { font-family: var(--font); user-select: none; -webkit-user-select: none; }
+.topo text { dominant-baseline: auto; }
+.topo .is-hidden { opacity: 0 !important; pointer-events: none; }
+.topo .tz, .topo .tl, .topo .tn, .topo .tm, .topo .tc, .topo .tf-track, .topo .tf-dots { transition: opacity .45s var(--ease); }
+
+/* 区域 */
+.tz-box { fill: #f9fafb; stroke: #dfe3ea; stroke-width: 1.5; stroke-dasharray: 6 6; }
+.tz-lab-bg { fill: #fff; stroke: #dfe3ea; stroke-width: 1.2; }
+.tz-t { font-size: 15px; font-weight: 700; fill: var(--ink-600); }
+.tz.tone-customer .tz-box { fill: #f8fafc; stroke: #d6dce5; }
+.tz.tone-access .tz-box { fill: #f6f7f9; stroke: #d3d9e2; }
+.tz.tone-unicom .tz-box { fill: #fff8f8; stroke: #f1c9c9; }
+.tz.tone-unicom .tz-lab-bg { stroke: #f1c9c9; }
+.tz.tone-unicom .tz-t { fill: var(--brand-ink); }
+.tz.tone-internet .tz-box { fill: #f5f8fc; stroke: #d4dce8; }
+.tz.tone-transport .tz-box { fill: #f4f6ff; stroke: #c9d2f5; }
+.tz.tone-transport .tz-t { fill: var(--hardpipe); }
+.tz.tone-cloud .tz-box { fill: #f0fafc; stroke: #bfe5ee; }
+.tz.tone-cloud .tz-t { fill: var(--tunnel); }
+.tz.tone-security .tz-box { fill: #fff8ef; stroke: #f5d2a6; }
+.tz.tone-security .tz-t { fill: #b45309; }
+.tz.tone-ok .tz-box { fill: #f1faf4; stroke: #bfe5cc; }
+.tz.tone-ok .tz-t { fill: #0b7a3b; }
+.tz.tone-legacy .tz-box { fill: #f6f6f7; stroke: #d9dbe0; }
+
+/* 链路 */
+.tl-line, .tl-base { fill: none; stroke-linecap: round; stroke-linejoin: round; transition: stroke .3s, stroke-width .3s, opacity .3s; }
+.tl-line { stroke: #a5afbf; stroke-width: 3; }
+.tl.kind-lan .tl-line { stroke: #b6bfcc; stroke-width: 2.5; }
+.tl.kind-fiber .tl-line { stroke: #8d98aa; stroke-width: 2.5; }
+.tl.kind-dedicated .tl-line { stroke: var(--flow); stroke-width: 4.5; }
+.tl.kind-hardpipe .tl-base { stroke: #c9d3fb; stroke-width: 12; }
+.tl.kind-hardpipe .tl-line { stroke: var(--hardpipe); stroke-width: 4; }
+.tl.kind-tunnel .tl-line { stroke: var(--tunnel); stroke-width: 3; stroke-dasharray: 10 7; }
+.tl.kind-cloud .tl-line { stroke: var(--tunnel); stroke-width: 3; stroke-dasharray: 2 7; }
+.tl.kind-control .tl-line { stroke: var(--control); stroke-width: 2; stroke-dasharray: 5 6; opacity: .75; }
+.tl.kind-legacy .tl-line { stroke: var(--legacy); stroke-width: 3; stroke-dasharray: 11 7; }
+.tl.kind-threat .tl-line { stroke: var(--fault); stroke-width: 2; stroke-dasharray: 4 5; opacity: .8; }
+.tl.kind-service .tl-line { stroke: var(--ok); stroke-width: 2.5; stroke-dasharray: 2 7; }
+.tl-lab, .tl-x { transition: opacity .45s var(--ease); }
+.tl-lab rect { fill: #fff; stroke: #d6dce5; stroke-width: 1.2; }
+.tl-lab text { font-size: 13px; font-weight: 700; fill: var(--ink-700); }
+.tl-lab.kind-hardpipe text { fill: var(--hardpipe); }
+.tl-lab.kind-dedicated text { fill: var(--flow); }
+.tl-lab.kind-tunnel text, .tl-lab.kind-cloud text { fill: var(--tunnel); }
+.tl-lab.is-down rect { stroke: var(--fault); }
+.tl-lab.is-down text { fill: var(--fault); }
+.tl-x:not(.is-down) { opacity: 0 !important; }
+.tl-x circle { fill: #fff; stroke: var(--fault); stroke-width: 2.5; }
+.tl-x path { stroke: var(--fault); stroke-width: 3; stroke-linecap: round; }
+.tl.is-active .tl-line { stroke-width: 6; }
+.tl.kind-hardpipe.is-active .tl-base { stroke: #a5b4fc; }
+.tl.is-standby .tl-line, .tl.is-standby .tl-base { opacity: .45; }
+.tl.is-down .tl-line { stroke: var(--fault); stroke-dasharray: 7 7; stroke-width: 3; }
+.tl.is-down .tl-base { stroke: #fde2e1; }
+.tl.is-alert .tl-line { stroke: var(--fault); }
+.tl.is-ok .tl-line { stroke: var(--ok); }
+
+/* 节点 */
+.tn { cursor: default; }
+.tn.is-clickable { cursor: pointer; }
+.tn-plate { fill: #fff; stroke: #98a2b3; stroke-width: 2; filter: drop-shadow(0 1px 1.5px rgba(16, 24, 40, .12)); transition: stroke .3s, fill .3s; }
+.tn-icon { color: var(--ink-700); }
+.tn-halo { fill: none; stroke: none; transform-box: fill-box; transform-origin: center; }
+.tn-lab-bg { fill: rgba(255, 255, 255, .94); }
+.tn-t { font-size: 17px; font-weight: 700; fill: var(--ink-900); }
+.tn-s { font-size: 13px; font-weight: 500; fill: var(--ink-500); }
+.tn-badge rect { fill: var(--ink-900); }
+.tn-badge text { font-size: 12px; font-weight: 700; fill: #fff; }
+.tn.tone-customer .tn-plate { stroke: #98a2b3; }
+.tn.tone-access .tn-plate { stroke: #8e9ab0; }
+.tn.tone-access .tn-icon { color: var(--ink-600); }
+.tn.tone-unicom .tn-plate { stroke: #344054; }
+.tn.tone-unicom .tn-icon { color: var(--ink-900); }
+.tn.tone-transport .tn-plate { stroke: var(--hardpipe); }
+.tn.tone-transport .tn-icon { color: var(--hardpipe); }
+.tn.tone-security .tn-plate { stroke: var(--security); }
+.tn.tone-security .tn-icon { color: #c2410c; }
+.tn.tone-security .tn-badge rect { fill: #c2410c; }
+.tn.tone-cloud .tn-plate { stroke: var(--tunnel); }
+.tn.tone-cloud .tn-icon { color: var(--tunnel); }
+.tn.tone-internet .tn-plate { stroke: #a8b1c0; }
+.tn.tone-internet .tn-icon { color: var(--ink-600); }
+.tn.tone-attacker .tn-plate { stroke: var(--fault); fill: #fff7f6; }
+.tn.tone-attacker .tn-icon { color: var(--fault); }
+.tn.tone-platform .tn-plate { stroke: var(--control); }
+.tn.tone-platform .tn-icon { color: var(--control); }
+.tn.tone-legacy .tn-plate { stroke: #a0a8b6; fill: #f4f5f7; stroke-dasharray: 5 4; }
+.tn.tone-legacy .tn-icon { color: var(--legacy); }
+.tn.tone-ok .tn-plate { stroke: var(--ok); }
+.tn.tone-ok .tn-icon { color: var(--ok); }
+.tn .tn-cloud { stroke-width: 2.5; }
+.tn.tone-cloud .tn-cloud { fill: #f3fbfd; }
+.tn.is-clickable:hover .tn-plate { stroke-width: 3; }
+.tn.is-clickable:focus-visible { outline: none; }
+.tn.is-clickable:focus-visible .tn-plate { stroke: var(--flow); stroke-width: 3.5; }
+
+.tn.is-alert .tn-halo { stroke: var(--fault); stroke-width: 3; fill: rgba(217, 45, 32, .08); animation: halo 1.3s ease-out infinite; }
+.tn.is-alert .tn-plate { stroke: var(--fault); }
+.tn.is-protect .tn-halo { stroke: var(--security); stroke-width: 3; fill: rgba(232, 120, 12, .08); animation: halo 1.6s ease-out infinite; }
+.tn.is-protect .tn-plate { stroke: var(--security); }
+.tn.is-ok .tn-halo { stroke: var(--ok); stroke-width: 3; fill: rgba(17, 153, 75, .08); }
+.tn.is-ok .tn-plate { stroke: var(--ok); }
+.tn.is-active .tn-halo { stroke: var(--flow); stroke-width: 3; fill: rgba(31, 111, 235, .07); animation: halo 1.8s ease-out infinite; }
+@keyframes halo { 0% { transform: scale(.92); opacity: 1; } 100% { transform: scale(1.28); opacity: 0; } }
+
+/* 聚焦与路径高亮 */
+.topo.has-focus :is(.tn, .tl, .tm, .tz, .tl-lab):not(.is-focus):not(.is-hidden) { opacity: .2; }
+.topo.has-hl :is(.tn, .tl, .tl-lab):not(.is-hl):not(.is-hidden) { opacity: .25; }
+.topo.has-hl .tf-track:not(.is-hl):not(.is-hidden), .topo.has-hl .tf-dots:not(.is-hl):not(.is-hidden) { opacity: .15; }
+.topo .tf-track.is-hl { stroke-width: 7; opacity: .55; }
+
+/* 流量 */
+.tf-track { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: .28; stroke-dasharray: 1 9; }
+.tf-dot { stroke: #fff; stroke-width: 2; }
+.kind-data.tf-track, .tf-dots.kind-data .tf-dot, .kind-video.tf-track, .tf-dots.kind-video .tf-dot { stroke: var(--flow); }
+.tf-dots.kind-data .tf-dot, .tf-dots.kind-video .tf-dot { fill: var(--flow); stroke: #fff; }
+.tf-track.kind-attack { stroke: var(--fault); }
+.tf-dots.kind-attack .tf-dot { fill: var(--fault); }
+.tf-track.kind-clean, .tf-track.kind-backup { stroke: var(--ok); }
+.tf-dots.kind-clean .tf-dot, .tf-dots.kind-backup .tf-dot { fill: var(--ok); }
+.tf-track.kind-tunnel, .tf-track.kind-cloud { stroke: var(--tunnel); }
+.tf-dots.kind-tunnel .tf-dot, .tf-dots.kind-cloud .tf-dot { fill: var(--tunnel); }
+.tf-track.kind-control { stroke: var(--control); }
+.tf-dots.kind-control .tf-dot { fill: var(--control); }
+.tf-track.kind-security { stroke: var(--security); }
+.tf-dots.kind-security .tf-dot { fill: var(--security); }
+.tf-track.kind-video { stroke: #3b82f6; }
+.arw-flow { fill: var(--flow); } .arw-tunnel { fill: var(--tunnel); } .arw-security { fill: var(--security); }
+.arw-ok { fill: var(--ok); } .arw-fault { fill: var(--fault); } .arw-control { fill: var(--control); } .arw-link { fill: var(--link); }
+.topo.reduced .tf-track { opacity: .75; stroke-dasharray: 8 6; stroke-width: 3.5; }
+
+/* 标注 */
+.tc-box { fill: #fff; stroke: var(--tc, var(--ink-400)); stroke-width: 1.6; filter: drop-shadow(0 4px 10px rgba(16, 24, 40, .12)); }
+.tc-bar { fill: var(--tc, var(--ink-400)); }
+.tc-lead { stroke: var(--tc, var(--ink-400)); stroke-width: 1.6; stroke-dasharray: 4 4; }
+.tc-dot { fill: var(--tc, var(--ink-400)); }
+.tc-text { font-size: 15px; font-weight: 600; fill: var(--ink-800); }
+.tc.tone-info { --tc: #667085; }
+.tc.tone-flow { --tc: var(--flow); }
+.tc.tone-tunnel { --tc: var(--tunnel); }
+.tc.tone-security { --tc: var(--security); }
+.tc.tone-ok { --tc: var(--ok); }
+.tc.tone-fault { --tc: var(--fault); }
+.tc.tone-control { --tc: var(--control); }
+.tc.tone-hardpipe { --tc: var(--hardpipe); }
+.tc.tone-brand { --tc: var(--brand); }
+.tc { animation: tc-in .45s var(--ease); }
+@keyframes tc-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* 仪表 */
+.tm-card { fill: #fff; stroke: #d6dce5; stroke-width: 1.4; filter: drop-shadow(0 2px 6px rgba(16, 24, 40, .08)); }
+.tm-title { font-size: 14px; font-weight: 700; fill: var(--ink-600); }
+.tm-val { font-size: 17px; font-weight: 800; fill: var(--tmc, var(--flow)); font-family: var(--font-num); }
+.tm-track { fill: var(--ink-100); }
+.tm-fill { fill: var(--tmc, var(--flow)); transform-box: fill-box; transform-origin: 0 50%; transition: transform .9s var(--ease), fill .4s; }
+.tm-mark { stroke: var(--fault); stroke-width: 2; stroke-dasharray: 3 3; }
+.tm-mark-t { font-size: 12px; font-weight: 700; fill: var(--fault); }
+.tm-cap { font-size: 12px; fill: var(--ink-500); }
+.tm.tone-flow { --tmc: var(--flow); }
+.tm.tone-ok { --tmc: var(--ok); }
+.tm.tone-fault { --tmc: var(--fault); }
+.tm.tone-security { --tmc: var(--security); }
+
+@media (prefers-reduced-motion: reduce) {
+  .tn-halo, .tn.is-alert .tn-halo, .tn.is-protect .tn-halo, .tn.is-active .tn-halo { animation: none !important; }
+  .tc, .kpi { animation: none; }
+  .tm-fill { transition: none; }
+}

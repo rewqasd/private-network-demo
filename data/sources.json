@@ -1,0 +1,32 @@
+{
+  "note": "资料来源登记表。只记录文件名、发布单位、日期、适用范围和受众，不记录任何在线文档链接、文件 ID 或访问凭据。页码 P 指 PPT 页码或 PDF/Word 章节。",
+  "docs": [
+    { "id": "S01", "title": "★互联网专线业务-202607 - 地市", "type": "PPT", "issuer": "湖南联通政企客户部", "date": "2026-07", "scope": "湖南联通", "audience": "内部培训", "pages": 31 },
+    { "id": "S02", "title": "互联网专线智能升速产品介绍 -26年", "type": "PPT", "issuer": "中国联通政企BG 网络运营事业部", "date": "2026-01", "scope": "集团（全国31省）", "audience": "内部培训", "pages": 30 },
+    { "id": "S03", "title": "互联网专线业务接入合同结构化模板（省公司）正式文件", "type": "Word", "issuer": "省公司合同模板", "date": "2026-11", "scope": "省公司", "audience": "合同模板（仅引用通用条款，不引用任何客户信息）" },
+    { "id": "S04", "title": "关于加强专线服务价值提升的指导意见（政企〔2026〕3号）", "type": "PDF", "issuer": "中国联合网络通信集团有限公司 政企客户事业群", "date": "2026-01-08", "scope": "集团", "audience": "内部文件" },
+    { "id": "S05", "title": "1-中国联通互联网安全专线-产品手册（2026年4月）", "type": "PDF", "issuer": "中国联通", "date": "2026-05（封面）", "scope": "集团（全国版）", "audience": "产品管理、销售、服务人员" },
+    { "id": "S06", "title": "3-中国联通互联网安全专线-产品介绍（面向客户）", "type": "PPT/PDF", "issuer": "中国联通", "date": "2026-05", "scope": "集团", "audience": "面向客户" },
+    { "id": "S07", "title": "4-中国联通互联网安全专线-销售一纸禅v4.0", "type": "Word", "issuer": "中国联通", "date": "2026", "scope": "集团", "audience": "销售人员" },
+    { "id": "S09", "title": "关于湖南联通互联网安全专线安全服务产品焕新的通知（转发集团 WTZ20260515110320066）", "type": "PDF/Word", "issuer": "湖南联通", "date": "2026-06-25", "scope": "湖南联通（转发集团焕新升级通知）", "audience": "内部文件" },
+    { "id": "S11", "title": "更新V2《安全专线产品营销工具包》", "type": "Word", "issuer": "湖南联通", "date": "2026", "scope": "湖南联通", "audience": "客户经理" },
+    { "id": "S13", "title": "中国联通政企精品网白皮书", "type": "PDF", "issuer": "中国联合网络通信有限公司", "date": "未标注", "scope": "集团", "audience": "面向客户" },
+    { "id": "S14", "title": "政企精品网产品及智能化功能介绍-V2", "type": "PPT", "issuer": "中国联通网络运营事业部", "date": "2025-03", "scope": "集团", "audience": "内部培训", "pages": 31 },
+    { "id": "S15", "title": "联通 OTN政企精品网 产品介绍彩页 2P", "type": "PDF", "issuer": "中国联通", "date": "2025-03-18", "scope": "集团", "audience": "面向客户" },
+    { "id": "S16", "title": "联通 政企OTN精品专网汇报 支撑材料 附录6P", "type": "PDF", "issuer": "中国联通", "date": "2025-03-16", "scope": "集团", "audience": "汇报支撑" },
+    { "id": "S17", "title": "联通 行客一指禅_SDH迁转 政企精品网 2P", "type": "PDF", "issuer": "中国联通", "date": "2025-04-07", "scope": "集团", "audience": "行业客户经理" },
+    { "id": "S18", "title": "政企OTN专线-技术标摘录", "type": "PDF", "issuer": "中国联通", "date": "2025-03-27", "scope": "集团", "audience": "投标支撑" },
+    { "id": "S19", "title": "联通政企OTN精品专线产品特性、核心卖点介绍", "type": "PDF", "issuer": "中国联通（成都）", "date": "2025-02", "scope": "四川联通", "audience": "内部培训" },
+    { "id": "S20", "title": "《政企精品网产品营销工具包》2026.07.13", "type": "Word", "issuer": "湖南联通", "date": "2026-07-13", "scope": "湖南联通", "audience": "客户经理" },
+    { "id": "S22", "title": "全省投标能力培训_四川农商银行OTN案例", "type": "PPT", "issuer": "四川联通 政企·金融行业线", "date": "2025", "scope": "四川联通", "audience": "内部培训（案例数据以材料为准，需业务确认）" },
+    { "id": "S23", "title": "★政企组网专线业务-202606", "type": "PPT", "issuer": "湖南联通政企客户部", "date": "2026-06", "scope": "湖南联通", "audience": "内部培训", "pages": 45 },
+    { "id": "S24", "title": "PON组网专线介绍（湖南联通PON虚拟专网产品介绍）", "type": "PPT", "issuer": "湖南联通", "date": "2023-03", "scope": "湖南联通", "audience": "内部培训" },
+    { "id": "S25", "title": "云联网产品介绍、九大场景及案例分析-湖南", "type": "PPT", "issuer": "湖南联通", "date": "2025", "scope": "湖南联通", "audience": "内部培训" },
+    { "id": "S26", "title": "V6.07.18《云联网产品营销工具包》", "type": "Word", "issuer": "湖南联通", "date": "2026-07-18", "scope": "湖南联通", "audience": "客户经理" },
+    { "id": "S27", "title": "云联网产品培训（政企专线联网产品）", "type": "PPT", "issuer": "湖南联通", "date": "2026-06", "scope": "湖南联通", "audience": "内部培训" },
+    { "id": "S30", "title": "专线联网-延伸服务安全服务体系介绍", "type": "PPT", "issuer": "政企客户部", "date": "2026-03", "scope": "集团体系", "audience": "内部研讨" },
+    { "id": "S40", "title": "云联网与SDWAN对比", "type": "PPT", "issuer": "中国联通", "date": "2024", "scope": "集团", "audience": "内部培训（较早版本）" },
+    { "id": "S41", "title": "云联网案例集（脱敏版）", "type": "PDF", "issuer": "中国联通", "date": "2023-03-15", "scope": "集团", "audience": "案例集（客户名已脱敏）" },
+    { "id": "S48", "title": "互联网专线一指禅（江苏客户经理版）", "type": "Word", "issuer": "江苏联通", "date": "2023", "scope": "江苏联通", "audience": "客户经理（较早版本）" }
+  ]
+}

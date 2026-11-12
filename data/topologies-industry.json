@@ -1,0 +1,471 @@
+{
+  "note": "行业方案动态演示（教学抽象场景）：依据资料中的行业需求与产品定位绘制，不代表任何单一客户的实际部署。画布 1280×720，从左到右依次为末梢 → 汇聚 → 核心 → 外部。",
+  "demos": [
+    {
+      "id": "industry-gov",
+      "title": "政务：省—市—县—乡一体化政务外网",
+      "kind": "industry",
+      "industry": "gov",
+      "products": ["premium-network", "pon-network", "security-line", "extension-services"],
+      "summary": "骨干用政企精品网硬管道（10G 到市、1G 到县），乡镇末梢用 PON 组网，互联网政务入口叠加安全专线，重大会议重保。",
+      "scenes": [
+        {
+          "id": "main",
+          "title": "政务外网组合方案",
+          "zones": [
+            { "id": "z-t", "x": 30, "y": 96, "w": 250, "h": 588, "label": "乡镇（街道）", "tone": "customer" },
+            { "id": "z-c", "x": 292, "y": 96, "w": 250, "h": 588, "label": "区县", "tone": "customer" },
+            { "id": "z-m", "x": 554, "y": 96, "w": 250, "h": 588, "label": "市级", "tone": "customer" },
+            { "id": "z-p", "x": 816, "y": 96, "w": 250, "h": 588, "label": "省级", "tone": "customer" },
+            { "id": "z-i", "x": 1078, "y": 96, "w": 180, "h": 588, "label": "互联网入口", "tone": "internet" }
+          ],
+          "nodes": [
+            { "id": "t1", "x": 155, "y": 200, "icon": "branch", "label": "乡镇便民服务点", "tone": "customer" },
+            { "id": "t2", "x": 155, "y": 540, "icon": "branch", "label": "乡镇便民服务点", "tone": "customer" },
+            { "id": "c1", "x": 417, "y": 200, "icon": "gov", "label": "区县政务节点", "tone": "customer" },
+            { "id": "c2", "x": 417, "y": 540, "icon": "gov", "label": "区县政务节点", "tone": "customer" },
+            { "id": "city", "x": 679, "y": 370, "icon": "gov", "label": "市级政务外网节点", "tone": "customer" },
+            { "id": "prov", "x": 941, "y": 370, "icon": "datacenter", "label": "省级政务云", "sub": "大数据中心", "tone": "customer", "size": "lg" },
+            { "id": "sec", "x": 1168, "y": 240, "icon": "shield", "label": "互联网安全专线", "tone": "security" },
+            { "id": "pub", "x": 1168, "y": 520, "icon": "user", "label": "公众办事用户", "tone": "internet" },
+            { "id": "svc", "x": 941, "y": 600, "icon": "tool", "label": "重保 · 巡检 · 运行报告", "tone": "ok", "size": "sm" }
+          ],
+          "links": [
+            { "id": "lt1", "a": "t1", "b": "c1", "kind": "tunnel", "label": "100M 到镇" },
+            { "id": "lt2", "a": "t2", "b": "c2", "kind": "tunnel", "label": "100M 到镇" },
+            { "id": "lc1", "a": "c1", "b": "city", "kind": "hardpipe", "label": "1G 到县" },
+            { "id": "lc2", "a": "c2", "b": "city", "kind": "hardpipe", "label": "1G 到县" },
+            { "id": "lcp", "a": "city", "b": "prov", "kind": "hardpipe", "label": "10G 到市" },
+            { "id": "lps", "a": "prov", "b": "sec", "kind": "link", "route": "hv" },
+            { "id": "lpub", "a": "pub", "b": "sec", "kind": "link" },
+            { "id": "lsv", "a": "svc", "b": "prov", "kind": "service" }
+          ],
+          "flows": [
+            { "id": "f-c1", "path": ["c1", "city", "prov"], "kind": "data", "n": 3, "label": "区县（上）→ 市 → 省级政务云" },
+            { "id": "f-c2", "path": ["c2", "city", "prov"], "kind": "data", "n": 3, "label": "区县（下）→ 市 → 省级政务云" },
+            { "id": "f1", "path": ["t1", "c1", "city", "prov"], "kind": "data", "n": 4, "label": "乡镇（上）→ 区县 → 市 → 省级政务云" },
+            { "id": "f2", "path": ["t2", "c2", "city", "prov"], "kind": "data", "n": 4, "label": "乡镇（下）→ 区县 → 市 → 省级政务云" },
+            { "id": "f-pub", "path": ["pub", "sec", "prov"], "kind": "data", "n": 3 }
+          ],
+          "callouts": [
+            { "id": "c-need", "x": 679, "y": 185, "w": 300, "lead": false, "text": "政务外网关键需求：10G 到市、1G 到县、100M 到镇；安全隔离、自助服务（资料表述）", "tone": "brand" },
+            { "id": "c-otn", "at": "city", "x": 679, "y": 560, "w": 280, "text": "政企精品网：OTN 硬管道物理隔离、多路由保护；带宽可从 155M/622M 提速至 GE/10GE", "tone": "hardpipe" },
+            { "id": "c-pon", "at": "t2", "x": 300, "y": 370, "w": 260, "text": "末梢接入：PON 组网专线，专线与互联网自动切换备份（资料案例）", "tone": "tunnel" },
+            { "id": "c-sec", "at": "sec", "x": 1150, "y": 640, "w": 230, "text": "互联网政务入口：防 DDoS、网站防篡改、满足网信检查", "tone": "security" },
+            { "id": "c-svc", "at": "svc", "x": 680, "y": 650, "w": 260, "text": "重大会议重保、机房巡检、运行分析报告", "tone": "ok" }
+          ],
+          "kpis": [
+            { "id": "k-need", "label": "带宽规划", "value": "10G 到市 · 1G 到县 · 100M 到镇", "src": "S19:政务" },
+            { "id": "k-otn", "label": "骨干", "value": "OTN 硬隔离", "src": "S13:5.1.1" },
+            { "id": "k-sec", "label": "互联网入口", "value": "安全专线", "src": "S05:三3" },
+            { "id": "k-svc", "label": "服务", "value": "重保 · 巡检", "src": "S23:P9" }
+          ],
+          "steps": [
+            { "t": "政务外网四级结构", "say": "省级政务云、市级节点、区县节点、乡镇便民服务点：多张网整合为一张网。", "add": ["z-t", "z-c", "z-m", "z-p", "z-i", "t1", "t2", "c1", "c2", "city", "prov"], "callouts": ["c-need"], "kpis": ["k-need"], "src": "S19:政务" },
+            { "t": "省—市—县：政企精品网", "say": "省、市、县之间用 OTN 硬管道承载，物理隔离、多路由保护。", "add": ["lc1", "lc2", "lcp"], "flows": ["f-c1", "f-c2"], "callouts": ["c-otn"], "kpis": ["k-need", "k-otn"], "src": "S13:5.1.1; S19:政务" },
+            { "t": "乡镇末梢：PON 组网专线", "say": "乡镇与区县之间以 PON 组网专线低成本接入，零配置开通、统一运维。", "add": ["lt1", "lt2"], "flows": ["f1", "f2"], "callouts": ["c-pon"], "src": "S24:P25; S23:P4" },
+            { "t": "互联网政务入口：安全专线", "say": "面向公众的政务服务入口叠加安全专线，防攻击、防篡改、满足监管检查。", "add": ["sec", "pub", "lps", "lpub"], "flows": ["f1", "f2", "f-pub"], "states": { "sec": "protect" }, "callouts": ["c-sec"], "kpis": ["k-need", "k-otn", "k-sec"], "src": "S05:三3; S11:3.4" },
+            { "t": "重保与运维", "say": "重大会议期间提供重保，日常机房巡检与运行分析报告（湖南材料：电子政务网 + 重保 + 巡检服务）。", "add": ["svc", "lsv"], "states": { "svc": "ok", "prov": "active", "sec": "normal" }, "callouts": ["c-svc"], "kpis": ["k-need", "k-otn", "k-sec", "k-svc"], "src": "S23:P9; S04:一" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "industry-justice",
+      "title": "政法公安：分级专网、视频回传与末梢接入",
+      "kind": "industry",
+      "industry": "justice",
+      "products": ["premium-network", "pon-network", "extension-services"],
+      "summary": "公安信息网与政法专网用 OTN 硬隔离分级承载，视频卡口高带宽回传，交管受理点以 PON-SDWAN 网关接入。",
+      "scenes": [
+        {
+          "id": "main",
+          "title": "政法公安组合方案",
+          "zones": [
+            { "id": "z-b", "x": 30, "y": 96, "w": 250, "h": 588, "label": "基层所队 / 前端", "tone": "customer" },
+            { "id": "z-c", "x": 292, "y": 96, "w": 250, "h": 588, "label": "区县分局", "tone": "customer" },
+            { "id": "z-m", "x": 554, "y": 96, "w": 250, "h": 588, "label": "市局", "tone": "customer" },
+            { "id": "z-p", "x": 816, "y": 96, "w": 442, "h": 588, "label": "省厅 / 政法单位", "tone": "customer" }
+          ],
+          "nodes": [
+            { "id": "ps", "x": 155, "y": 185, "icon": "gov", "label": "派出所 / 基层所队", "tone": "customer" },
+            { "id": "cam", "x": 155, "y": 370, "icon": "camera", "label": "视频卡口 / 监控", "tone": "customer" },
+            { "id": "tg", "x": 155, "y": 560, "icon": "branch", "label": "交管业务受理点", "tone": "customer" },
+            { "id": "fj", "x": 417, "y": 370, "icon": "gov", "label": "区县分局", "tone": "customer" },
+            { "id": "sj", "x": 679, "y": 370, "icon": "gov", "label": "市局指挥中心", "tone": "customer", "size": "lg" },
+            { "id": "st", "x": 1010, "y": 210, "icon": "gov", "label": "省厅（公安信息网）", "tone": "customer" },
+            { "id": "jf", "x": 1010, "y": 540, "icon": "gov", "label": "检察院 / 法院内网", "tone": "customer" }
+          ],
+          "links": [
+            { "id": "l1", "a": "ps", "b": "fj", "kind": "hardpipe", "label": "四级网" },
+            { "id": "l2", "a": "cam", "b": "fj", "kind": "hardpipe", "label": "视频专网" },
+            { "id": "l3", "a": "tg", "b": "fj", "kind": "tunnel", "label": "PON-SDWAN" },
+            { "id": "l4", "a": "fj", "b": "sj", "kind": "hardpipe", "label": "三级网" },
+            { "id": "l5", "a": "sj", "b": "st", "kind": "hardpipe", "label": "二级网" },
+            { "id": "l6", "a": "sj", "b": "jf", "kind": "hardpipe", "label": "政法专网" }
+          ],
+          "flows": [
+            { "id": "f-ps", "path": ["ps", "fj", "sj", "st"], "kind": "data", "n": 4 },
+            { "id": "f-jf", "path": ["sj", "jf"], "kind": "data", "n": 3 },
+            { "id": "f-cam", "path": ["cam", "fj", "sj"], "kind": "video", "n": 6, "speed": 180 },
+            { "id": "f-tg", "path": ["tg", "fj", "sj"], "kind": "tunnel", "n": 3 }
+          ],
+          "callouts": [
+            { "id": "c-iso", "x": 679, "y": 185, "w": 300, "lead": false, "text": "公安信息网（二至五级）、政法专网、检法内网：硬隔离、高安全、高可靠", "tone": "hardpipe" },
+            { "id": "c-video", "at": "cam", "x": 335, "y": 492, "w": 230, "text": "视频回传带宽与品质要求高：物理隔离、可管可运维，比裸纤可靠性高", "tone": "flow" },
+            { "id": "c-tg", "at": "tg", "x": 430, "y": 630, "w": 260, "text": "交管受理点：一台网关替换原互联网和专线光猫，建 VPN 接入交管与视频业务", "tone": "tunnel" },
+            { "id": "c-svc", "at": "st", "x": 1010, "y": 375, "w": 280, "text": "重要会议与重大活动：重保服务（A/B/C 级）+ 机房巡检", "tone": "ok" }
+          ],
+          "kpis": [
+            { "id": "k-iso", "label": "专网", "value": "物理隔离硬管道", "src": "S19:OTN典型目标用户" },
+            { "id": "k-video", "label": "视频", "value": "高带宽回传", "src": "S19:政法公安" },
+            { "id": "k-tg", "label": "末梢", "value": "PON-SDWAN 接入", "src": "S24:P24" },
+            { "id": "k-svc", "label": "保障", "value": "重保 · 巡检", "src": "S04:一" }
+          ],
+          "steps": [
+            { "t": "分级专网结构", "say": "基层所队、区县分局、市局、省厅逐级汇聚，检察院、法院内网与政法专网互联。", "add": ["z-b", "z-c", "z-m", "z-p", "ps", "cam", "tg", "fj", "sj", "st", "jf"], "callouts": ["c-iso"], "src": "S19:OTN典型目标用户" },
+            { "t": "分级硬管道：政企精品网", "say": "各级专网由 OTN 硬管道承载，与公网物理隔离。", "add": ["l1", "l4", "l5", "l6"], "flows": ["f-ps", "f-jf"], "kpis": ["k-iso"], "src": "S15; S19:政法公安" },
+            { "t": "视频卡口回传", "say": "摄像头智能化普及，视频专网要求大带宽、稳定回传。", "add": ["l2"], "flows": ["f-ps", "f-cam"], "callouts": ["c-video"], "kpis": ["k-iso", "k-video"], "src": "S19:政法公安; S15" },
+            { "t": "末梢交管受理点", "say": "交管受理点以 PON-SDWAN 网关接入，后续业务可平滑添加。", "add": ["l3"], "flows": ["f-ps", "f-cam", "f-tg"], "callouts": ["c-tg"], "kpis": ["k-iso", "k-video", "k-tg"], "src": "S24:P24" },
+            { "t": "重保与运维", "say": "重要活动期间重保，日常巡检。", "flows": ["f-ps", "f-cam", "f-tg", "f-jf"], "states": { "st": "active", "sj": "active" }, "callouts": ["c-svc"], "kpis": ["k-iso", "k-video", "k-tg", "k-svc"], "src": "S04:一; S23:P39" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "industry-finance",
+      "title": "金融：生产网扁平化、同城双活与互联网业务安全",
+      "kind": "industry",
+      "industry": "finance",
+      "products": ["finance-premium", "premium-network", "cloud-connect", "security-line"],
+      "summary": "网点—分行—数据中心生产网走 OTN，同城双活与交易所直达走高等级精品网，安保网用云联网，网银业务叠加安全专线。",
+      "scenes": [
+        {
+          "id": "main",
+          "title": "银行组合方案",
+          "zones": [
+            { "id": "z-n", "x": 30, "y": 96, "w": 250, "h": 588, "label": "营业网点", "tone": "customer" },
+            { "id": "z-b", "x": 292, "y": 96, "w": 250, "h": 588, "label": "分行", "tone": "customer" },
+            { "id": "z-d", "x": 554, "y": 96, "w": 310, "h": 588, "label": "总行数据中心", "tone": "customer" },
+            { "id": "z-e", "x": 876, "y": 96, "w": 382, "h": 588, "label": "交易所 / 互联网", "tone": "internet" }
+          ],
+          "nodes": [
+            { "id": "n1", "x": 155, "y": 190, "icon": "branch", "label": "营业网点", "tone": "customer" },
+            { "id": "n2", "x": 155, "y": 530, "icon": "branch", "label": "营业网点", "tone": "customer" },
+            { "id": "br", "x": 417, "y": 360, "icon": "bank", "label": "分行", "tone": "customer" },
+            { "id": "dc1", "x": 709, "y": 200, "icon": "datacenter", "label": "数据中心 A", "tone": "customer" },
+            { "id": "dc2", "x": 709, "y": 520, "icon": "datacenter", "label": "数据中心 B", "sub": "同城双活", "tone": "customer" },
+            { "id": "ex", "x": 1010, "y": 200, "icon": "exchange", "label": "交易所 / IDC", "tone": "customer" },
+            { "id": "sec", "x": 1010, "y": 520, "icon": "shield", "label": "互联网安全专线", "tone": "security" },
+            { "id": "user", "x": 1180, "y": 520, "icon": "user", "label": "网银 / APP 用户", "tone": "internet" },
+            { "id": "ccn", "x": 417, "y": 612, "icon": "cloud", "label": "云联网", "sub": "安保 / 视频网", "tone": "cloud", "size": "sm" }
+          ],
+          "links": [
+            { "id": "ln1", "a": "n1", "b": "br", "kind": "hardpipe", "route": "hv", "label": "网点扁平化", "lab": 0.3 },
+            { "id": "ln2", "a": "n2", "b": "br", "kind": "hardpipe", "route": "hv" },
+            { "id": "lb1", "a": "br", "b": "dc1", "kind": "hardpipe" },
+            { "id": "lb2", "a": "br", "b": "dc2", "kind": "hardpipe" },
+            { "id": "ldc", "a": "dc1", "b": "dc2", "kind": "hardpipe", "label": "同城双活 < 1ms" },
+            { "id": "lex", "a": "dc1", "b": "ex", "kind": "hardpipe", "label": "一跳直达" },
+            { "id": "lsec", "a": "dc2", "b": "sec", "kind": "link" },
+            { "id": "luser", "a": "sec", "b": "user", "kind": "link" },
+            { "id": "lc1", "a": "n1", "b": "ccn", "kind": "tunnel", "via": [[62, 190], [62, 612]] },
+            { "id": "lc2", "a": "n2", "b": "ccn", "kind": "tunnel" },
+            { "id": "lc3", "a": "ccn", "b": "dc2", "kind": "tunnel" }
+          ],
+          "flows": [
+            { "id": "f-n1", "path": ["n1", "br", "dc1"], "kind": "data", "n": 4 },
+            { "id": "f-n2", "path": ["n2", "br", "dc2"], "kind": "data", "n": 4 },
+            { "id": "f-dc", "path": ["dc1", "dc2"], "kind": "data", "n": 4, "speed": 120 },
+            { "id": "f-ex", "path": ["dc1", "ex"], "kind": "data", "n": 4 },
+            { "id": "f-web", "path": ["user", "sec", "dc2"], "kind": "data", "n": 3 },
+            { "id": "f-v1", "path": ["n1", "ccn", "dc2"], "kind": "video", "n": 4 },
+            { "id": "f-v2", "path": ["n2", "ccn", "dc2"], "kind": "video", "n": 4 }
+          ],
+          "callouts": [
+            { "id": "c-dual", "at": "dc1", "x": 905, "y": 360, "w": 260, "text": "同城双活：超大带宽、时延 <1ms；ASON/SNCP 多重保护，可用率 99.99% 以上", "tone": "hardpipe" },
+            { "id": "c-video", "at": "ccn", "x": 278, "y": 440, "w": 210, "text": "安保网 / 视频监控：云联网扁平化组网、弹性带宽（资料有银行安保网案例）", "tone": "tunnel" },
+            { "id": "c-sec", "at": "sec", "x": 1110, "y": 640, "w": 250, "text": "网银、官网等互联网业务：DDoS 清洗 + Web 防护", "tone": "security" }
+          ],
+          "kpis": [
+            { "id": "k-iso", "label": "生产网", "value": "L1 物理隔离", "src": "S13:5.1.2" },
+            { "id": "k-av", "label": "可用率", "value": "99.99% 以上（ASON/SNCP）", "src": "S13:5.1.2" },
+            { "id": "k-dual", "label": "同城双活", "value": "时延 < 1ms", "src": "S19:金融" },
+            { "id": "k-ex", "label": "交易", "value": "一跳直达 · 双向 1ms 灾备", "src": "S13:5.1.3" },
+            { "id": "k-fin", "label": "金融精品网", "value": "99.999% · 恢复 1 小时", "src": "S14:P26" }
+          ],
+          "steps": [
+            { "t": "银行网络结构", "say": "营业网点、分行、总行双数据中心，以及交易所与互联网业务。", "add": ["z-n", "z-b", "z-d", "z-e", "n1", "n2", "br", "dc1", "dc2", "ex"], "src": "S19:金融" },
+            { "t": "生产网扁平化：政企精品网", "say": "网点—分行—数据中心生产网走 OTN 硬管道，带宽提速、SLA 可视。", "add": ["ln1", "ln2", "lb1", "lb2"], "flows": ["f-n1", "f-n2"], "kpis": ["k-iso", "k-av"], "src": "S13:5.1.2; S19:金融" },
+            { "t": "同城双活与交易所直达", "say": "双数据中心同城双活、交易所一跳直达，选择高等级精品网。", "add": ["ldc", "lex"], "flows": ["f-n1", "f-n2", "f-dc", "f-ex"], "callouts": ["c-dual"], "kpis": ["k-iso", "k-av", "k-dual", "k-ex", "k-fin"], "src": "S13:5.1.3; S14:P26; S19:金融" },
+            { "t": "安保网 / 视频：云联网", "say": "网点视频监控、安保网以云联网扁平化组网，按需弹性带宽。", "add": ["ccn", "lc1", "lc2", "lc3"], "flows": ["f-v1", "f-v2", "f-dc"], "callouts": ["c-video"], "src": "S41:安保网案例" },
+            { "t": "互联网业务：安全专线", "say": "网银、官网等面向互联网的业务叠加 DDoS 清洗与 Web 防护。", "add": ["sec", "user", "lsec", "luser"], "flows": ["f-web", "f-dc", "f-ex", "f-n1"], "states": { "sec": "protect" }, "callouts": ["c-sec"], "src": "S05:三2" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "industry-medical",
+      "title": "医疗卫健：院区互联、医共体、医保专线与互联网业务安全",
+      "kind": "industry",
+      "industry": "medical",
+      "products": ["premium-network", "cloud-connect", "pon-network", "security-line"],
+      "summary": "分院与总院 GE 级以上硬管道、PACS 影像上云；医共体走云联网；定点药店医保专线走 PON 组网；挂号与官网叠加安全专线。",
+      "scenes": [
+        {
+          "id": "main",
+          "title": "医疗组合方案",
+          "zones": [
+            { "id": "z-e", "x": 30, "y": 96, "w": 250, "h": 588, "label": "基层与网点", "tone": "customer" },
+            { "id": "z-a", "x": 292, "y": 96, "w": 250, "h": 588, "label": "接入与汇聚", "tone": "unicom" },
+            { "id": "z-c", "x": 554, "y": 96, "w": 310, "h": 588, "label": "总院 / 平台", "tone": "customer" },
+            { "id": "z-x", "x": 876, "y": 96, "w": 382, "h": 588, "label": "云 / 互联网", "tone": "internet" }
+          ],
+          "nodes": [
+            { "id": "comm", "x": 155, "y": 180, "icon": "hospital", "label": "社区卫生服务中心", "tone": "customer" },
+            { "id": "fy", "x": 155, "y": 370, "icon": "hospital", "label": "分院 / 院区", "tone": "customer" },
+            { "id": "ds", "x": 155, "y": 570, "icon": "branch", "label": "定点药店", "sub": "约 100 家（资料案例）", "tone": "customer" },
+            { "id": "ccn", "x": 417, "y": 180, "icon": "cloud", "label": "云联网", "sub": "医共体", "tone": "cloud", "size": "sm" },
+            { "id": "pop", "x": 417, "y": 570, "icon": "pop", "label": "POP（vCPE）", "tone": "cloud" },
+            { "id": "zy", "x": 709, "y": 300, "icon": "hospital", "label": "总院数据中心", "sub": "HIS / PACS", "tone": "customer", "size": "lg" },
+            { "id": "yb", "x": 709, "y": 570, "icon": "datacenter", "label": "医保平台", "tone": "customer" },
+            { "id": "cloud", "x": 1040, "y": 170, "icon": "cloud", "label": "医疗云 / 影像云", "tone": "cloud" },
+            { "id": "sec", "x": 1040, "y": 440, "icon": "shield", "label": "互联网安全专线", "tone": "security" },
+            { "id": "pat", "x": 1185, "y": 440, "icon": "user", "label": "患者", "sub": "挂号 / 官网", "tone": "internet" }
+          ],
+          "links": [
+            { "id": "lc", "a": "comm", "b": "ccn", "kind": "tunnel" },
+            { "id": "lcz", "a": "ccn", "b": "zy", "kind": "tunnel", "route": "hv" },
+            { "id": "lfy", "a": "fy", "b": "zy", "kind": "hardpipe", "label": "GE 级以上" },
+            { "id": "lds", "a": "ds", "b": "pop", "kind": "tunnel", "label": "VxLAN 专网" },
+            { "id": "lpy", "a": "pop", "b": "yb", "kind": "tunnel" },
+            { "id": "lzc", "a": "zy", "b": "cloud", "kind": "hardpipe", "route": "hv", "label": "PACS 影像上云", "lab": 0.35 },
+            { "id": "lzs", "a": "zy", "b": "sec", "kind": "link", "route": "vh" },
+            { "id": "lsp", "a": "sec", "b": "pat", "kind": "link" }
+          ],
+          "flows": [
+            { "id": "f-comm", "path": ["comm", "ccn", "zy"], "kind": "tunnel", "n": 3 },
+            { "id": "f-fy", "path": ["fy", "zy"], "kind": "data", "n": 4 },
+            { "id": "f-pacs", "path": ["zy", "cloud"], "kind": "data", "n": 5, "speed": 190 },
+            { "id": "f-ds", "path": ["ds", "pop", "yb"], "kind": "tunnel", "n": 4 },
+            { "id": "f-pat", "path": ["pat", "sec", "zy"], "kind": "data", "n": 3 }
+          ],
+          "callouts": [
+            { "id": "c-pacs", "at": "zy", "x": 892, "y": 382, "w": 230, "text": "多院区互联与 PACS 影像上云：GE 级以上专线、低时延", "tone": "hardpipe" },
+            { "id": "c-gx", "at": "ccn", "x": 417, "y": 288, "w": 220, "text": "医联体 / 医共体：云联网多点组网与上云", "tone": "tunnel" },
+            { "id": "c-yb", "at": "ds", "x": 420, "y": 445, "w": 250, "text": "医保专线：药店总部 vCPE + 约 100 个分支 uCPE 建 VxLAN 专网，分支不上互联网", "tone": "tunnel" },
+            { "id": "c-sec", "at": "sec", "x": 1110, "y": 580, "w": 250, "text": "挂号系统、官网：全场景监测 + DDoS 防护 + Web 防护", "tone": "security" }
+          ],
+          "kpis": [
+            { "id": "k-ge", "label": "院区互联", "value": "GE 级以上", "src": "S13:5.1.10" },
+            { "id": "k-gx", "label": "医共体", "value": "云联网", "src": "S19:卫健" },
+            { "id": "k-yb", "label": "医保", "value": "PON 组网专线", "src": "S24:P23" },
+            { "id": "k-sec", "label": "互联网业务", "value": "安全专线", "src": "S11:3.4" }
+          ],
+          "steps": [
+            { "t": "医疗网络结构", "say": "总院数据中心、分院、社区卫生服务中心、定点药店、医保平台与医疗云。", "add": ["z-e", "z-a", "z-c", "z-x", "comm", "fy", "ds", "zy", "yb", "cloud"], "src": "S13:5.1.10" },
+            { "t": "院区互联与影像上云", "say": "分院与总院 GE 级以上硬管道，PACS 影像上云。", "add": ["lfy", "lzc"], "flows": ["f-fy", "f-pacs"], "callouts": ["c-pacs"], "kpis": ["k-ge"], "src": "S13:5.1.10; S19:卫健" },
+            { "t": "医共体：云联网", "say": "社区卫生服务中心等基层机构经云联网接入总院。", "add": ["ccn", "lc", "lcz"], "flows": ["f-fy", "f-pacs", "f-comm"], "callouts": ["c-gx"], "kpis": ["k-ge", "k-gx"], "src": "S19:卫健; S23:P24" },
+            { "t": "医保专线：PON 组网", "say": "定点药店经 PON-SDWAN 网关与 POP 建立 VxLAN 专网，访问医保平台。", "add": ["pop", "lds", "lpy"], "flows": ["f-fy", "f-comm", "f-ds"], "callouts": ["c-yb"], "kpis": ["k-ge", "k-gx", "k-yb"], "src": "S24:P23" },
+            { "t": "互联网业务：安全专线", "say": "挂号系统、官网面向公众，叠加安全监测与防护。", "add": ["sec", "pat", "lzs", "lsp"], "flows": ["f-fy", "f-pacs", "f-ds", "f-pat"], "states": { "sec": "protect" }, "callouts": ["c-sec"], "kpis": ["k-ge", "k-gx", "k-yb", "k-sec"], "src": "S05:三4-5; S11:3.4" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "industry-education",
+      "title": "教育：教育城域网、校园出口合规与考试高峰",
+      "kind": "industry",
+      "industry": "education",
+      "products": ["premium-network", "dia", "security-line", "smart-dia"],
+      "summary": "教育城域网与校区互联走政企精品网；学校互联网出口叠加防火墙版；考点学校考试期间智能升速、结束自动恢复。",
+      "scenes": [
+        {
+          "id": "main",
+          "title": "教育组合方案",
+          "zones": [
+            { "id": "z-s", "x": 30, "y": 96, "w": 390, "h": 588, "label": "中小学 / 考点", "tone": "customer" },
+            { "id": "z-e", "x": 432, "y": 96, "w": 300, "h": 588, "label": "教育城域网", "tone": "transport" },
+            { "id": "z-u", "x": 744, "y": 96, "w": 300, "h": 588, "label": "高校校区", "tone": "customer" },
+            { "id": "z-i", "x": 1056, "y": 96, "w": 202, "h": 588, "label": "互联网", "tone": "internet" }
+          ],
+          "nodes": [
+            { "id": "k12", "x": 130, "y": 170, "icon": "school", "label": "中小学", "tone": "customer" },
+            { "id": "fw", "x": 310, "y": 170, "icon": "firewall", "label": "防火墙版", "sub": "安全专线", "tone": "security" },
+            { "id": "exam", "x": 130, "y": 560, "icon": "school", "label": "考点学校", "tone": "customer" },
+            { "id": "edu", "x": 582, "y": 360, "icon": "datacenter", "label": "教育城域网中心", "sub": "教育局", "tone": "customer" },
+            { "id": "u1", "x": 894, "y": 200, "icon": "school", "label": "高校主校区", "tone": "customer" },
+            { "id": "u2", "x": 894, "y": 520, "icon": "school", "label": "高校分校区", "tone": "customer" },
+            { "id": "inet", "x": 1157, "y": 360, "icon": "internet", "label": "互联网", "tone": "internet", "round": true },
+            { "id": "m-exam", "kind": "meter", "x": 582, "y": 625, "w": 220, "label": "考点出口速率", "value": 50, "valueText": "100M", "tone": "flow" }
+          ],
+          "links": [
+            { "id": "l-ke", "a": "k12", "b": "edu", "kind": "hardpipe", "route": "vh", "label": "教育城域网" },
+            { "id": "l-ee", "a": "exam", "b": "edu", "kind": "hardpipe" },
+            { "id": "l-u1", "a": "edu", "b": "u1", "kind": "hardpipe", "label": "校区互联 100G~800G" },
+            { "id": "l-u2", "a": "edu", "b": "u2", "kind": "hardpipe" },
+            { "id": "l-kf", "a": "k12", "b": "fw", "kind": "lan" },
+            { "id": "l-fi", "a": "fw", "b": "inet", "kind": "dedicated", "label": "互联网专线", "lab": 0.3 },
+            { "id": "l-ei", "a": "exam", "b": "inet", "kind": "dedicated", "label": "互联网专线 + 智能升速", "lab": 0.72 }
+          ],
+          "flows": [
+            { "id": "f-edu", "path": ["k12", "edu"], "kind": "data", "n": 3 },
+            { "id": "f-u", "path": ["u2", "edu", "u1"], "kind": "data", "n": 5 },
+            { "id": "f-k12", "path": ["inet", "fw", "k12"], "kind": "data", "n": 3 },
+            { "id": "f-exam", "path": ["inet", "exam"], "kind": "data", "n": 7, "speed": 200 }
+          ],
+          "callouts": [
+            { "id": "c-u", "at": "edu", "x": 894, "y": 360, "w": 270, "text": "教育城域网 / 校区互联：100G~800G PeOTN，“一校一网”“一市一网”", "tone": "hardpipe" },
+            { "id": "c-fw", "at": "fw", "x": 300, "y": 300, "w": 250, "text": "防火墙版：满足校园网出口访问防火墙要求（资料案例：廊坊固安县 K12 学校）", "tone": "security" },
+            { "id": "c-exam", "at": "exam", "x": 300, "y": 455, "w": 250, "text": "考试期间按天升速、结束自动恢复（资料案例：山西运城某中学高考考点）", "tone": "ok" }
+          ],
+          "kpis": [
+            { "id": "k-otn", "label": "城域互联", "value": "100G ~ 800G", "src": "S13:5.1.9" },
+            { "id": "k-fw", "label": "出口合规", "value": "防火墙版（≤300M）", "src": "S06:P12; S05:五(一)" },
+            { "id": "k-smart", "label": "考试高峰", "value": "按天升速", "src": "S02:P15" }
+          ],
+          "steps": [
+            { "t": "学校与教育城域网", "say": "教育局教育城域网中心连接中小学、考点学校与高校校区。", "add": ["z-s", "z-e", "z-u", "z-i", "k12", "exam", "edu", "u1", "u2", "inet"], "src": "S13:5.1.9" },
+            { "t": "教育城域网与校区互联", "say": "政企精品网承载教育城域网与校区互联，支撑教育资源共享。", "add": ["l-ke", "l-ee", "l-u1", "l-u2"], "flows": ["f-edu", "f-u"], "callouts": ["c-u"], "kpis": ["k-otn"], "src": "S13:5.1.9" },
+            { "t": "校园出口合规：防火墙版", "say": "学校互联网出口叠加安全专线防火墙版，满足网信部门检查要求。", "add": ["fw", "l-kf", "l-fi"], "flows": ["f-u", "f-k12"], "states": { "fw": "protect" }, "callouts": ["c-fw"], "kpis": ["k-otn", "k-fw"], "src": "S06:P12" },
+            { "t": "考试高峰：智能升速", "say": "考点学校在考试期间把出口从 100M 升至 200M。", "add": ["l-ei", "m-exam"], "flows": ["f-exam", "f-u"], "meters": { "m-exam": { "value": 100, "text": "200M（升速中）", "tone": "ok" } }, "states": { "fw": "normal", "exam": "active" }, "callouts": ["c-exam"], "kpis": ["k-otn", "k-fw", "k-smart"], "src": "S02:P13, P15" },
+            { "t": "考试结束自动恢复", "say": "到期自动恢复原速率，只按升速天数计费。", "flows": ["f-exam", "f-u", "f-k12"], "meters": { "m-exam": { "value": 50, "text": "100M（已恢复）", "tone": "flow" } }, "states": { "exam": "normal" }, "kpis": ["k-otn", "k-fw", "k-smart"], "src": "S02:P14" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "industry-manufacturing",
+      "title": "制造与能源：生产网硬隔离、远程集控、上云与出口安全",
+      "kind": "industry",
+      "industry": "industry",
+      "products": ["premium-network", "cloud-connect", "security-line"],
+      "summary": "厂区与场站生产网走 OTN 硬隔离（时延可确定），总部上云走云联网，互联网出口与终端叠加安全专线。",
+      "scenes": [
+        {
+          "id": "main",
+          "title": "制造与能源组合方案",
+          "zones": [
+            { "id": "z-s", "x": 30, "y": 96, "w": 300, "h": 588, "label": "厂区 / 场站", "tone": "customer" },
+            { "id": "z-u", "x": 342, "y": 96, "w": 298, "h": 588, "label": "中国联通网络", "tone": "unicom" },
+            { "id": "z-h", "x": 652, "y": 96, "w": 300, "h": 588, "label": "集团总部", "tone": "customer" },
+            { "id": "z-x", "x": 964, "y": 96, "w": 294, "h": 588, "label": "云 / 互联网", "tone": "internet" }
+          ],
+          "nodes": [
+            { "id": "f1", "x": 150, "y": 170, "icon": "factory", "label": "生产厂区 A", "tone": "customer" },
+            { "id": "f2", "x": 150, "y": 380, "icon": "factory", "label": "生产厂区 B", "tone": "customer" },
+            { "id": "st", "x": 150, "y": 590, "icon": "energy", "label": "场站 / 发电站", "tone": "customer" },
+            { "id": "otn", "x": 490, "y": 380, "icon": "otn", "label": "政企精品网", "sub": "OTN", "tone": "transport", "size": "lg" },
+            { "id": "hq", "x": 802, "y": 380, "icon": "building", "label": "集团总部 / 数据中心", "tone": "customer", "size": "lg" },
+            { "id": "ccn", "x": 802, "y": 160, "icon": "cloud", "label": "云联网", "tone": "cloud", "size": "sm" },
+            { "id": "cloud", "x": 1110, "y": 170, "icon": "cloud", "label": "工业互联网平台", "sub": "公有云", "tone": "cloud" },
+            { "id": "sec", "x": 1030, "y": 470, "icon": "shield", "label": "安全专线", "sub": "防火墙版 / 终端版", "tone": "security" },
+            { "id": "inet", "x": 1190, "y": 470, "icon": "internet", "label": "互联网", "tone": "internet", "round": true }
+          ],
+          "links": [
+            { "id": "lf1", "a": "f1", "b": "otn", "kind": "hardpipe", "label": "生产网" },
+            { "id": "lf2", "a": "f2", "b": "otn", "kind": "hardpipe" },
+            { "id": "lst", "a": "st", "b": "otn", "kind": "hardpipe", "label": "远程集控" },
+            { "id": "loh", "a": "otn", "b": "hq", "kind": "hardpipe" },
+            { "id": "lhc", "a": "hq", "b": "ccn", "kind": "tunnel" },
+            { "id": "lcc", "a": "ccn", "b": "cloud", "kind": "cloud" },
+            { "id": "lhs", "a": "hq", "b": "sec", "kind": "link", "route": "hv" },
+            { "id": "lsi", "a": "sec", "b": "inet", "kind": "link" }
+          ],
+          "flows": [
+            { "id": "f-p1", "path": ["f1", "otn", "hq"], "kind": "data", "n": 4 },
+            { "id": "f-p2", "path": ["f2", "otn", "hq"], "kind": "data", "n": 4 },
+            { "id": "f-st", "path": ["st", "otn", "hq"], "kind": "data", "n": 4, "speed": 190 },
+            { "id": "f-cloud", "path": ["hq", "ccn", "cloud"], "kind": "cloud", "n": 4 },
+            { "id": "f-net", "path": ["inet", "sec", "hq"], "kind": "data", "n": 3 }
+          ],
+          "callouts": [
+            { "id": "c-prod", "at": "otn", "x": 490, "y": 565, "w": 250, "text": "生产、办公、视频业务硬隔离；时延可视可确定，ASON 抗多次断纤，工厂不断网", "tone": "hardpipe" },
+            { "id": "c-energy", "at": "st", "x": 332, "y": 612, "w": 220, "text": "能源远程集控：继电保护等对实时性要求为毫秒级", "tone": "flow" },
+            { "id": "c-cloud", "at": "ccn", "x": 950, "y": 285, "w": 230, "text": "总部上云：云联网一点入多云", "tone": "tunnel" },
+            { "id": "c-sec", "at": "sec", "x": 1110, "y": 610, "w": 270, "text": "互联网出口边界防护（防火墙版）；终端防勒索（终端版适用高端制造业）", "tone": "security" }
+          ],
+          "kpis": [
+            { "id": "k-iso", "label": "生产网", "value": "物理隔离 · 时延可确定", "src": "S13:5.1.11" },
+            { "id": "k-ms", "label": "能源集控", "value": "毫秒级实时性", "src": "S19:能源" },
+            { "id": "k-cc", "label": "上云", "value": "云联网", "src": "S23:P24" },
+            { "id": "k-sec", "label": "安全", "value": "防火墙版 / 终端版", "src": "S01:P16; S09:一" }
+          ],
+          "steps": [
+            { "t": "厂区、场站与总部", "say": "多个生产厂区、能源场站与集团总部数据中心协同。", "add": ["z-s", "z-u", "z-h", "z-x", "f1", "f2", "st", "otn", "hq"], "src": "S13:5.1.11" },
+            { "t": "生产网：政企精品网", "say": "厂区生产网走 OTN 硬管道，生产、办公、视频业务硬隔离。", "add": ["lf1", "lf2", "loh"], "flows": ["f-p1", "f-p2"], "callouts": ["c-prod"], "kpis": ["k-iso"], "src": "S13:5.1.11; S19:石化燃气" },
+            { "t": "能源远程集控", "say": "发电站远程集控与长途电路，对实时性要求为毫秒级。", "add": ["lst"], "flows": ["f-p1", "f-p2", "f-st"], "callouts": ["c-energy"], "kpis": ["k-iso", "k-ms"], "src": "S19:能源" },
+            { "t": "总部上云：云联网", "say": "总部与工业互联网平台、公有云经云联网互联。", "add": ["ccn", "cloud", "lhc", "lcc"], "flows": ["f-p1", "f-p2", "f-st", "f-cloud"], "callouts": ["c-cloud"], "kpis": ["k-iso", "k-ms", "k-cc"], "src": "S23:P24" },
+            { "t": "出口与终端安全", "say": "互联网出口叠加防火墙版，办公终端叠加终端版防勒索。", "add": ["sec", "inet", "lhs", "lsi"], "flows": ["f-p1", "f-st", "f-cloud", "f-net"], "states": { "sec": "protect" }, "callouts": ["c-sec"], "kpis": ["k-iso", "k-ms", "k-cc", "k-sec"], "src": "S09:一; S01:P16" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "industry-enterprise",
+      "title": "集团企业与连锁：扁平化组网、多云与统一出口",
+      "kind": "industry",
+      "industry": "enterprise",
+      "products": ["cloud-connect", "sd-wan", "security-line"],
+      "summary": "总部与分支就近接入云联网全连通，一点入多云；末梢小网点以 SD-WAN 补充；统一互联网出口叠加安全专线。",
+      "scenes": [
+        {
+          "id": "main",
+          "title": "集团与连锁组合方案",
+          "zones": [
+            { "id": "z-s", "x": 30, "y": 96, "w": 300, "h": 588, "label": "总部与分支", "tone": "customer" },
+            { "id": "z-c", "x": 342, "y": 96, "w": 448, "h": 588, "label": "云联网（CUII）", "tone": "cloud" },
+            { "id": "z-x", "x": 802, "y": 96, "w": 456, "h": 588, "label": "云 / 出口", "tone": "internet" }
+          ],
+          "nodes": [
+            { "id": "hq", "x": 150, "y": 170, "icon": "building", "label": "集团总部", "tone": "customer" },
+            { "id": "reg", "x": 150, "y": 380, "icon": "building", "label": "区域分公司", "tone": "customer" },
+            { "id": "store", "x": 150, "y": 590, "icon": "branch", "label": "连锁门店 / 小网点", "tone": "customer" },
+            { "id": "sdw", "x": 440, "y": 590, "icon": "sdwan", "label": "SD-WAN 智选专线", "tone": "cloud" },
+            { "id": "ccn", "x": 600, "y": 380, "icon": "cloud", "label": "云联网", "tone": "cloud", "shape": "cloud", "size": "lg" },
+            { "id": "cloud", "x": 1000, "y": 170, "icon": "cloud", "label": "公有云 / 联通云", "tone": "cloud" },
+            { "id": "idc", "x": 1000, "y": 380, "icon": "datacenter", "label": "数据中心 / 私有云", "tone": "customer" },
+            { "id": "sec", "x": 1000, "y": 590, "icon": "shield", "label": "安全专线", "tone": "security" },
+            { "id": "exit", "x": 1170, "y": 590, "icon": "internet", "label": "统一互联网出口", "tone": "internet", "round": true, "lp": "t" }
+          ],
+          "links": [
+            { "id": "lh", "a": "hq", "b": "ccn", "kind": "tunnel" },
+            { "id": "lr", "a": "reg", "b": "ccn", "kind": "tunnel" },
+            { "id": "ls", "a": "store", "b": "sdw", "kind": "link" },
+            { "id": "lsd", "a": "sdw", "b": "ccn", "kind": "tunnel", "label": "末梢补充" },
+            { "id": "lcl", "a": "ccn", "b": "cloud", "kind": "cloud" },
+            { "id": "lid", "a": "ccn", "b": "idc", "kind": "tunnel" },
+            { "id": "lse", "a": "ccn", "b": "sec", "kind": "link" },
+            { "id": "lex", "a": "sec", "b": "exit", "kind": "link" }
+          ],
+          "flows": [
+            { "id": "f-hr", "path": ["reg", "ccn", "hq"], "kind": "tunnel", "n": 3 },
+            { "id": "f-hc", "path": ["hq", "ccn", "cloud"], "kind": "cloud", "n": 3 },
+            { "id": "f-st", "path": ["store", "sdw", "ccn", "idc"], "kind": "tunnel", "n": 3 },
+            { "id": "f-ex", "path": ["reg", "ccn", "sec", "exit"], "kind": "data", "n": 3 },
+            { "id": "f-ex2", "path": ["hq", "ccn", "sec", "exit"], "kind": "data", "n": 3 }
+          ],
+          "callouts": [
+            { "id": "c-flat", "at": "ccn", "x": 600, "y": 530, "w": 280, "text": "全国分支扁平化互通：就近接入、一点接入全连通（资料案例：绝味食品 21 节点）", "tone": "tunnel" },
+            { "id": "c-cloud", "at": "cloud", "x": 790, "y": 205, "w": 230, "text": "多云接入：公有云、联通云、私有云统一纳入一张网", "tone": "tunnel" },
+            { "id": "c-mix", "at": "sdw", "x": 320, "y": 480, "w": 230, "text": "末梢小网点：SD-WAN 智选专线作为云联网接入补充（混合组网）", "tone": "info" },
+            { "id": "c-exit", "at": "sec", "x": 818, "y": 655, "w": 260, "text": "统一出口 + 安全专线：集中管控、减少暴露面（资料案例：中建五局）", "tone": "security" }
+          ],
+          "kpis": [
+            { "id": "k-flat", "label": "组网", "value": "扁平化 · 全连通", "src": "S23:P13" },
+            { "id": "k-cloud", "label": "上云", "value": "多云一点接入", "src": "S23:P15" },
+            { "id": "k-mix", "label": "末梢", "value": "SD-WAN 补充", "src": "S41:混合组网" },
+            { "id": "k-exit", "label": "出口", "value": "统一出口 + 安全", "src": "S23:P23-P24" }
+          ],
+          "steps": [
+            { "t": "集团与连锁网络", "say": "集团总部、区域分公司、连锁门店分布在全国各地。", "add": ["z-s", "z-c", "z-x", "hq", "reg", "store", "ccn"], "src": "S23:P23" },
+            { "t": "扁平化互通：云联网", "say": "总部与分公司就近接入云联网，任意节点一跳直达。", "add": ["lh", "lr"], "flows": ["f-hr"], "callouts": ["c-flat"], "kpis": ["k-flat"], "src": "S23:P13, P23" },
+            { "t": "多云与数据中心", "say": "公有云、联通云、私有云和数据中心统一纳入一张网。", "add": ["cloud", "idc", "lcl", "lid"], "flows": ["f-hr", "f-hc"], "callouts": ["c-cloud"], "kpis": ["k-flat", "k-cloud"], "src": "S23:P15" },
+            { "t": "末梢小网点：SD-WAN 补充", "say": "小网点以 SD-WAN 智选专线接入，作为云联网的补充。", "add": ["sdw", "ls", "lsd"], "flows": ["f-hr", "f-hc", "f-st"], "callouts": ["c-mix"], "kpis": ["k-flat", "k-cloud", "k-mix"], "src": "S41:混合组网" },
+            { "t": "统一互联网出口 + 安全", "say": "全网互联网流量统一出口，叠加安全专线集中防护。", "add": ["sec", "exit", "lse", "lex"], "flows": ["f-hc", "f-st", "f-ex", "f-ex2"], "states": { "sec": "protect" }, "callouts": ["c-exit"], "kpis": ["k-flat", "k-cloud", "k-mix", "k-exit"], "src": "S23:P23-P24" }
+          ]
+        }
+      ]
+    }
+  ]
+}
